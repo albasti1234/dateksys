@@ -73,7 +73,13 @@ export default function CareersPage() {
 
     try {
       const res = await fetch("/api/contact", { method: "POST", body: formData });
-      const json = await res.json();
+      const text = await res.text();
+      let json: { message?: string; error?: string };
+      try {
+        json = JSON.parse(text);
+      } catch {
+        json = { error: `Server error (${res.status})` };
+      }
       if (res.ok) {
         setStatus("success");
         setServerMessage(t("apply_success"));
@@ -82,11 +88,11 @@ export default function CareersPage() {
         if (fileRef.current) fileRef.current.value = "";
       } else {
         setStatus("error");
-        setServerMessage(json.error || "Error");
+        setServerMessage(json.error || `Error (${res.status})`);
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setServerMessage("Network error.");
+      setServerMessage(err instanceof Error ? err.message : "Network error.");
     }
   }
 

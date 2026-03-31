@@ -99,7 +99,13 @@ export default function ContactForm() {
         method: "POST",
         body: formData,
       });
-      const json = await res.json();
+      const text = await res.text();
+      let json: { message?: string; error?: string };
+      try {
+        json = JSON.parse(text);
+      } catch {
+        json = { error: `Server error (${res.status})` };
+      }
       if (res.ok) {
         setStatus("success");
         setServerMessage(json.message || "Success");
@@ -108,11 +114,11 @@ export default function ContactForm() {
         if (fileRef.current) fileRef.current.value = "";
       } else {
         setStatus("error");
-        setServerMessage(json.error || "Error");
+        setServerMessage(json.error || `Error (${res.status})`);
       }
-    } catch {
+    } catch (err) {
       setStatus("error");
-      setServerMessage("Network error. Please try again.");
+      setServerMessage(err instanceof Error ? err.message : "Network error.");
     }
   }
 
