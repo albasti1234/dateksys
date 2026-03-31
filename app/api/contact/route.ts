@@ -68,7 +68,7 @@ export async function POST(request: Request) {
 
     // Handle file attachment
     const file = formData.get("attachment") as File | null;
-    let attachmentData: { filename: string; content: Buffer }[] = [];
+    let attachmentData: { filename: string; content: string }[] = [];
 
     if (file && file.size > 0) {
       if (!ALLOWED_TYPES.includes(file.type)) {
@@ -84,7 +84,8 @@ export async function POST(request: Request) {
         );
       }
       const bytes = await file.arrayBuffer();
-      attachmentData = [{ filename: file.name, content: Buffer.from(bytes) }];
+      const base64 = Buffer.from(bytes).toString("base64");
+      attachmentData = [{ filename: file.name, content: base64 }];
     }
 
     // Send email via Resend
