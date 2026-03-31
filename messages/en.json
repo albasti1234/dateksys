@@ -414,6 +414,34 @@
     "spontaneous": "Send us your CV",
     "spontaneous_desc": "Think you'd be a great fit? Send us your resume and tell us what you're passionate about.",
     "cta": "Send Your CV",
+    "apply_title": "Apply Now",
+    "apply_sub": "Fill out the form below and attach your CV. We'll get back to you within 48 hours.",
+    "apply_fields": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "phone": "Phone Number (optional)",
+      "position": "Position you're applying for",
+      "position_options": {
+        "placeholder": "Select a position",
+        "network_engineer": "Network Engineer",
+        "fiber_technician": "Fiber Optic Technician",
+        "security_installer": "Security Systems Installer",
+        "software_developer": "Software Developer",
+        "project_manager": "Project Manager",
+        "other": "Other"
+      },
+      "message": "Tell us about yourself",
+      "attachment": "Attach your CV (PDF or Word)",
+      "attachment_hint": "Max 5MB — PDF, DOC, DOCX",
+      "submit": "Submit Application",
+      "sending": "Submitting..."
+    },
+    "apply_success": "Application submitted successfully! We'll review your CV and get back to you.",
+    "hero_images": {
+      "desk": "Professional working at a modern desk",
+      "fiber": "Technician splicing fiber optic cables",
+      "cabling": "Structured fiber cabling installation"
+    },
     "why_join": "Why Join DatekSys",
     "why_items": [
       {
