@@ -18,6 +18,9 @@ export const contactSchema = z.object({
     .regex(/^\+?[0-9\s\-()]{7,20}$/, "رقم الهاتف غير صالح")
     .optional()
     .or(z.literal("")),
+  reason: z
+    .string()
+    .min(1, "يرجى اختيار السبب"),
   subject: z
     .string()
     .min(3, "الموضوع لازم يكون أكثر من 3 حروف")
