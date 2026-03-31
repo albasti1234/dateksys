@@ -6,8 +6,6 @@ import {
   isHoneypotTriggered,
 } from "@/lib/security";
 
-// Allow up to 6MB body (5MB file + form fields)
-export const maxDuration = 30;
 
 const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "info@dateksys.com";
 const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
