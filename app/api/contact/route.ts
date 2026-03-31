@@ -19,7 +19,7 @@ export async function POST(request: Request) {
   try {
     // Rate limiting
     const ip = getClientIP(request);
-    const limiter = rateLimit(ip);
+    const limiter = await rateLimit(ip);
 
     if (!limiter.success) {
       return NextResponse.json(
@@ -133,10 +133,9 @@ export async function POST(request: Request) {
         { status: 200 }
       );
     } else {
-      console.log("📧 RESEND_API_KEY not set. Data:", data);
       return NextResponse.json(
-        { error: "Email service not configured (RESEND_API_KEY missing)" },
-        { status: 500 }
+        { error: "Email service not configured" },
+        { status: 503 }
       );
     }
   } catch (error) {

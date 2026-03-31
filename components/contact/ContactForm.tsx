@@ -64,13 +64,13 @@ export default function ContactForm() {
       return;
     }
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setFileError("PDF, DOC, DOCX only");
+      setFileError(t("validation.file_type"));
       setFileName("");
       e.target.value = "";
       return;
     }
     if (file.size > MAX_FILE_SIZE) {
-      setFileError("Max 5MB");
+      setFileError(t("validation.file_size"));
       setFileName("");
       e.target.value = "";
       return;

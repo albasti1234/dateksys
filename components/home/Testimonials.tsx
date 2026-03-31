@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 
 // ✅ مؤقتاً — اقتباس من المؤسس عن رؤية الشركة
 // لما يصير عندك عملاء حقيقيين — بدّلهم بشهاداتهم
@@ -43,8 +43,9 @@ const testimonials = {
 };
 
 export default function Testimonials() {
-  const t = useTranslations("hero");
-  const isArabic = t("badge") !== "Enterprise IT Infrastructure Partner";
+  const t = useTranslations("testimonials");
+  const locale = useLocale();
+  const isArabic = locale === "ar";
   const items = isArabic ? testimonials.ar : testimonials.en;
 
   return (
@@ -62,14 +63,14 @@ export default function Testimonials() {
           transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] as const }}
         >
           <p className="section-label mb-4">
-            {isArabic ? "ما نؤمن به" : "What We Believe"}
+            {t("label")}
           </p>
           <h2
             className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold"
             style={{ letterSpacing: "var(--tracking-tight)" }}
           >
             <span className="gradient-text">
-              {isArabic ? "بكلماتنا" : "In Our Words"}
+              {t("title")}
             </span>
           </h2>
         </motion.div>
@@ -105,7 +106,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <p className="text-text-secondary text-sm lg:text-base leading-relaxed font-body flex-1 mb-6">
+                <p className="text-text-primary/80 text-sm lg:text-base leading-relaxed font-body flex-1 mb-6">
                   {item.quote}
                 </p>
 

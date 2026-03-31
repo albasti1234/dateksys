@@ -47,13 +47,13 @@ export default function CareersPage() {
     const file = e.target.files?.[0];
     if (!file) { setFileName(""); return; }
     if (!ALLOWED_TYPES.includes(file.type)) {
-      setFileError("PDF, DOC, DOCX only");
+      setFileError(t("file_type_error"));
       setFileName("");
       e.target.value = "";
       return;
     }
     if (file.size > MAX_FILE_SIZE) {
-      setFileError("Max 5MB");
+      setFileError(t("file_size_error"));
       setFileName("");
       e.target.value = "";
       return;

@@ -119,6 +119,7 @@ export default function Navbar() {
             onClick={() => setMobileOpen(!mobileOpen)}
             className="lg:hidden relative z-50 w-10 h-10 flex flex-col items-center justify-center gap-1.5"
             aria-label="Toggle menu"
+            aria-expanded={mobileOpen}
           >
             <motion.span className="block w-6 h-[1.5px] bg-white"
               animate={mobileOpen ? { rotate: 45, y: 5 } : { rotate: 0, y: 0 }} transition={{ duration: 0.3 }} />

@@ -32,11 +32,13 @@ export default function GlowCard({ children, className = "" }: GlowCardProps) {
       <div
         className="pointer-events-none absolute transition-opacity duration-500"
         style={{
-          left: position.x - 200,
-          top: position.y - 200,
+          left: 0,
+          top: 0,
           width: 400,
           height: 400,
           borderRadius: "50%",
+          transform: `translate(${position.x - 200}px, ${position.y - 200}px)`,
+          willChange: "transform",
           background: "radial-gradient(circle, var(--color-accent-dim) 0%, transparent 70%)",
           opacity: isHovered ? 1 : 0,
         }}

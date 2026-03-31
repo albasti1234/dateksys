@@ -108,7 +108,7 @@ const fadeUp = {
   },
 };
 
-function ArticleCard({ article, index }: { article: BlogArticle; index: number }) {
+function ArticleCard({ article, index, readMoreLabel }: { article: BlogArticle; index: number; readMoreLabel: string }) {
   const isFeatured = index === 0;
 
   return (
@@ -172,7 +172,7 @@ function ArticleCard({ article, index }: { article: BlogArticle; index: number }
           </p>
 
           <div className="mt-4 flex items-center gap-1.5 text-sm text-text-muted group-hover:text-accent transition-colors duration-300 font-body">
-            <span>Read article</span>
+            <span>{readMoreLabel}</span>
             <span className="inline-block group-hover:translate-x-1 rtl:group-hover:-translate-x-1 transition-transform duration-300">→</span>
           </div>
         </div>
@@ -218,7 +218,7 @@ export default function BlogPage() {
         variants={stagger}
       >
         {displayArticles.map((article, i) => (
-          <ArticleCard key={article.slug} article={article} index={i} />
+          <ArticleCard key={article.slug} article={article} index={i} readMoreLabel={t("read_more")} />
         ))}
       </motion.div>
     </section>

@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 
-export default function ScrollIndicator() {
+export default function ScrollIndicator({ label = "Scroll" }: { label?: string }) {
   return (
     <motion.div
       className="flex flex-col items-center gap-3"
@@ -18,7 +18,7 @@ export default function ScrollIndicator() {
         />
       </div>
       <span className="text-[10px] uppercase tracking-[0.3em] text-text-muted font-body">
-        Scroll
+        {label}
       </span>
     </motion.div>
   );

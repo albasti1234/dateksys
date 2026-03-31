@@ -25,7 +25,8 @@
     "cta_primary": "Get a Free Consultation",
     "cta_secondary": "See What We Do",
     "trusted_by": "Technologies We Work With",
-    "network_label": "Live Network Simulation"
+    "network_label": "Live Network Simulation",
+    "scroll_hint": "Scroll"
   },
   "trust_brands": {
     "label": "Technologies We Work With",
@@ -170,6 +171,10 @@
         "description": "We design with redundancy in mind. Every network, every server setup, every security system is built to stay operational — because your business depends on it."
       }
     ]
+  },
+  "testimonials": {
+    "label": "What We Believe",
+    "title": "In Our Words"
   },
   "cta_banner": {
     "label": "Ready to Start?",
@@ -437,6 +442,8 @@
       "sending": "Submitting..."
     },
     "apply_success": "Application submitted successfully! We'll review your CV and get back to you.",
+    "file_type_error": "PDF, DOC, DOCX only",
+    "file_size_error": "Max 5MB",
     "hero_images": {
       "desk": "Professional working at a modern desk",
       "fiber": "Technician splicing fiber optic cables",
@@ -500,7 +507,9 @@
         "service_min": "Please select a service type",
         "scope_min": "Project scope must be at least 10 characters",
         "budget_min": "Please select a budget range",
-        "timeline_min": "Please select a timeline"
+        "timeline_min": "Please select a timeline",
+        "file_type": "PDF, DOC, DOCX only",
+        "file_size": "Max 5MB"
       },
       "options": {
         "service": {
@@ -533,7 +542,7 @@
       "address": "Location",
       "address_val": "Amman, Jordan",
       "phone": "Phone",
-      "phone_val": "+962 XX XXX XXXX",
+      "phone_val": "+962 7 8010 4920",
       "email": "Email",
       "email_val": "info@dateksys.com",
       "hours": "Business Hours",

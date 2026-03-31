@@ -12,7 +12,6 @@ const CONTACT_EMAIL = process.env.CONTACT_EMAIL || "info@dateksys.com";
 
 export async function POST(request: Request) {
   try {
-    // ✅ Request size check
     if (!checkRequestSize(request, 10_000)) {
       return NextResponse.json(
         { error: "Request too large" },
@@ -20,9 +19,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // Rate limiting
     const ip = getClientIP(request);
-    const limiter = rateLimit(ip);
+    const limiter = await rateLimit(ip);
 
     if (!limiter.success) {
       return NextResponse.json(
@@ -33,7 +31,6 @@ export async function POST(request: Request) {
 
     const body = await request.json();
 
-    // ✅ Honeypot check
     if (isHoneypotTriggered(body)) {
       return NextResponse.json(
         { success: true, message: "Quote request received" },
@@ -41,7 +38,6 @@ export async function POST(request: Request) {
       );
     }
 
-    // Validation
     const result = quoteSchema.safeParse(body);
     if (!result.success) {
       return NextResponse.json(
@@ -69,8 +65,10 @@ export async function POST(request: Request) {
       const { Resend } = await import("resend");
       const resend = new Resend(process.env.RESEND_API_KEY);
 
-      await resend.emails.send({
-        from: `DatekSys Quotes <${process.env.FROM_EMAIL || "onboarding@resend.dev"}>`,
+      const fromEmail = process.env.FROM_EMAIL || "onboarding@resend.dev";
+
+      const emailResult = await resend.emails.send({
+        from: `DatekSys <${fromEmail}>`,
         to: [CONTACT_EMAIL],
         replyTo: data.contactEmail,
         subject: `Quote Request — ${data.companyName} (${data.serviceType})`,
@@ -98,14 +96,25 @@ export async function POST(request: Request) {
           </div>
         `,
       });
-    } else {
-      console.log("💰 Quote request (RESEND_API_KEY not set):", data);
-    }
 
-    return NextResponse.json(
-      { success: true, message: "Quote request received" },
-      { status: 200 }
-    );
+      if (emailResult.error) {
+        console.error("Resend error:", emailResult.error);
+        return NextResponse.json(
+          { error: `Email failed: ${emailResult.error.message}` },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.json(
+        { success: true, message: "Quote request received" },
+        { status: 200 }
+      );
+    } else {
+      return NextResponse.json(
+        { error: "Email service not configured" },
+        { status: 503 }
+      );
+    }
   } catch (error) {
     console.error("Quote API error:", error);
     return NextResponse.json(

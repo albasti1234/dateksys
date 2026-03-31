@@ -3,31 +3,35 @@
 // Rate limiting + Sanitization + Security headers
 // ============================================
 
-// --- Rate Limiter (In-Memory) ---
-// ⚠️ ملاحظة: على Serverless (Vercel) استخدم Upstash Redis بدل هاد
-// هاد بيشتغل على Node.js server عادي أو VPS
-const rateLimitMap = new Map<string, { count: number; lastReset: number }>();
-const RATE_LIMIT_WINDOW = 60 * 1000; // دقيقة وحدة
-const RATE_LIMIT_MAX = 5; // 5 طلبات بالدقيقة
+// --- Rate Limiter (Upstash Redis) ---
+// يشتغل على Vercel serverless + أي بيئة ثانية
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
-export function rateLimit(identifier: string): {
+const redis = process.env.UPSTASH_REDIS_REST_URL
+  ? new Redis({
+      url: process.env.UPSTASH_REDIS_REST_URL,
+      token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+    })
+  : null;
+
+const rateLimiter = redis
+  ? new Ratelimit({
+      redis,
+      limiter: Ratelimit.slidingWindow(5, "60 s"), // 5 requests per minute
+    })
+  : null;
+
+export async function rateLimit(identifier: string): Promise<{
   success: boolean;
   remaining: number;
-} {
-  const now = Date.now();
-  const record = rateLimitMap.get(identifier);
-
-  if (!record || now - record.lastReset > RATE_LIMIT_WINDOW) {
-    rateLimitMap.set(identifier, { count: 1, lastReset: now });
-    return { success: true, remaining: RATE_LIMIT_MAX - 1 };
+}> {
+  if (!rateLimiter) {
+    // Fallback: allow all if Redis not configured
+    return { success: true, remaining: 5 };
   }
-
-  if (record.count >= RATE_LIMIT_MAX) {
-    return { success: false, remaining: 0 };
-  }
-
-  record.count++;
-  return { success: true, remaining: RATE_LIMIT_MAX - record.count };
+  const result = await rateLimiter.limit(identifier);
+  return { success: result.success, remaining: result.remaining };
 }
 
 // --- Sanitize Input ---

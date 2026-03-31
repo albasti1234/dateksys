@@ -449,7 +449,7 @@ export default function Hero() {
           </div>
         </motion.div>
 
-        <ScrollIndicator />
+        <ScrollIndicator label={t("scroll_hint")} />
       </div>
 
       {/* Bottom fade */}

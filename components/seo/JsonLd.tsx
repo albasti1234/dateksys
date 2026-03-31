@@ -26,7 +26,7 @@ export function OrganizationJsonLd() {
     },
     sameAs: [
       "https://linkedin.com/company/dateksys",
-      "https://instagram.com/dateksys.com",
+      "https://instagram.com/dateksys",
     ],
   };
 
@@ -145,11 +145,6 @@ export function WebSiteJsonLd() {
     name: "DatekSys",
     url: "https://dateksys.com",
     inLanguage: ["en", "ar"],
-    potentialAction: {
-      "@type": "SearchAction",
-      target: "https://dateksys.com/search?q={search_term_string}",
-      "query-input": "required name=search_term_string",
-    },
   };
 
   return (

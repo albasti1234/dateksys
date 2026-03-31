@@ -46,7 +46,7 @@ const cardVariant = {
   },
 };
 
-export default function WhyNetcore() {
+export default function WhyDatekSys() {
   const t = useTranslations("why_us");
   const items = t.raw("items") as ValueItem[];
 

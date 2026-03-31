@@ -16,6 +16,7 @@ const pages = [
   { path: "/pricing", priority: 0.7, changeFrequency: "monthly" as const },
   { path: "/faq", priority: 0.5, changeFrequency: "monthly" as const },
   { path: "/careers", priority: 0.4, changeFrequency: "monthly" as const },
+  { path: "/blog", priority: 0.6, changeFrequency: "weekly" as const },
 ];
 
 const locales = ["en", "ar"];

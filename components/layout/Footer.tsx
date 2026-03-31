@@ -116,7 +116,7 @@ export default function Footer() {
           {/* Col 1 — Brand */}
           <motion.div variants={fadeUp} className="col-span-2 md:col-span-1">
             <span className="text-xl font-display font-bold text-white">
-              Net<span className="text-[var(--accent-primary)]">core</span>
+              Datek<span className="text-[var(--accent-primary)]">Sys</span>
             </span>
             <p className="mt-4 text-sm text-[var(--text-tertiary)] leading-relaxed max-w-xs">
               {t("description")}

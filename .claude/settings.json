@@ -25,7 +25,12 @@
       "Bash(pnpm setup:*)",
       "Bash(export PNPM_HOME=\"$HOME/AppData/Local/pnpm\")",
       "Bash(export PATH=\"$PNPM_HOME:$PATH\")",
-      "Bash(vercel --version)"
+      "Bash(vercel --version)",
+      "Bash(xargs -0 ls)",
+      "Bash(find /e/netcore/components -name \"*.tsx\" -exec grep -l \"Enterprise\\\\|Network\\\\|Security\\\\|Software\" {})",
+      "Bash(grep -r \"dateksys\\\\|DATEKSYS\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
+      "Bash(grep -r \"info@dateksys\\\\|/967\\\\|+967\\\\|plus_966\\\\|966 \" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
+      "Bash(grep -r \"TODO\\\\|FIXME\\\\|HACK\\\\|BUG\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)"
     ],
     "additionalDirectories": [
       "e:\\netcore\\node_modules"
