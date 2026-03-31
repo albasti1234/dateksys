@@ -17,7 +17,15 @@
       "Bash(pnpm install:*)",
       "Bash(CI=true pnpm install)",
       "Bash(node compress-images.mjs)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" -X POST http://localhost:3000/api/contact -F \"name=test\" -F \"email=test@test.com\" -F \"reason=general\" -F \"subject=test\" -F \"message=hello world test message\" -F \"honeypot=\")",
+      "Bash(curl -s -w \"\\\\n%{http_code}\" -X POST http://localhost:3000/api/contact -F \"name=test\" -F \"email=test@test.com\" -F \"reason=general\" -F \"subject=test\" -F \"message=hello world test message\" -F \"honeypot=\" -L)",
+      "Bash(curl -s -w \"\\\\n%{http_code}\" -X POST http://localhost:3000/api/contact -F \"name=test\" -F \"email=test@test.com\" -F \"reason=general\" -F \"subject=test\" -F \"message=hello world test message\" -F \"honeypot=\")",
+      "Bash(pnpm add:*)",
+      "Bash(pnpm setup:*)",
+      "Bash(export PNPM_HOME=\"$HOME/AppData/Local/pnpm\")",
+      "Bash(export PATH=\"$PNPM_HOME:$PATH\")",
+      "Bash(vercel --version)"
     ],
     "additionalDirectories": [
       "e:\\netcore\\node_modules"

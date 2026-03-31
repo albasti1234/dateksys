@@ -92,8 +92,10 @@ export async function POST(request: Request) {
       const { Resend } = await import("resend");
       const resend = new Resend(process.env.RESEND_API_KEY);
 
-      await resend.emails.send({
-        from: `DatekSys Contact <${process.env.FROM_EMAIL || "onboarding@resend.dev"}>`,
+      const fromEmail = process.env.FROM_EMAIL || "onboarding@resend.dev";
+
+      const result = await resend.emails.send({
+        from: `DatekSys <${fromEmail}>`,
         to: [CONTACT_EMAIL],
         replyTo: data.email,
         subject: `[${data.reason}] ${data.subject}`,
@@ -116,17 +118,26 @@ export async function POST(request: Request) {
           </div>
         `,
       });
-    } else {
-      console.log("📧 Contact form submission (RESEND_API_KEY not set):", data);
-      if (attachmentData.length > 0) {
-        console.log("📎 Attachment:", attachmentData[0].filename);
-      }
-    }
 
-    return NextResponse.json(
-      { success: true, message: "Message sent successfully" },
-      { status: 200 }
-    );
+      if (result.error) {
+        console.error("Resend error:", result.error);
+        return NextResponse.json(
+          { error: `Email failed: ${result.error.message}` },
+          { status: 500 }
+        );
+      }
+
+      return NextResponse.json(
+        { success: true, message: "Message sent successfully" },
+        { status: 200 }
+      );
+    } else {
+      console.log("📧 RESEND_API_KEY not set. Data:", data);
+      return NextResponse.json(
+        { error: "Email service not configured (RESEND_API_KEY missing)" },
+        { status: 500 }
+      );
+    }
   } catch (error) {
     console.error("Contact API error:", error);
     return NextResponse.json(
