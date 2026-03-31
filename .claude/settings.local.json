@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall:*)",
+      "Bash(find e:/netcore/app/[locale] -name page.tsx)",
+      "Bash(python3 -c \":*)",
+      "Bash(node -e \"const d=require\\(''e:/netcore/messages/en.json''\\); console.log\\(JSON.stringify\\(d.projects, null,2\\)\\)\")",
+      "Bash(node -e \"const d=require\\(''e:/netcore/messages/en.json''\\); const keys=Object.keys\\(d\\); console.log\\(''namespaces:'', keys.join\\('', ''\\)\\); console.log\\(''projects keys:'', Object.keys\\(d.projects\\)\\)\")",
+      "Bash(node -e \":*)"
+    ]
+  }
+}

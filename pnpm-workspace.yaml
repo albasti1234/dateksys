@@ -1,0 +1,5 @@
+onlyBuiltDependencies:
+  - "@swc/core"
+  - "sharp"
+  - "unrs-resolver"
+  - "@parcel/watcher"

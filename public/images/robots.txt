@@ -1,0 +1,15 @@
+# ============================================
+# DatekSys — Robots.txt
+# ============================================
+
+User-agent: *
+Allow: /
+
+# Block API routes
+Disallow: /api/
+
+# Block Next.js internal
+Disallow: /_next/
+
+# Sitemap
+Sitemap: https://dateksys.com/sitemap.xml

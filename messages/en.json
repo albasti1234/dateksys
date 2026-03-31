@@ -1,0 +1,654 @@
+{
+  "meta": {
+    "title": "DatekSys — Enterprise IT Infrastructure & Software Solutions",
+    "description": "Enterprise-grade networking, data center solutions, security systems, and custom software development. Built on 12+ years of field experience in fiber deployment and network infrastructure."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "projects": "Our Work",
+    "about": "About",
+    "contact": "Contact",
+    "blog": "Blog",
+    "pricing": "Pricing",
+    "faq": "FAQ",
+    "careers": "Careers",
+    "cta": "Get a Free Consultation"
+  },
+  "hero": {
+    "badge": "Enterprise IT Infrastructure Partner",
+    "title_line1": "Infrastructure Built",
+    "title_line2": "To Never Go Down",
+    "description": "We design, deploy, and manage enterprise-grade networks, data centers, security systems, and custom software — backed by 12+ years of hands-on field experience.",
+    "description_highlight1": "enterprise-grade networks",
+    "description_highlight2": "12+ years of hands-on field experience",
+    "cta_primary": "Get a Free Consultation",
+    "cta_secondary": "See What We Do",
+    "trusted_by": "Technologies We Work With",
+    "network_label": "Live Network Simulation"
+  },
+  "trust_brands": {
+    "label": "Technologies We Work With",
+    "items": [
+      "Cisco",
+      "Ubiquiti",
+      "MikroTik",
+      "Huawei OLT",
+      "Fortinet"
+    ]
+  },
+  "stats": {
+    "uptime": "Uptime Guarantee",
+    "support": "Support Availability",
+    "experience": "Years Field Experience",
+    "response": "Hour Response Time"
+  },
+  "services": {
+    "label": "What We Do",
+    "title": "End-to-End IT Solutions",
+    "subtitle": "From fiber deployment to custom software — we handle the full technology stack so you can focus on growing your business.",
+    "learn_more": "Learn more",
+    "view_all": "Explore All Services",
+    "categories": {
+      "infrastructure": {
+        "label": "Infrastructure & Networking",
+        "title": "Network Infrastructure",
+        "description": "Complete enterprise networking solutions — from structured cabling and fiber optic deployment to core switching, wireless coverage, and SD-WAN connectivity. We build networks that scale.",
+        "capabilities": [
+          "LAN/WAN Design & Deployment",
+          "Fiber Optic & GPON/OLT Installation",
+          "Wireless Network Solutions (UniFi, Cisco)",
+          "Structured Cabling (Cat6/Cat6A/Fiber)",
+          "Network Monitoring & Optimization",
+          "Data Center Design & Build"
+        ]
+      },
+      "security": {
+        "label": "Security & Protection",
+        "title": "Security Systems",
+        "description": "Comprehensive physical and digital security — CCTV surveillance, biometric access control, fire alarm systems, and network security solutions that keep your premises and data safe.",
+        "capabilities": [
+          "IP & Analog CCTV Surveillance",
+          "Biometric & Access Control Systems",
+          "Fire Detection & Alarm Systems",
+          "Intrusion Detection Systems",
+          "Network Firewall & Security",
+          "24/7 Remote Monitoring Setup"
+        ]
+      },
+      "software": {
+        "label": "Software & Development",
+        "title": "Software & Web Development",
+        "description": "Custom websites, web applications, business platforms, and enterprise software — built with modern technologies like React, Next.js, and Node.js. From corporate websites to complex SaaS products, we deliver fast, responsive, and SEO-optimized digital experiences.",
+        "capabilities": [
+          "Corporate & Business Websites",
+          "E-Commerce Platforms",
+          "Web Applications (SaaS)",
+          "Landing Pages & Marketing Sites",
+          "Business Management Platforms",
+          "API Development & Integration"
+        ]
+      }
+    },
+    "items": {
+      "network": {
+        "title": "Network Infrastructure",
+        "description": "Enterprise-grade network design, fiber optic deployment, and LAN/WAN architecture — built to scale with your business."
+      },
+      "server": {
+        "title": "Server & Data Center",
+        "description": "High-performance server deployment, rack setup, and data center build-out for maximum uptime and reliability."
+      },
+      "security": {
+        "title": "Security Systems",
+        "description": "CCTV surveillance, biometric access control, fire alarms, and network security — comprehensive protection for your premises."
+      },
+      "erp": {
+        "title": "Business Platforms",
+        "description": "Custom business management systems that streamline your operations — from inventory to finance to HR."
+      },
+      "software": {
+        "title": "Websites & Web Apps",
+        "description": "Custom-designed websites and web applications — from corporate sites to full-scale platforms. Built with React, Next.js, and modern technologies for speed and SEO."
+      },
+      "cloud": {
+        "title": "IT Consulting",
+        "description": "Strategic technology consulting to help you make informed decisions about your IT infrastructure and digital transformation."
+      }
+    }
+  },
+  "process": {
+    "label": "How We Work",
+    "title": "From Concept to Completion",
+    "subtitle": "Every project follows a proven methodology that ensures quality delivery, clear communication, and zero surprises.",
+    "steps": [
+      {
+        "number": "01",
+        "title": "Discovery & Assessment",
+        "description": "We start by understanding your business, challenges, and goals. We conduct site surveys, assess existing infrastructure, and identify the optimal solution for your needs."
+      },
+      {
+        "number": "02",
+        "title": "Planning & Design",
+        "description": "Our team creates detailed technical designs, network diagrams, and project timelines. You see exactly what will be built before any work begins."
+      },
+      {
+        "number": "03",
+        "title": "Implementation",
+        "description": "We deploy with precision — structured cabling, equipment installation, software development, and system configuration. Minimal disruption to your operations."
+      },
+      {
+        "number": "04",
+        "title": "Testing & Handover",
+        "description": "Rigorous testing, documentation, and training. We hand over a fully operational system with complete documentation and ensure your team is confident using it."
+      },
+      {
+        "number": "05",
+        "title": "Ongoing Support",
+        "description": "Our relationship doesn't end at delivery. We provide monitoring, maintenance, and rapid response support to keep everything running at peak performance."
+      }
+    ]
+  },
+  "why_us": {
+    "label": "Why DatekSys",
+    "title": "What Sets Us Apart",
+    "items": [
+      {
+        "title": "Field-Tested Expertise",
+        "description": "Our foundation is 12+ years of hands-on experience in fiber deployment, OLT management, and network infrastructure. We don't just plan — we've physically built and maintained hundreds of network sites."
+      },
+      {
+        "title": "End-to-End Delivery",
+        "description": "From the physical cable in the ground to the software on your screen — we handle the full stack. No subcontractors, no finger-pointing, one team responsible for everything."
+      },
+      {
+        "title": "Certified & Current",
+        "description": "FOA certified, experienced with Cisco, Ubiquiti, and GPON/OLT platforms. We invest in staying current with evolving technologies so your infrastructure never falls behind."
+      },
+      {
+        "title": "Built for Uptime",
+        "description": "We design with redundancy in mind. Every network, every server setup, every security system is built to stay operational — because your business depends on it."
+      }
+    ]
+  },
+  "cta_banner": {
+    "label": "Ready to Start?",
+    "title": "Let's Build Something Reliable",
+    "description": "Whether you need a complete network overhaul, a security system installation, or a custom software platform — we're ready to help.",
+    "cta_primary": "Schedule a Free Consultation",
+    "cta_secondary": "Explore Our Services"
+  },
+  "about": {
+    "label": "About DatekSys",
+    "title": "Built on Real-World\nExperience",
+    "sub": "DatekSys was founded in 2026 with a clear mission: deliver enterprise-grade IT solutions backed by over a decade of hands-on field experience.",
+    "body": "Before DatekSys became a company, it was years of real work — deploying fiber networks, configuring OLTs, building sites from the ground up, and solving infrastructure problems that don't have textbook answers. That field experience is what drives everything we do today. We don't sell theory. We build systems that work, because we've spent years building them with our own hands.",
+    "valuesLabel": "What We Stand For",
+    "values": [
+      {
+        "title": "Reliability Over Everything",
+        "desc": "We design systems that stay up. Redundancy, proper cable management, tested configurations — every detail matters because downtime costs money."
+      },
+      {
+        "title": "Honesty & Transparency",
+        "desc": "We tell you what you need, not what's most expensive. If a simpler solution works — we'll recommend it. Our reputation is built on trust, not upselling."
+      },
+      {
+        "title": "End-to-End Ownership",
+        "desc": "We don't hand off half-finished work. From the first site survey to ongoing support — one team, one point of contact, full accountability."
+      }
+    ],
+    "credentials": {
+      "label": "Credentials & Expertise",
+      "items": [
+        {
+          "title": "FOA Certified",
+          "description": "Fiber Optic Association certified — internationally recognized standard for fiber optic installation and testing."
+        },
+        {
+          "title": "Cisco Experienced",
+          "description": "Extensive hands-on experience with Cisco enterprise networking equipment, routing, and switching platforms."
+        },
+        {
+          "title": "GPON/OLT Specialist",
+          "description": "Deep expertise in passive optical network deployment, OLT configuration, and fiber-to-the-home rollouts."
+        },
+        {
+          "title": "Ubiquiti/UniFi Pro",
+          "description": "Proven deployment experience with Ubiquiti enterprise wireless, switching, and security gateway solutions."
+        }
+      ]
+    },
+    "stats": [
+      {
+        "value": "99.9",
+        "label": "Uptime Guarantee",
+        "suffix": "%"
+      },
+      {
+        "value": "24",
+        "label": "Support Availability",
+        "suffix": "/7"
+      },
+      {
+        "value": "12",
+        "label": "Years Field Experience",
+        "suffix": "+"
+      },
+      {
+        "value": "2",
+        "label": "Hour Response Time",
+        "suffix": "hr"
+      }
+    ]
+  },
+  "capabilities": {
+    "label": "Our Work",
+    "title": "What We Deliver",
+    "sub": "Enterprise-grade solutions designed, deployed, and managed with precision.",
+    "items": [
+      {
+        "type": "Network Infrastructure",
+        "title": "Enterprise Network Design & Deployment",
+        "desc": "Complete LAN/WAN network architecture — from structured cabling and fiber backbone to core switching, access layers, and full wireless coverage for campuses and offices.",
+        "tech": "Cisco · Ubiquiti · MikroTik · Fiber Optic",
+        "color": "blue",
+        "metrics": [
+          "Fiber Deployment",
+          "OLT Configuration",
+          "Campus Networks",
+          "Point-to-Point Links"
+        ],
+        "image": "/images/projects/network.webp"
+      },
+      {
+        "type": "Data Center",
+        "title": "Data Center Design & Build-Out",
+        "desc": "Full data center lifecycle — from room preparation and rack deployment to server installation, cable management, cooling, and power redundancy planning.",
+        "tech": "Server Racks · UPS Systems · Structured Cabling",
+        "color": "cyan",
+        "metrics": [
+          "Rack & Stack",
+          "Power Planning",
+          "Cable Management",
+          "Cooling Design"
+        ],
+        "image": "/images/projects/datacenter.webp"
+      },
+      {
+        "type": "Security Systems",
+        "title": "Physical Security & Surveillance",
+        "desc": "End-to-end security system deployment — IP cameras, NVR/DVR systems, biometric access control, fire detection, and centralized monitoring dashboards.",
+        "tech": "Hikvision · Dahua · ZKTeco · Notifier",
+        "color": "purple",
+        "metrics": [
+          "CCTV Installation",
+          "Access Control",
+          "Fire Alarm Systems",
+          "Remote Monitoring"
+        ],
+        "image": "/images/projects/security.webp"
+      },
+      {
+        "type": "Software",
+        "title": "Custom Web & Business Applications",
+        "desc": "Modern web applications and business management platforms built with cutting-edge technologies — designed to automate workflows and scale with your business.",
+        "tech": "React · Next.js · Node.js · PostgreSQL",
+        "color": "green",
+        "metrics": [
+          "Web Applications",
+          "Business Platforms",
+          "API Integration",
+          "Database Design"
+        ],
+        "image": "/images/projects/software.webp"
+      },
+      {
+        "type": "Web Development",
+        "title": "Professional Websites & Web Applications",
+        "desc": "Custom-designed, high-performance websites and web applications — from corporate sites and landing pages to full-scale e-commerce platforms and SaaS products. Built with modern frameworks for speed, SEO, and scalability.",
+        "tech": "React · Next.js · TypeScript · Tailwind CSS",
+        "metrics": [
+          "Custom Design",
+          "SEO Optimized",
+          "Mobile-First",
+          "Fast Loading"
+        ],
+        "color": "cyan",
+        "image": "/images/projects/software.webp"
+      }
+    ]
+  },
+  "faq": {
+    "label": "FAQ",
+    "title": "Frequently Asked Questions",
+    "still_have_questions": "Still have questions?",
+    "contact_cta": "Contact Us",
+    "items": [
+      {
+        "question": "What areas does DatekSys serve?",
+        "answer": "We serve clients globally, with on-site capabilities in Jordan and remote project management worldwide. For infrastructure projects requiring physical presence, we deploy our team to your location."
+      },
+      {
+        "question": "How long does a typical network deployment take?",
+        "answer": "It depends on the scope. A small office network can be deployed in 1-2 weeks. A campus or multi-building deployment typically takes 4-12 weeks including design, cabling, and configuration."
+      },
+      {
+        "question": "Do you provide ongoing support after project completion?",
+        "answer": "Yes. We offer flexible support plans including 24/7 monitoring, scheduled maintenance, and rapid response for critical issues. Our goal is to keep your systems running at peak performance long after deployment."
+      },
+      {
+        "question": "Can you work with our existing equipment and infrastructure?",
+        "answer": "Absolutely. We assess your current setup and build on what works. We're experienced with multi-vendor environments and can integrate new solutions with your existing infrastructure."
+      },
+      {
+        "question": "What certifications does your team hold?",
+        "answer": "Our team is FOA (Fiber Optic Association) certified with extensive hands-on experience in Cisco enterprise networking, Ubiquiti/UniFi, and GPON/OLT fiber platforms."
+      },
+      {
+        "question": "Do you handle both the physical infrastructure and software?",
+        "answer": "Yes — that's what makes us different. We handle everything from the physical cable in the ground to the software on your screen. One team, end-to-end delivery."
+      }
+    ]
+  },
+  "pricing": {
+    "label": "Pricing",
+    "title": "Transparent & Flexible",
+    "subtitle": "Every project is unique. We provide custom quotes based on your specific requirements — no hidden fees, no surprises.",
+    "most_popular": "Most Popular",
+    "cta": "Request a Custom Quote",
+    "tiers": [
+      {
+        "name": "Essential",
+        "description": "For small businesses and startups needing foundational IT infrastructure.",
+        "features": [
+          "Network assessment & design",
+          "Basic structured cabling",
+          "Wireless network setup",
+          "Security camera installation",
+          "3-month support included"
+        ],
+        "cta": "Get a Quote"
+      },
+      {
+        "name": "Professional",
+        "description": "For growing businesses that need robust, scalable infrastructure.",
+        "features": [
+          "Everything in Essential",
+          "Fiber optic deployment",
+          "Server & rack setup",
+          "Access control & fire systems",
+          "Custom web application",
+          "6-month support included"
+        ],
+        "cta": "Get a Quote",
+        "popular": true
+      },
+      {
+        "name": "Enterprise",
+        "description": "For organizations requiring full-scale infrastructure and software solutions.",
+        "features": [
+          "Everything in Professional",
+          "Complete data center build-out",
+          "Multi-site network architecture",
+          "Enterprise software platform",
+          "24/7 monitoring & support",
+          "Dedicated account manager"
+        ],
+        "cta": "Contact Us"
+      }
+    ]
+  },
+  "blog": {
+    "label": "Insights",
+    "title": "Latest from Our Blog",
+    "subtitle": "Technical guides, industry insights, and practical advice from our team.",
+    "read_more": "Read article",
+    "view_all": "View All Articles"
+  },
+  "careers": {
+    "label": "Careers",
+    "title": "Join Our Team",
+    "subtitle": "We're building something new and looking for talented people who want to grow with us.",
+    "no_openings": "No open positions right now — but we're always interested in meeting talented people.",
+    "spontaneous": "Send us your CV",
+    "spontaneous_desc": "Think you'd be a great fit? Send us your resume and tell us what you're passionate about.",
+    "cta": "Send Your CV",
+    "why_join": "Why Join DatekSys",
+    "why_items": [
+      {
+        "title": "Real Impact",
+        "desc": "Work on projects that matter — from building networks to developing software that businesses depend on."
+      },
+      {
+        "title": "Grow With Us",
+        "desc": "We're a new company — your contributions shape the culture, the products, and the future."
+      },
+      {
+        "title": "Hands-On Work",
+        "desc": "No bureaucracy. You deploy, configure, and build — not just plan and delegate."
+      }
+    ]
+  },
+  "contact": {
+    "label": "Get in Touch",
+    "title": "Let's Talk",
+    "sub": "Have a project in mind or want to explore how we can help? Reach out — we respond within 2 hours during business days.",
+    "form": {
+      "generalBtn": "General Inquiry",
+      "quoteBtn": "Request a Quote",
+      "fields": {
+        "name": "Full Name",
+        "email": "Email Address",
+        "phone": "Phone Number (optional)",
+        "subject": "Subject",
+        "message": "Your Message",
+        "company": "Company Name",
+        "scope": "Project Scope",
+        "details": "Tell us about your project",
+        "submit": "Send Message",
+        "quote_submit": "Submit Quote Request",
+        "sending": "Sending..."
+      },
+      "validation": {
+        "name_min": "Name must be at least 2 characters",
+        "email_invalid": "Please enter a valid email address",
+        "phone_invalid": "Please enter a valid phone number",
+        "subject_min": "Subject must be at least 2 characters",
+        "message_min": "Message must be at least 10 characters",
+        "company_min": "Company name must be at least 2 characters",
+        "service_min": "Please select a service type",
+        "scope_min": "Project scope must be at least 10 characters",
+        "budget_min": "Please select a budget range",
+        "timeline_min": "Please select a timeline"
+      },
+      "options": {
+        "service": {
+          "placeholder": "Select Service Type",
+          "infrastructure": "Network & Infrastructure",
+          "security": "Security Systems",
+          "software": "Software Development",
+          "consulting": "IT Consulting",
+          "other": "Other"
+        },
+        "budget": {
+          "placeholder": "Select Budget Range",
+          "under_5k": "Under $5,000",
+          "5k_15k": "$5,000 – $15,000",
+          "15k_50k": "$15,000 – $50,000",
+          "50k_plus": "$50,000+",
+          "not_sure": "Not sure yet"
+        },
+        "timeline": {
+          "placeholder": "Select Timeline",
+          "urgent": "Urgent (ASAP)",
+          "1_3_months": "1–3 Months",
+          "3_6_months": "3–6 Months",
+          "flexible": "Flexible"
+        }
+      }
+    },
+    "info": {
+      "label": "Contact Information",
+      "address": "Location",
+      "address_val": "Amman, Jordan",
+      "phone": "Phone",
+      "phone_val": "+962 XX XXX XXXX",
+      "email": "Email",
+      "email_val": "info@dateksys.com",
+      "hours": "Business Hours",
+      "hours_val": "Sun – Thu, 9:00 AM – 6:00 PM",
+      "response": "Average Response",
+      "response_val": "Within 2 hours"
+    }
+  },
+  "footer": {
+    "description": "Enterprise IT infrastructure, security systems, and custom software — built on 12+ years of field experience.",
+    "cta_label": "Let's Work Together",
+    "cta_title": "Ready to Start?",
+    "cta_button": "Get in Touch",
+    "services_title": "Services",
+    "services": {
+      "networking": "Network Infrastructure",
+      "servers": "Security Systems",
+      "erp": "Business Platforms",
+      "software": "Software Development"
+    },
+    "company_title": "Company",
+    "company": {
+      "about": "About Us",
+      "projects": "Our Work",
+      "careers": "Careers",
+      "contact": "Contact"
+    },
+    "resources_title": "Resources",
+    "resources": {
+      "blog": "Blog",
+      "faq": "FAQ",
+      "pricing": "Pricing"
+    },
+    "contact_title": "Contact",
+    "address": "Amman, Jordan",
+    "rights": "All rights reserved.",
+    "made_with": "Crafted with precision"
+  },
+  "projects": {
+    "label": "Our Work",
+    "title": "What We Deliver",
+    "sub": "Enterprise-grade solutions designed, deployed, and managed with precision.",
+    "items": [
+      {
+        "type": "Network Infrastructure",
+        "title": "Enterprise Network Design & Deployment",
+        "desc": "Complete LAN/WAN network architecture — from structured cabling and fiber backbone to core switching, access layers, and full wireless coverage for campuses and offices.",
+        "tech": "Cisco · Ubiquiti · MikroTik · Fiber Optic",
+        "color": "blue",
+        "metrics": [
+          "Fiber Deployment",
+          "OLT Configuration",
+          "Campus Networks",
+          "Point-to-Point Links"
+        ],
+        "image": "/images/projects/network.webp"
+      },
+      {
+        "type": "Data Center",
+        "title": "Data Center Design & Build-Out",
+        "desc": "Full data center lifecycle — from room preparation and rack deployment to server installation, cable management, cooling, and power redundancy planning.",
+        "tech": "Server Racks · UPS Systems · Structured Cabling",
+        "color": "cyan",
+        "metrics": [
+          "Rack & Stack",
+          "Power Planning",
+          "Cable Management",
+          "Cooling Design"
+        ],
+        "image": "/images/projects/datacenter.webp"
+      },
+      {
+        "type": "Security Systems",
+        "title": "Physical Security & Surveillance",
+        "desc": "End-to-end security system deployment — IP cameras, NVR/DVR systems, biometric access control, fire detection, and centralized monitoring dashboards.",
+        "tech": "Hikvision · Dahua · ZKTeco · Notifier",
+        "color": "purple",
+        "metrics": [
+          "CCTV Installation",
+          "Access Control",
+          "Fire Alarm Systems",
+          "Remote Monitoring"
+        ],
+        "image": "/images/projects/security.webp"
+      },
+      {
+        "type": "Software",
+        "title": "Custom Web & Business Applications",
+        "desc": "Modern web applications and business management platforms built with cutting-edge technologies — designed to automate workflows and scale with your business.",
+        "tech": "React · Next.js · Node.js · PostgreSQL",
+        "color": "green",
+        "metrics": [
+          "Web Applications",
+          "Business Platforms",
+          "API Integration",
+          "Database Design"
+        ],
+        "image": "/images/projects/software.webp"
+      },
+      {
+        "type": "Web Development",
+        "title": "Professional Websites & Web Applications",
+        "desc": "Custom-designed, high-performance websites and web applications — from corporate sites and landing pages to full-scale e-commerce platforms and SaaS products. Built with modern frameworks for speed, SEO, and scalability.",
+        "tech": "React · Next.js · TypeScript · Tailwind CSS",
+        "metrics": [
+          "Custom Design",
+          "SEO Optimized",
+          "Mobile-First",
+          "Fast Loading"
+        ],
+        "color": "cyan",
+        "image": "/images/projects/software.webp"
+      }
+    ]
+  },
+  "servicesOverview": {
+    "label": "What We Do",
+    "title": "Full-Spectrum IT Solutions",
+    "items": [
+      {
+        "icon": "network",
+        "title": "Network Infrastructure",
+        "sub": "Enterprise Networking",
+        "desc": "We design, deploy, and manage enterprise-grade LAN/WAN networks, wireless infrastructure, and fiber optic solutions. From campus networks to distributed branch connectivity — we build the backbone your operations depend on."
+      },
+      {
+        "icon": "zap",
+        "title": "Security Systems",
+        "sub": "Physical & Digital Security",
+        "desc": "Comprehensive security solutions covering CCTV surveillance, biometric access control, fire detection systems, and network security. We help you protect your premises and data against modern threats."
+      },
+      {
+        "icon": "server",
+        "title": "Server & Data Center",
+        "sub": "Infrastructure & Setup",
+        "desc": "High-availability server environments, rack deployment, storage solutions, and full data center lifecycle management from planning to operations."
+      },
+      {
+        "icon": "code",
+        "title": "Software Development",
+        "sub": "Custom Applications",
+        "desc": "Bespoke web applications, enterprise portals, mobile-responsive platforms, and API integrations — built with modern tech stacks tailored to your business logic and workflows."
+      },
+      {
+        "icon": "layout",
+        "title": "Business Platforms",
+        "sub": "Process Automation",
+        "desc": "End-to-end business management systems — streamline finance, HR, inventory, and operations into a unified platform your teams will actually use."
+      },
+      {
+        "icon": "globe",
+        "title": "IT Consulting",
+        "sub": "Strategic Technology Advisory",
+        "desc": "Strategic technology consulting to help you make informed decisions about your IT infrastructure, digital transformation, and technology investments."
+      }
+    ]
+  }
+}

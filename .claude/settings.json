@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -e \":*)",
+      "Bash(npm -v)",
+      "Bash(NODE_OPTIONS=--openssl-legacy-provider npm install)",
+      "Bash(cmd //c \"rmdir /s /q E:\\\\netcore\\\\node_modules\")",
+      "Bash(echo \"Exit: $?\")",
+      "Bash(npm cache:*)",
+      "Bash(npm install:*)",
+      "Bash(npm config:*)",
+      "Bash(ls -la /e/netcore/app/[locale]/projects/)",
+      "Bash(find /e/netcore/lib -type f -name *.ts -o -name *.tsx)",
+      "Bash(grep -c \"export\\\\|function\\\\|const\" /e/netcore/components/**/*.tsx)",
+      "Bash(pnpm exec:*)",
+      "Bash(ls node_modules/.pnpm/sharp*/node_modules/sharp/lib/index.js)",
+      "Bash(pnpm install:*)",
+      "Bash(CI=true pnpm install)",
+      "Bash(node compress-images.mjs)",
+      "Bash(npx next:*)"
+    ],
+    "additionalDirectories": [
+      "e:\\netcore\\node_modules"
+    ]
+  }
+}
