@@ -551,15 +551,17 @@ export default function Hero() {
         >
           {/* Background glow */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none"
             style={{
               background:
-                "radial-gradient(circle, rgba(56,189,248,0.08) 0%, rgba(56,189,248,0.02) 50%, transparent 70%)",
+                "radial-gradient(circle, rgba(56,189,248,0.06) 0%, rgba(56,189,248,0.01) 50%, transparent 70%)",
               filter: "blur(40px)",
             }}
           />
 
-          <FiberOpticVisual />
+          <div className="w-[90%] max-w-[560px]">
+            <FiberOpticVisual />
+          </div>
 
           {/* Label */}
           <motion.div

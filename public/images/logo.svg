@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 120" fill="none">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 100" fill="none">
   <defs>
     <!-- Fiber optic glow gradient -->
     <linearGradient id="fiber-glow" x1="0" y1="0" x2="1" y2="1">
@@ -87,28 +87,15 @@
   </g>
 
   <!-- ═══ WORDMARK: DATEKSYS ═══ -->
-  <g transform="translate(120, 0)">
-    <!-- Main brand name -->
+  <g transform="translate(115, 0)">
     <text
       x="0"
-      y="62"
+      y="58"
       font-family="'Space Grotesk', 'Inter', system-ui, sans-serif"
       font-weight="700"
-      font-size="52"
+      font-size="48"
       letter-spacing="-0.02em"
       fill="#F4F4F5"
     >DATEK<tspan fill="url(#fiber-glow)">SYS</tspan></text>
-
-    <!-- Tagline -->
-    <text
-      x="2"
-      y="88"
-      font-family="'DM Sans', 'Inter', system-ui, sans-serif"
-      font-weight="400"
-      font-size="13"
-      letter-spacing="0.28em"
-      fill="#A1A1AA"
-      text-transform="uppercase"
-    >IT INFRASTRUCTURE &amp; FIBER OPTICS</text>
   </g>
 </svg>

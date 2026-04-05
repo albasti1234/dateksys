@@ -34,7 +34,8 @@
       "Bash(git add:*)",
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
-      "Bash(ls -la /e/netcore/public/images/logo*)"
+      "Bash(ls -la /e/netcore/public/images/logo*)",
+      "Bash(ls /e/netcore/app/favicon* /e/netcore/public/favicon*)"
     ],
     "additionalDirectories": [
       "e:\\netcore\\node_modules"
