@@ -165,9 +165,9 @@ export default function Hero() {
 
           {/* Headline */}
           <h1
-            className="font-heading font-bold"
+            className="font-heading font-extrabold"
             style={{
-              fontSize: "clamp(2.75rem, 5.5vw, 6rem)",
+              fontSize: "clamp(3.2rem, 6.5vw, 7rem)",
               letterSpacing: "-0.03em",
               lineHeight: 1.05,
             }}
@@ -178,7 +178,7 @@ export default function Hero() {
               delay={0.3}
               style={{
                 color: "#FFFFFF",
-                textShadow: "0 0 60px rgba(255,255,255,0.12)",
+                textShadow: "0 0 80px rgba(255,255,255,0.15)",
               }}
             />
             <RevealText
@@ -187,21 +187,22 @@ export default function Hero() {
               delay={0.55}
               style={{
                 background:
-                  "linear-gradient(135deg, #FFFFFF 0%, #7DD3FC 40%, #38BDF8 100%)",
+                  "linear-gradient(135deg, #7DD3FC 0%, #38BDF8 50%, #0EA5E9 100%)",
                 WebkitBackgroundClip: "text",
                 WebkitTextFillColor: "transparent",
                 backgroundClip: "text",
+                textShadow: "none",
               }}
             />
           </h1>
 
           {/* Description */}
           <motion.p
-            className="mt-7 font-body max-w-[480px]"
+            className="mt-8 font-body max-w-[520px]"
             style={{
-              fontSize: "17px",
-              lineHeight: "1.8",
-              color: "rgba(180, 200, 220, 0.8)",
+              fontSize: "18px",
+              lineHeight: "1.85",
+              color: "rgba(180, 200, 220, 0.75)",
               fontWeight: 400,
             }}
             initial={{ opacity: 0, y: 14 }}
