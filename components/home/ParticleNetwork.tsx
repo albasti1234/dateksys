@@ -11,11 +11,11 @@ interface Particle {
   opacity: number;
 }
 
-const PARTICLE_COUNT = 80;
-const CONNECTION_DIST = 140;
-const MOUSE_RADIUS = 180;
-const MOUSE_FORCE = 0.04;
-const BASE_SPEED = 0.3;
+const PARTICLE_COUNT = 160;
+const CONNECTION_DIST = 200;
+const MOUSE_RADIUS = 250;
+const MOUSE_FORCE = 0.06;
+const BASE_SPEED = 0.25;
 const ACCENT = { r: 56, g: 189, b: 248 }; // #38BDF8
 
 export default function ParticleNetwork() {
@@ -33,8 +33,8 @@ export default function ParticleNetwork() {
         y: Math.random() * h,
         vx: (Math.random() - 0.5) * BASE_SPEED,
         vy: (Math.random() - 0.5) * BASE_SPEED,
-        r: Math.random() * 1.8 + 0.8,
-        opacity: Math.random() * 0.5 + 0.3,
+        r: Math.random() * 2.2 + 1,
+        opacity: Math.random() * 0.4 + 0.4,
       });
     }
     particlesRef.current = particles;
@@ -136,12 +136,12 @@ export default function ParticleNetwork() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < CONNECTION_DIST) {
-            const alpha = (1 - dist / CONNECTION_DIST) * 0.25;
+            const alpha = (1 - dist / CONNECTION_DIST) * 0.4;
             ctx.beginPath();
             ctx.moveTo(a.x, a.y);
             ctx.lineTo(b.x, b.y);
             ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${alpha})`;
-            ctx.lineWidth = 0.6;
+            ctx.lineWidth = 0.8;
             ctx.stroke();
           }
         }
@@ -156,12 +156,12 @@ export default function ParticleNetwork() {
           const dist = Math.sqrt(dx * dx + dy * dy);
 
           if (dist < MOUSE_RADIUS) {
-            const alpha = (1 - dist / MOUSE_RADIUS) * 0.4;
+            const alpha = (1 - dist / MOUSE_RADIUS) * 0.6;
             ctx.beginPath();
             ctx.moveTo(mouse.x, mouse.y);
             ctx.lineTo(p.x, p.y);
             ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${alpha})`;
-            ctx.lineWidth = 0.8;
+            ctx.lineWidth = 1;
             ctx.stroke();
           }
         }
@@ -187,17 +187,17 @@ export default function ParticleNetwork() {
       // Draw mouse glow
       if (mouse.x > -9000) {
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 4, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.6)`;
+        ctx.arc(mouse.x, mouse.y, 5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.7)`;
         ctx.fill();
 
         ctx.beginPath();
-        ctx.arc(mouse.x, mouse.y, 20, 0, Math.PI * 2);
+        ctx.arc(mouse.x, mouse.y, 40, 0, Math.PI * 2);
         const grad = ctx.createRadialGradient(
           mouse.x, mouse.y, 0,
-          mouse.x, mouse.y, 20
+          mouse.x, mouse.y, 40
         );
-        grad.addColorStop(0, `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.15)`);
+        grad.addColorStop(0, `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.2)`);
         grad.addColorStop(1, `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0)`);
         ctx.fillStyle = grad;
         ctx.fill();
