@@ -376,7 +376,7 @@ export default function Hero() {
       </motion.div>
 
       {/* ── Main Grid ── */}
-      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 grid grid-cols-1 lg:grid-cols-[42%_58%] gap-10 lg:gap-0 items-center min-h-[100dvh]">
+      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-8 items-center min-h-[100dvh]">
         {/* ── LEFT: Text ── */}
         <motion.div
           style={{ y: textY, opacity }}
@@ -543,15 +543,15 @@ export default function Hero() {
 
         {/* ── RIGHT: Fiber Optic Convergence Visual ── */}
         <motion.div
-          className="relative hidden lg:flex items-center justify-center self-stretch"
-          style={{ y: visualY, padding: "3% 0" }}
+          className="relative hidden lg:flex items-center justify-center"
+          style={{ y: visualY }}
           initial={{ opacity: 0, scale: 0.92 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.2, delay: 0.2, ease: EXPO_OUT }}
         >
           {/* Background glow */}
           <div
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] rounded-full pointer-events-none"
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%] rounded-full pointer-events-none"
             style={{
               background:
                 "radial-gradient(circle, rgba(56,189,248,0.06) 0%, rgba(56,189,248,0.01) 50%, transparent 70%)",
@@ -559,32 +559,9 @@ export default function Hero() {
             }}
           />
 
-          <div className="w-[90%] max-w-[560px]">
+          <div className="w-full max-w-[520px] mx-auto">
             <FiberOpticVisual />
           </div>
-
-          {/* Label */}
-          <motion.div
-            className="absolute bottom-[5%] left-1/2 -translate-x-1/2 flex items-center gap-2 pointer-events-none"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.4, duration: 0.6 }}
-          >
-            <div
-              className="w-4 h-px"
-              style={{ background: "rgba(56,189,248,0.25)" }}
-            />
-            <span
-              className="font-body tracking-[0.14em] uppercase"
-              style={{ fontSize: "9px", color: "rgba(56,189,248,0.35)" }}
-            >
-              {t("network_label")}
-            </span>
-            <div
-              className="w-4 h-px"
-              style={{ background: "rgba(56,189,248,0.25)" }}
-            />
-          </motion.div>
         </motion.div>
       </div>
 
