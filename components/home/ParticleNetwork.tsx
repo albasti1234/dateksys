@@ -26,18 +26,18 @@ interface NetNode {
 }
 
 const NODES: NetNode[] = [
-  { id: "core", label: "CORE", x: 0.5, y: 0.45, r: 14, isPrimary: true },
-  { id: "cloud", label: "CLOUD", x: 0.5, y: 0.08, r: 10, isPrimary: true },
-  { id: "wan", label: "WAN", x: 0.85, y: 0.2, r: 9, isPrimary: false },
-  { id: "fw", label: "FIREWALL", x: 0.82, y: 0.52, r: 9, isPrimary: false },
-  { id: "lan", label: "LAN", x: 0.72, y: 0.78, r: 9, isPrimary: false },
-  { id: "vpn", label: "VPN", x: 0.42, y: 0.82, r: 8, isPrimary: false },
-  { id: "ids", label: "IDS", x: 0.2, y: 0.7, r: 8, isPrimary: false },
-  { id: "dmz", label: "DMZ", x: 0.15, y: 0.38, r: 9, isPrimary: false },
-  { id: "sw", label: "SWITCH", x: 0.68, y: 0.32, r: 8, isPrimary: false },
-  { id: "ap", label: "AP", x: 0.3, y: 0.22, r: 8, isPrimary: false },
-  { id: "srv", label: "SERVER", x: 0.28, y: 0.55, r: 9, isPrimary: true },
-  { id: "db", label: "DB", x: 0.58, y: 0.65, r: 8, isPrimary: false },
+  { id: "core", label: "CORE", x: 0.5, y: 0.45, r: 20, isPrimary: true },
+  { id: "cloud", label: "CLOUD", x: 0.5, y: 0.08, r: 14, isPrimary: true },
+  { id: "wan", label: "WAN", x: 0.88, y: 0.18, r: 13, isPrimary: false },
+  { id: "fw", label: "FIREWALL", x: 0.85, y: 0.55, r: 13, isPrimary: false },
+  { id: "lan", label: "LAN", x: 0.72, y: 0.8, r: 13, isPrimary: false },
+  { id: "vpn", label: "VPN", x: 0.38, y: 0.82, r: 12, isPrimary: false },
+  { id: "ids", label: "IDS", x: 0.15, y: 0.68, r: 12, isPrimary: false },
+  { id: "dmz", label: "DMZ", x: 0.12, y: 0.35, r: 13, isPrimary: false },
+  { id: "sw", label: "SWITCH", x: 0.72, y: 0.3, r: 12, isPrimary: false },
+  { id: "ap", label: "AP", x: 0.28, y: 0.2, r: 12, isPrimary: false },
+  { id: "srv", label: "SERVER", x: 0.25, y: 0.52, r: 14, isPrimary: true },
+  { id: "db", label: "DB", x: 0.6, y: 0.66, r: 12, isPrimary: false },
 ];
 
 const EDGES: [string, string][] = [
@@ -144,7 +144,7 @@ export default function ParticleNetwork() {
         progress: 0,
         speed: 0.003 + Math.random() * 0.004,
         color: PACKET_COLORS[Math.floor(Math.random() * PACKET_COLORS.length)],
-        size: 2 + Math.random() * 2,
+        size: 3 + Math.random() * 2.5,
         trail: 0.06 + Math.random() * 0.08,
       });
     };
@@ -234,8 +234,8 @@ export default function ParticleNetwork() {
         ctx.beginPath();
         ctx.moveTo(pa.x, pa.y);
         ctx.lineTo(pb.x, pb.y);
-        ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.12)`;
-        ctx.lineWidth = 1;
+        ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.3)`;
+        ctx.lineWidth = 1.5;
         ctx.stroke();
       }
 
@@ -328,24 +328,24 @@ export default function ParticleNetwork() {
         }
 
         // Label
-        const labelY = pos.y - node.r - 10;
-        ctx.font = `${isCore ? 600 : 500} ${isCore ? 9 : 7.5}px ui-monospace, monospace`;
+        const labelY = pos.y - node.r - 14;
+        ctx.font = `${isCore ? 700 : 600} ${isCore ? 11 : 9}px ui-monospace, monospace`;
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
 
         // Label background pill
         const textWidth = ctx.measureText(node.label).width;
         const pillW = textWidth + 12;
-        const pillH = isCore ? 16 : 14;
+        const pillH = isCore ? 20 : 17;
         ctx.beginPath();
         ctx.roundRect(pos.x - pillW / 2, labelY - pillH / 2, pillW, pillH, pillH / 2);
         ctx.fillStyle = "rgba(9,9,11,0.85)";
         ctx.fill();
-        ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.2)`;
-        ctx.lineWidth = 0.7;
+        ctx.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.35)`;
+        ctx.lineWidth = 1;
         ctx.stroke();
 
-        ctx.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${isCore ? 0.9 : 0.65})`;
+        ctx.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${isCore ? 1 : 0.8})`;
         ctx.fillText(node.label, pos.x, labelY);
       }
 
@@ -444,31 +444,31 @@ export default function ParticleNetwork() {
       const hudY = 16;
 
       c.beginPath();
-      c.roundRect(hudX, hudY, 140, 56, 8);
-      c.fillStyle = "rgba(17,17,19,0.88)";
+      c.roundRect(hudX, hudY, 170, 68, 10);
+      c.fillStyle = "rgba(17,17,19,0.92)";
       c.fill();
-      c.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.12)`;
-      c.lineWidth = 0.7;
+      c.strokeStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.25)`;
+      c.lineWidth = 1;
       c.stroke();
 
       // Blinking dot
       const blink = Math.sin(t * 0.05) * 0.5 + 0.5;
       c.beginPath();
-      c.arc(hudX + 14, hudY + 18, 3.5, 0, Math.PI * 2);
+      c.arc(hudX + 18, hudY + 22, 5, 0, Math.PI * 2);
       c.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},${0.4 + blink * 0.6})`;
       c.fill();
 
-      c.font = "600 9px ui-monospace, monospace";
+      c.font = "700 12px ui-monospace, monospace";
       c.textAlign = "left";
       c.textBaseline = "middle";
-      c.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.9)`;
-      c.fillText("NETWORK LIVE", hudX + 24, hudY + 18);
+      c.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.95)`;
+      c.fillText("NETWORK LIVE", hudX + 30, hudY + 22);
 
-      c.font = "500 8px ui-monospace, monospace";
-      c.fillStyle = "rgba(255,255,255,0.3)";
-      c.fillText("UPTIME", hudX + 12, hudY + 38);
-      c.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.8)`;
-      c.fillText("99.97%", hudX + 62, hudY + 38);
+      c.font = "500 10px ui-monospace, monospace";
+      c.fillStyle = "rgba(255,255,255,0.4)";
+      c.fillText("UPTIME", hudX + 16, hudY + 48);
+      c.fillStyle = `rgba(${ACCENT.r},${ACCENT.g},${ACCENT.b},0.9)`;
+      c.fillText("99.97%", hudX + 80, hudY + 48);
     };
 
     rafRef.current = requestAnimationFrame(animate);
