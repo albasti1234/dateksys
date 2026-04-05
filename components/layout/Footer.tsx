@@ -57,15 +57,15 @@ export default function Footer() {
   const t = useTranslations("footer");
 
   return (
-    <footer className="relative bg-[var(--bg-primary)] border-t border-[var(--border-subtle)]">
+    <footer className="relative bg-base border-t border-border">
       {/* === CTA Section === */}
       <div className="relative overflow-hidden">
-        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[var(--accent-primary)]/5 rounded-full blur-[150px]" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-[var(--accent-secondary)]/5 rounded-full blur-[120px]" />
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-accent/5 rounded-full blur-[150px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/5 rounded-full blur-[120px]" />
 
         <div className="relative z-10 py-24 sm:py-32 lg:py-40 text-center px-[5%] lg:px-[6%]">
           <motion.p
-            className="text-sm uppercase tracking-[0.3em] text-[var(--text-tertiary)] mb-6 font-body"
+            className="text-sm uppercase tracking-[0.3em] text-text-muted mb-6 font-body"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -75,7 +75,7 @@ export default function Footer() {
           </motion.p>
 
           <motion.h2
-            className="text-4xl md:text-6xl lg:text-8xl font-display font-bold tracking-tighter text-white"
+            className="text-4xl md:text-6xl lg:text-8xl font-heading font-bold tracking-tighter text-white"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -106,7 +106,7 @@ export default function Footer() {
 
       {/* === Footer Links === */}
       <motion.div
-        className="border-t border-[var(--border-subtle)] px-[5%] lg:px-[6%] py-16"
+        className="border-t border-border px-[5%] lg:px-[6%] py-16"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -115,10 +115,10 @@ export default function Footer() {
         <div className="w-full grid grid-cols-2 md:grid-cols-4 gap-10 lg:gap-16">
           {/* Col 1 — Brand */}
           <motion.div variants={fadeUp} className="col-span-2 md:col-span-1">
-            <span className="text-xl font-display font-bold text-white">
-              Datek<span className="text-[var(--accent-primary)]">Sys</span>
+            <span className="text-xl font-heading font-bold text-white">
+              Datek<span className="text-accent">Sys</span>
             </span>
-            <p className="mt-4 text-sm text-[var(--text-tertiary)] leading-relaxed max-w-xs">
+            <p className="mt-4 text-sm text-text-secondary leading-relaxed max-w-xs">
               {t("description")}
             </p>
           </motion.div>
@@ -133,7 +133,7 @@ export default function Footer() {
                 <li key={link.labelKey}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--text-tertiary)] hover:text-white transition-colors duration-300"
+                    className="text-sm text-text-secondary hover:text-white transition-colors duration-300"
                   >
                     {t(`services.${link.labelKey}`)}
                   </Link>
@@ -152,7 +152,7 @@ export default function Footer() {
                 <li key={link.labelKey}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[var(--text-tertiary)] hover:text-white transition-colors duration-300"
+                    className="text-sm text-text-secondary hover:text-white transition-colors duration-300"
                   >
                     {t(`company.${link.labelKey}`)}
                   </Link>
@@ -166,7 +166,7 @@ export default function Footer() {
             <h4 className="text-sm font-semibold text-white mb-4 font-body">
               {t("contact_title")}
             </h4>
-            <ul className="space-y-3 text-sm text-[var(--text-tertiary)]">
+            <ul className="space-y-3 text-sm text-text-secondary">
               <li>
                 <a href="mailto:info@dateksys.com" className="hover:text-white transition-colors duration-300">
                   info@dateksys.com
@@ -184,7 +184,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={label}
-                  className="w-9 h-9 rounded-full bg-white/[0.05] border border-[var(--border-subtle)] flex items-center justify-center text-[var(--text-tertiary)] hover:text-white hover:bg-white/[0.08] hover:border-[var(--border-light)] transition-all duration-300"
+                  className="w-9 h-9 rounded-full bg-white/[0.05] border border-border flex items-center justify-center text-text-secondary hover:text-white hover:bg-white/[0.08] hover:border-border-glow transition-all duration-300"
                   data-magnetic
                 >
                   <Icon />
@@ -196,8 +196,8 @@ export default function Footer() {
       </motion.div>
 
       {/* === Bottom Bar === */}
-      <div className="border-t border-[var(--border-subtle)] px-[5%] lg:px-[6%] py-6">
-        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-[var(--text-muted)]">
+      <div className="border-t border-border px-[5%] lg:px-[6%] py-6">
+        <div className="w-full flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-text-muted">
           <span>© {new Date().getFullYear()} DatekSys. {t("rights")}</span>
           <span>{t("made_with")}</span>
         </div>

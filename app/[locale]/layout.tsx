@@ -82,15 +82,11 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      dir={locale === "ar" ? "rtl" : "ltr"}
-      suppressHydrationWarning
-    >
+    <html lang={locale} dir={locale === "ar" ? "rtl" : "ltr"}>
       <body
-        className={`${spaceGrotesk.variable} ${dmSans.variable} ${ibmPlexArabic.variable} antialiased`}
+        className={`${spaceGrotesk.variable} ${dmSans.variable} ${ibmPlexArabic.variable}`}
       >
-        {/* ✅ Accessibility — Skip to content */}
+        {/* Accessibility — Skip to content */}
         <a
           href="#main-content"
           className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[200] focus:px-4 focus:py-2 focus:bg-accent focus:text-black focus:rounded-lg focus:font-semibold focus:text-sm"

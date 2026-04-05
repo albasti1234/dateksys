@@ -30,7 +30,8 @@
       "Bash(find /e/netcore/components -name \"*.tsx\" -exec grep -l \"Enterprise\\\\|Network\\\\|Security\\\\|Software\" {})",
       "Bash(grep -r \"dateksys\\\\|DATEKSYS\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
       "Bash(grep -r \"info@dateksys\\\\|/967\\\\|+967\\\\|plus_966\\\\|966 \" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
-      "Bash(grep -r \"TODO\\\\|FIXME\\\\|HACK\\\\|BUG\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)"
+      "Bash(grep -r \"TODO\\\\|FIXME\\\\|HACK\\\\|BUG\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
+      "Bash(git add:*)"
     ],
     "additionalDirectories": [
       "e:\\netcore\\node_modules"
