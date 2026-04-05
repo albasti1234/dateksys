@@ -8,6 +8,7 @@ import LenisProvider from "@/components/ui/LenisProvider";
 import MagneticCursor from "@/components/ui/MagneticCursor";
 import { OrganizationJsonLd, LocalBusinessJsonLd, WebSiteJsonLd } from "@/components/seo/JsonLd";
 import GoogleAnalytics from "@/components/seo/GoogleAnalytics";
+import { Analytics } from "@vercel/analytics/next";
 
 const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
@@ -104,6 +105,7 @@ export default async function LocaleLayout({
 
         {/* Analytics */}
         <GoogleAnalytics />
+        <Analytics />
 
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
