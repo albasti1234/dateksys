@@ -143,7 +143,7 @@ export default function ServicesOverview() {
                     <h3 className="font-heading font-semibold text-text-primary text-base mb-1.5">
                       {t(`items.${service.key}.title`)}
                     </h3>
-                    <p className="text-xs text-text-muted leading-relaxed font-body line-clamp-2">
+                    <p className="text-[13px] text-text-secondary leading-relaxed font-body line-clamp-2">
                       {t(`items.${service.key}.description`)}
                     </p>
                   </div>

@@ -36,22 +36,22 @@ export default function NetworkingServices() {
   };
 
   return (
-    <motion.div ref={ref} variants={container} initial="hidden" animate={isInView ? "visible" : "hidden"} className="space-y-[24px]">
+    <motion.div ref={ref} variants={container} initial="hidden" animate={isInView ? "visible" : "hidden"} className="space-y-6">
       {networkingData.map((service: ServiceItem, i: number) => {
         const IconComponent = iconMap[service.icon] || Network;
         return (
           <motion.div key={i} variants={variants}>
-            <GlowCard className="bg-[var(--color-surface)] border border-[var(--color-border)]">
-              <div className="flex flex-col md:flex-row items-start gap-[32px] md:gap-[48px]">
+            <GlowCard className="bg-surface border border-border">
+              <div className="flex flex-col md:flex-row items-start gap-8 md:gap-12">
                 <div className="shrink-0">
-                  <div className="w-[64px] h-[64px] rounded-2xl border border-accent/15 bg-accent/5 flex items-center justify-center group-hover:border-accent/30 transition-colors duration-500">
+                  <div className="w-16 h-16 rounded-2xl border border-accent/15 bg-accent/5 flex items-center justify-center group-hover:border-accent/30 transition-colors duration-500">
                     <IconComponent size={28} className="text-accent" />
                   </div>
                 </div>
                 <div className="text-start">
-                  <h3 className="font-heading font-bold text-[24px] text-[var(--color-text-primary)] mb-[8px]">{service.title}</h3>
-                  <p className="text-accent text-[13px] font-medium tracking-wide mb-[16px] uppercase">{service.sub}</p>
-                  <p className="text-[var(--color-text-secondary)] text-[16px] leading-[1.75] max-w-[600px]">{service.desc}</p>
+                  <h3 className="font-heading font-bold text-2xl text-text-primary mb-2">{service.title}</h3>
+                  <p className="text-accent text-[13px] font-medium tracking-wide mb-4 uppercase">{service.sub}</p>
+                  <p className="text-text-secondary text-base leading-relaxed max-w-xl">{service.desc}</p>
                 </div>
               </div>
             </GlowCard>

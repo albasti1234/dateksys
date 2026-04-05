@@ -123,23 +123,23 @@ export default function ContactForm() {
   }
 
   const inputClasses =
-    "w-full bg-[var(--color-surface-2)] border border-[var(--color-border)] rounded-xl px-[20px] py-[16px] text-[var(--color-text-primary)] text-[15px] placeholder:text-[var(--color-text-muted)] focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 focus:shadow-[0_0_20px_rgba(14,165,233,0.06)] transition-all duration-300 font-body text-start appearance-none";
+    "w-full bg-surface-2 border border-border rounded-xl px-5 py-4 text-text-primary text-[15px] placeholder:text-text-muted focus:outline-none focus:border-accent/50 focus:ring-2 focus:ring-accent/10 focus:shadow-[0_0_20px_rgba(14,165,233,0.06)] transition-all duration-300 font-body text-start appearance-none";
 
   return (
-    <form onSubmit={(e) => { handleSubmit(onSubmit)(e); }} className="space-y-[24px]">
+    <form onSubmit={(e) => { handleSubmit(onSubmit)(e); }} className="space-y-6">
       <div className="hidden" aria-hidden="true">
         <label htmlFor="contact-hp">Leave empty</label>
         <input id="contact-hp" type="text" tabIndex={-1} autoComplete="off" {...register("honeypot")} />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <input
             {...register("name")}
             placeholder={t("fields.name")}
             className={inputClasses}
           />
-          {errors.name && <p className="text-red-400 text-[13px] mt-[8px] text-start">{errors.name.message}</p>}
+          {errors.name && <p className="text-red-400 text-[13px] mt-2 text-start">{errors.name.message}</p>}
         </div>
         <div>
           <input
@@ -148,18 +148,18 @@ export default function ContactForm() {
             placeholder={t("fields.email")}
             className={inputClasses}
           />
-          {errors.email && <p className="text-red-400 text-[13px] mt-[8px] text-start">{errors.email.message}</p>}
+          {errors.email && <p className="text-red-400 text-[13px] mt-2 text-start">{errors.email.message}</p>}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-[24px]">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
           <input
             {...register("phone")}
             placeholder={t("fields.phone")}
             className={inputClasses}
           />
-          {errors.phone && <p className="text-red-400 text-[13px] mt-[8px] text-start">{errors.phone.message}</p>}
+          {errors.phone && <p className="text-red-400 text-[13px] mt-2 text-start">{errors.phone.message}</p>}
         </div>
         <div className="relative">
           <select {...register("reason")} className={inputClasses} defaultValue="">
@@ -171,7 +171,7 @@ export default function ContactForm() {
             <option value="careers">{t("fields.reason_options.careers")}</option>
             <option value="other">{t("fields.reason_options.other")}</option>
           </select>
-          {errors.reason && <p className="text-red-400 text-[13px] mt-[8px] text-start">{errors.reason.message}</p>}
+          {errors.reason && <p className="text-red-400 text-[13px] mt-2 text-start">{errors.reason.message}</p>}
         </div>
       </div>
 
@@ -181,7 +181,7 @@ export default function ContactForm() {
           placeholder={t("fields.subject")}
           className={inputClasses}
         />
-        {errors.subject && <p className="text-red-400 text-[13px] mt-[8px] text-start">{errors.subject.message}</p>}
+        {errors.subject && <p className="text-red-400 text-[13px] mt-2 text-start">{errors.subject.message}</p>}
       </div>
 
       <div>
@@ -191,7 +191,7 @@ export default function ContactForm() {
           placeholder={t("fields.message")}
           className={`${inputClasses} resize-none`}
         />
-        {errors.message && <p className="text-red-400 text-[13px] mt-[8px] text-start">{errors.message.message}</p>}
+        {errors.message && <p className="text-red-400 text-[13px] mt-2 text-start">{errors.message.message}</p>}
       </div>
 
       {/* File attachment */}
@@ -226,7 +226,7 @@ export default function ContactForm() {
           onChange={handleFileChange}
           className="hidden"
         />
-        {fileError && <p className="text-red-400 text-[13px] mt-[8px] text-start">{fileError}</p>}
+        {fileError && <p className="text-red-400 text-[13px] mt-2 text-start">{fileError}</p>}
       </div>
 
       {status === "success" && (
