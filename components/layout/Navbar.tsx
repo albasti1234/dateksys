@@ -65,14 +65,18 @@ export default function Navbar() {
         >
           {/* Logo */}
           <Link href="/" className="relative z-10">
-            <motion.span
-              className="text-xl font-heading font-bold text-text-primary"
-              style={{ letterSpacing: "var(--tracking-tight)" }}
+            <motion.div
+              className="flex items-center gap-2"
               whileHover={{ scale: 1.02 }}
               data-magnetic
             >
-              Datek<span className="text-accent">sys</span>
-            </motion.span>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/logo.svg"
+                alt="Dateksys"
+                className="h-8 w-auto"
+              />
+            </motion.div>
           </Link>
 
           {/* Desktop Links */}

@@ -106,7 +106,7 @@ export default function Testimonials() {
                 </div>
 
                 {/* Quote */}
-                <p className="text-text-primary/80 text-sm lg:text-base leading-relaxed font-body flex-1 mb-6">
+                <p className="text-text-secondary text-sm lg:text-base leading-relaxed font-body flex-1 mb-6">
                   {item.quote}
                 </p>
 
