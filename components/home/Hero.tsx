@@ -128,16 +128,12 @@ export default function Hero() {
         />
       </motion.div>
 
-      {/* ── Interactive Particle Network — full background ── */}
-      <div className="absolute inset-0 z-[1]">
-        <ParticleNetwork />
-      </div>
-
-      {/* ── Content ── */}
-      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 flex items-center min-h-[100dvh]">
+      {/* ── Main Grid — text left, network right ── */}
+      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 grid grid-cols-1 lg:grid-cols-[42%_58%] gap-10 lg:gap-0 items-center min-h-[100dvh]">
+        {/* ── LEFT: Text ── */}
         <motion.div
           style={{ y: textY, opacity }}
-          className="flex flex-col items-start will-change-transform max-w-2xl"
+          className="flex flex-col items-start will-change-transform"
         >
           {/* Badge */}
           <motion.div
@@ -295,6 +291,26 @@ export default function Hero() {
               </motion.span>
             </Link>
           </motion.div>
+        </motion.div>
+
+        {/* ── RIGHT: Network Visualization ── */}
+        <motion.div
+          className="relative hidden lg:flex items-center justify-center self-stretch"
+          style={{ padding: "2% 0" }}
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1.2, delay: 0.2, ease: EXPO_OUT }}
+        >
+          {/* Background glow behind network */}
+          <div
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] rounded-full pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 65%)",
+              filter: "blur(40px)",
+            }}
+          />
+          <ParticleNetwork />
         </motion.div>
       </div>
 

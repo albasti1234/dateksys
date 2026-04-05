@@ -486,9 +486,9 @@ export default function ParticleNetwork() {
   return (
     <canvas
       ref={canvasRef}
-      className="absolute inset-0 w-full h-full"
+      className="w-full h-full"
       aria-hidden="true"
-      style={{ pointerEvents: "auto" }}
+      style={{ pointerEvents: "auto", minHeight: "500px" }}
     />
   );
 }
