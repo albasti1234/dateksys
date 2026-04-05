@@ -183,16 +183,8 @@ export default function Hero() {
             />
             <RevealText
               text={t("title_line2")}
-              className="block"
+              className="block bg-gradient-to-r from-[#7DD3FC] via-[#38BDF8] to-[#0EA5E9] bg-clip-text text-transparent"
               delay={0.55}
-              style={{
-                background:
-                  "linear-gradient(135deg, #7DD3FC 0%, #38BDF8 50%, #0EA5E9 100%)",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
-                backgroundClip: "text",
-                textShadow: "none",
-              }}
             />
           </h1>
 
