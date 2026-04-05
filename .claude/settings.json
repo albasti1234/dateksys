@@ -35,7 +35,13 @@
       "Bash(git commit -m ':*)",
       "Bash(git push:*)",
       "Bash(ls -la /e/netcore/public/images/logo*)",
-      "Bash(ls /e/netcore/app/favicon* /e/netcore/public/favicon*)"
+      "Bash(ls /e/netcore/app/favicon* /e/netcore/public/favicon*)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" \"https://fonts.gstatic.com/s/ibmplexsansarabic/v15/Qw3NZRtWPQCuHme67tEYUIx3Kh0PHR9N6YPO_-CUXMRrKATt.woff2\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\" http://localhost:3000/en)",
+      "Bash(curl -sL -o /e/netcore/public/fonts/ibm-plex-arabic-400.woff2 \"https://fonts.gstatic.com/s/ibmplexsansarabic/v15/Qw3CZRtWPQCuHme67tEYUIx3Kh0PHR9N6YPy_eCiXQ.woff2\")",
+      "Bash(curl -sL -o /e/netcore/public/fonts/ibm-plex-arabic-500.woff2 \"https://fonts.gstatic.com/s/ibmplexsansarabic/v15/Qw3NZRtWPQCuHme67tEYUIx3Kh0PHR9N6YPO_-CU.woff2\")",
+      "Bash(curl -sL -o /e/netcore/public/fonts/ibm-plex-arabic-600.woff2 \"https://fonts.gstatic.com/s/ibmplexsansarabic/v15/Qw3NZRtWPQCuHme67tEYUIx3Kh0PHR9N6YPi8eCU.woff2\")",
+      "Bash(curl -sL -o /e/netcore/public/fonts/ibm-plex-arabic-700.woff2 \"https://fonts.gstatic.com/s/ibmplexsansarabic/v15/Qw3NZRtWPQCuHme67tEYUIx3Kh0PHR9N6YOG8OCU.woff2\")"
     ],
     "additionalDirectories": [
       "e:\\netcore\\node_modules"
