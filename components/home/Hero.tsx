@@ -21,11 +21,13 @@ function RevealText({
   className,
   delay = 0,
   style,
+  gradient,
 }: {
   text: string;
   className?: string;
   delay?: number;
   style?: React.CSSProperties;
+  gradient?: boolean;
 }) {
   const words = useMemo(() => text.split(" "), [text]);
   return (
@@ -36,7 +38,7 @@ function RevealText({
           className="inline-block overflow-hidden mr-[0.26em] last:mr-0 pb-[0.18em] mb-[-0.18em]"
         >
           <motion.span
-            className="inline-block will-change-transform"
+            className={`inline-block will-change-transform ${gradient ? "bg-gradient-to-r from-[#7DD3FC] via-[#38BDF8] to-[#0EA5E9] bg-clip-text text-transparent" : ""}`}
             initial={{ y: "110%", opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{
@@ -183,8 +185,9 @@ export default function Hero() {
             />
             <RevealText
               text={t("title_line2")}
-              className="block bg-gradient-to-r from-[#7DD3FC] via-[#38BDF8] to-[#0EA5E9] bg-clip-text text-transparent"
+              className="block"
               delay={0.55}
+              gradient
             />
           </h1>
 
