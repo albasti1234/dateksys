@@ -183,70 +183,6 @@
     "cta_primary": "Schedule a Free Consultation",
     "cta_secondary": "Explore Our Services"
   },
-  "about": {
-    "label": "About DatekSys",
-    "title": "Built on Real-World\nExperience",
-    "sub": "DatekSys was founded in 2026 with a clear mission: deliver enterprise-grade IT solutions backed by over a decade of hands-on field experience.",
-    "body": "Before DatekSys became a company, it was years of real work — deploying fiber networks, configuring OLTs, building sites from the ground up, and solving infrastructure problems that don't have textbook answers. That field experience is what drives everything we do today. We don't sell theory. We build systems that work, because we've spent years building them with our own hands.",
-    "valuesLabel": "What We Stand For",
-    "values": [
-      {
-        "title": "Reliability Over Everything",
-        "desc": "We design systems that stay up. Redundancy, proper cable management, tested configurations — every detail matters because downtime costs money."
-      },
-      {
-        "title": "Honesty & Transparency",
-        "desc": "We tell you what you need, not what's most expensive. If a simpler solution works — we'll recommend it. Our reputation is built on trust, not upselling."
-      },
-      {
-        "title": "End-to-End Ownership",
-        "desc": "We don't hand off half-finished work. From the first site survey to ongoing support — one team, one point of contact, full accountability."
-      }
-    ],
-    "credentials": {
-      "label": "Credentials & Expertise",
-      "items": [
-        {
-          "title": "FOA Certified",
-          "description": "Fiber Optic Association certified — internationally recognized standard for fiber optic installation and testing."
-        },
-        {
-          "title": "Cisco Experienced",
-          "description": "Extensive hands-on experience with Cisco enterprise networking equipment, routing, and switching platforms."
-        },
-        {
-          "title": "GPON/OLT Specialist",
-          "description": "Deep expertise in passive optical network deployment, OLT configuration, and fiber-to-the-home rollouts."
-        },
-        {
-          "title": "Ubiquiti/UniFi Pro",
-          "description": "Proven deployment experience with Ubiquiti enterprise wireless, switching, and security gateway solutions."
-        }
-      ]
-    },
-    "stats": [
-      {
-        "value": "99.9",
-        "label": "Uptime Guarantee",
-        "suffix": "%"
-      },
-      {
-        "value": "24",
-        "label": "Support Availability",
-        "suffix": "/7"
-      },
-      {
-        "value": "12",
-        "label": "Years Field Experience",
-        "suffix": "+"
-      },
-      {
-        "value": "2",
-        "label": "Hour Response Time",
-        "suffix": "hr"
-      }
-    ]
-  },
   "capabilities": {
     "label": "Our Work",
     "title": "What We Deliver",
@@ -699,5 +635,130 @@
         "desc": "Strategic technology consulting to help you make informed decisions about your IT infrastructure, digital transformation, and technology investments."
       }
     ]
+  },
+  "about": {
+    "hero_tag": "About Dateksys",
+    "hero_title_1": "Building the",
+    "hero_title_2": "Infrastructure",
+    "hero_title_3": "That Matters",
+    "hero_description": "We design, deploy, and maintain the networks that businesses depend on — from fiber optics and data centers to web platforms and mobile applications.",
+    "story_label": "Our Story",
+    "story_title": "Who We Are",
+    "story_blocks": [
+      {
+        "title": "Specialized Expertise",
+        "text": "Dateksys is an IT infrastructure and web development company based in Amman, Jordan. We deliver end-to-end solutions in fiber optic networks, structured cabling, data center builds, and digital platforms."
+      },
+      {
+        "title": "12+ Years in the Field",
+        "text": "With over a decade of hands-on experience executing telecom and IT projects across multiple sectors, we understand what works in the real world — not just on paper."
+      },
+      {
+        "title": "From Planning to Support",
+        "text": "Every project follows a clear path: site assessment, system design, professional installation, testing, and ongoing support. No shortcuts, no guesswork."
+      },
+      {
+        "title": "24/7 Emergency Response",
+        "text": "Our maintenance teams and emergency crews operate around the clock. When systems go down, we respond fast to minimize downtime and keep operations running."
+      }
+    ],
+    "stats": [
+      {
+        "value": "12",
+        "suffix": "+",
+        "label": "Years of Experience"
+      },
+      {
+        "value": "24",
+        "suffix": "/7",
+        "label": "Emergency Support"
+      },
+      {
+        "value": "500",
+        "suffix": "+",
+        "label": "Projects Delivered"
+      },
+      {
+        "value": "99",
+        "suffix": "%",
+        "label": "Client Retention"
+      }
+    ],
+    "tabs_label": "What Drives Us",
+    "tabs_title": "Vision, Mission & Values",
+    "tab_vision": "Vision",
+    "tab_mission": "Mission",
+    "tab_values": "Values",
+    "vision_text": "To be a leading force in IT infrastructure and digital solutions across Jordan and the region — delivering reliable, innovative systems that businesses trust.",
+    "mission_text": "To provide high-quality infrastructure and digital services that help our clients build stable, scalable foundations — and develop modern platforms that support real business growth.",
+    "values": [
+      {
+        "title": "Quality & Professionalism",
+        "text": "Every cable, every connection, every line of code — done right."
+      },
+      {
+        "title": "On-Time Delivery",
+        "text": "Deadlines are commitments, not estimates."
+      },
+      {
+        "title": "Fast Response",
+        "text": "When you need us, we're there — 24/7 support with real humans."
+      },
+      {
+        "title": "Transparency",
+        "text": "Honest communication, clear pricing, no surprises."
+      },
+      {
+        "title": "Continuous Improvement",
+        "text": "We stay current with certifications, tools, and industry standards."
+      }
+    ],
+    "services_label": "What We Do",
+    "services_title": "Our Services",
+    "services": [
+      {
+        "icon": "fiber",
+        "title": "Fiber Optic Networks",
+        "text": "Design, splicing, testing, and deployment of FTTH/FTTB fiber infrastructure with FOA-certified technicians."
+      },
+      {
+        "icon": "network",
+        "title": "Network Infrastructure",
+        "text": "Structured cabling (UTP/STP), rack builds, and switch configuration — Cisco, Ubiquiti, MikroTik."
+      },
+      {
+        "icon": "datacenter",
+        "title": "Data Centers",
+        "text": "Full data center planning, rack installation, power distribution, cooling, and cable management."
+      },
+      {
+        "icon": "web",
+        "title": "Web Development",
+        "text": "Modern, fast websites and web applications built with Next.js, React, and production-grade technologies."
+      },
+      {
+        "icon": "mobile",
+        "title": "Mobile Applications",
+        "text": "Custom mobile apps that extend your digital presence and connect with your customers."
+      },
+      {
+        "icon": "support",
+        "title": "Technical Support",
+        "text": "Ongoing maintenance, monitoring, and 24/7 emergency response teams to keep your systems running."
+      }
+    ],
+    "partners_label": "Certified & Trusted",
+    "partners": [
+      "FOA Certified",
+      "Cisco",
+      "Dell",
+      "Ubiquiti",
+      "MikroTik",
+      "Huawei OLT",
+      "Fortinet"
+    ],
+    "cta_title": "Ready to Build?",
+    "cta_description": "Let's discuss your next infrastructure or digital project.",
+    "cta_button": "Get in Touch"
   }
 }

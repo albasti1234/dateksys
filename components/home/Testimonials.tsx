@@ -102,11 +102,11 @@ export default function Testimonials() {
                   className="text-4xl font-heading font-black leading-none mb-4"
                   style={{ color: "rgba(56,189,248,0.2)" }}
                 >
-                  "
+                  {"\u201C"}
                 </div>
 
                 {/* Quote */}
-                <p className="text-text-secondary text-sm lg:text-base leading-relaxed font-body flex-1 mb-6">
+                <p className="text-sm lg:text-base leading-relaxed font-body flex-1 mb-6" style={{ color: "#d4d4d8" }}>
                   {item.quote}
                 </p>
 
