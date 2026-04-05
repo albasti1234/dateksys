@@ -74,7 +74,7 @@ export default function Navbar() {
               <img
                 src="/images/logo.svg"
                 alt="Dateksys"
-                className="h-8 w-auto"
+                className="h-10 lg:h-12 w-auto"
               />
             </motion.div>
           </Link>

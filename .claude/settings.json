@@ -31,7 +31,10 @@
       "Bash(grep -r \"dateksys\\\\|DATEKSYS\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
       "Bash(grep -r \"info@dateksys\\\\|/967\\\\|+967\\\\|plus_966\\\\|966 \" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
       "Bash(grep -r \"TODO\\\\|FIXME\\\\|HACK\\\\|BUG\" /e/netcore --include=*.json --include=*.ts --include=*.tsx)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m ':*)",
+      "Bash(git push:*)",
+      "Bash(ls -la /e/netcore/public/images/logo*)"
     ],
     "additionalDirectories": [
       "e:\\netcore\\node_modules"
