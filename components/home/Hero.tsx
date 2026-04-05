@@ -98,7 +98,7 @@ export default function Hero() {
       <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 flex flex-col justify-center min-h-[100dvh]">
         <motion.div
           style={{ y: textY, opacity }}
-          className="flex flex-col items-start will-change-transform max-w-4xl"
+          className="flex flex-col items-start will-change-transform max-w-6xl"
         >
           {/* Badge */}
           <motion.div
