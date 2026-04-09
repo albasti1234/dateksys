@@ -1,332 +1,168 @@
 "use client";
 
-import { useRef, useMemo } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
-import Image from "next/image";
-import ScrollIndicator from "@/components/ui/ScrollIndicator";
-import DataCenterAlive from "@/components/home/DataCenterAlive";
+import { motion } from "framer-motion";
 
-const techBrands = ["Cisco", "Ubiquiti", "MikroTik", "Huawei OLT", "Fortinet"];
-const EXPO_OUT = [0.16, 1, 0.3, 1] as const;
+const NODES = [
+  { id: "core", x: 380, y: 310, r: 18,  label: "Core",  pulse: true  },
+  { id: "n1",   x: 110, y: 110, r: 11,  label: "WAN",   pulse: false },
+  { id: "n2",   x: 580, y: 95,  r: 11,  label: "Cloud", pulse: true  },
+  { id: "n3",   x: 680, y: 305, r: 10,  label: "FW",    pulse: false },
+  { id: "n4",   x: 565, y: 510, r: 11,  label: "LAN",   pulse: false },
+  { id: "n5",   x: 360, y: 565, r: 10,  label: "VPN",   pulse: false },
+  { id: "n6",   x: 125, y: 495, r: 10,  label: "IDS",   pulse: false },
+  { id: "n7",   x: 50,  y: 305, r: 10,  label: "DMZ",   pulse: false },
+  { id: "n8",   x: 490, y: 182, r: 10,  label: "SW",    pulse: true  },
+  { id: "n9",   x: 210, y: 188, r: 10,  label: "AP",    pulse: false },
+];
 
-// ── Fiber Optic SVG — hexagonal network visualization ──
-function FiberOpticVisual() {
-  return useMemo(
-    () => (
+// Only animate every other edge — halves the animation count
+const EDGES: [string, string][] = [
+  ["core","n1"], ["core","n2"], ["core","n3"], ["core","n4"],
+  ["core","n5"], ["core","n6"], ["core","n7"], ["core","n8"],
+  ["core","n9"], ["n2","n3"],   ["n8","n3"],   ["n1","n7"],
+  ["n1","n9"],   ["n4","n5"],   ["n5","n6"],   ["n6","n7"],
+];
+
+// Only animate half the edges for flow dots
+const ANIMATED_EDGES = EDGES.filter((_, i) => i % 2 === 0);
+const FLOW_DUR = [2.8, 3.4, 2.2, 3.8, 2.6, 3.1, 2.4, 3.6];
+
+function getNode(id: string) {
+  return NODES.find((n) => n.id === id)!;
+}
+
+export default function NetworkVisualization() {
+  return (
+    <motion.div
+      className="absolute inset-0 flex items-center justify-center"
+      initial={{ opacity: 0, scale: 0.88 }}
+      animate={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+    >
       <svg
-        viewBox="0 0 600 520"
-        fill="none"
-        className="w-full h-full"
+        viewBox="0 0 740 650"
+        preserveAspectRatio="xMidYMid meet"
+        className="w-[82%] h-[82%]"
         aria-hidden="true"
       >
         <defs>
-          <linearGradient id="fiberGrad" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0%" stopColor="#7DD3FC" />
-            <stop offset="100%" stopColor="#0EA5E9" />
-          </linearGradient>
-          <radialGradient id="coreRadial" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.7" />
-            <stop offset="100%" stopColor="#38BDF8" stopOpacity="0" />
-          </radialGradient>
-          <filter id="glow">
-            <feGaussianBlur stdDeviation="3" result="b" />
+          {/* Single shared glow — cheaper than per-node filters */}
+          <filter id="nodeGlow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="4" result="blur" />
             <feMerge>
-              <feMergeNode in="b" />
+              <feMergeNode in="blur" />
               <feMergeNode in="SourceGraphic" />
             </feMerge>
           </filter>
         </defs>
 
-        <circle cx="300" cy="260" r="60" fill="url(#coreRadial)" />
-        <circle cx="300" cy="260" r="6" fill="#38BDF8" filter="url(#glow)" />
-        <circle cx="300" cy="260" r="2.5" fill="#fff" opacity="0.9" />
+        {/* ── Edges ── */}
+        {EDGES.map(([aId, bId], i) => {
+          const a = getNode(aId);
+          const b = getNode(bId);
+          return (
+            <line
+              key={`e-${i}`}
+              x1={a.x} y1={a.y} x2={b.x} y2={b.y}
+              stroke="#38BDF8" strokeWidth="1.2" strokeOpacity="0.18"
+            />
+          );
+        })}
 
-        <path
-          d="M300 60 L508 130 L508 390 L300 460 L92 390 L92 130 Z"
-          stroke="url(#fiberGrad)"
-          strokeWidth="1"
-          fill="none"
-          opacity="0.15"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M300 120 L440 170 L440 350 L300 400 L160 350 L160 170 Z"
-          stroke="#38BDF8"
-          strokeWidth="0.8"
-          fill="none"
-          opacity="0.08"
-          strokeDasharray="4 6"
-        />
-
-        {[
-          { x: 300, y: 60 },
-          { x: 508, y: 130 },
-          { x: 508, y: 390 },
-          { x: 300, y: 460 },
-          { x: 92, y: 390 },
-          { x: 92, y: 130 },
-        ].map((p, i) => (
-          <g key={i}>
-            <line x1={p.x} y1={p.y} x2={300} y2={260} stroke="#38BDF8" strokeWidth="1.5" opacity="0.25" />
-            <circle r="2.5" fill="#38BDF8" opacity="0.8">
-              <animate attributeName="cx" values={`${p.x};300;${p.x}`} dur={`${3 + i * 0.5}s`} repeatCount="indefinite" begin={`${i * 0.4}s`} />
-              <animate attributeName="cy" values={`${p.y};260;${p.y}`} dur={`${3 + i * 0.5}s`} repeatCount="indefinite" begin={`${i * 0.4}s`} />
-              <animate attributeName="opacity" values="0;0.8;0.8;0" keyTimes="0;0.15;0.85;1" dur={`${3 + i * 0.5}s`} repeatCount="indefinite" begin={`${i * 0.4}s`} />
+        {/* ── Flow dots — only on half the edges ── */}
+        {ANIMATED_EDGES.map(([aId, bId], i) => {
+          const a = getNode(aId);
+          const b = getNode(bId);
+          const dur = FLOW_DUR[i % FLOW_DUR.length];
+          return (
+            <circle key={`f-${i}`} r="3" fill="#38BDF8">
+              <animate attributeName="cx" values={`${a.x};${b.x};${a.x}`} dur={`${dur}s`} repeatCount="indefinite" begin={`${i * 0.45}s`} />
+              <animate attributeName="cy" values={`${a.y};${b.y};${a.y}`} dur={`${dur}s`} repeatCount="indefinite" begin={`${i * 0.45}s`} />
+              <animate attributeName="opacity" values="0;0.9;0.9;0" keyTimes="0;0.1;0.9;1" dur={`${dur}s`} repeatCount="indefinite" begin={`${i * 0.45}s`} />
             </circle>
-            <circle cx={p.x} cy={p.y} r="4" fill="#38BDF8" opacity="0.3" />
-            <circle cx={p.x} cy={p.y} r="2" fill="#38BDF8" opacity="0.6" />
-          </g>
-        ))}
+          );
+        })}
 
-        {[
-          { x: 300, y: 45, label: "CLOUD" },
-          { x: 525, y: 128, label: "WAN" },
-          { x: 525, y: 395, label: "LAN" },
-          { x: 300, y: 480, label: "VPN" },
-          { x: 75, y: 395, label: "FW" },
-          { x: 75, y: 128, label: "DMZ" },
-        ].map((n, i) => (
-          <g key={`l-${i}`}>
-            <rect x={n.x - 22} y={n.y - 8} width="44" height="16" rx="8" fill="rgba(9,9,11,0.85)" stroke="rgba(56,189,248,0.2)" strokeWidth="0.8" />
-            <text x={n.x} y={n.y + 3} textAnchor="middle" fontSize="8" fontFamily="ui-monospace, monospace" fontWeight="600" fill="rgba(56,189,248,0.7)" letterSpacing="0.1em">{n.label}</text>
-          </g>
-        ))}
+        {/* ── Nodes ── */}
+        {NODES.map((node) => {
+          const isCore = node.id === "core";
+          const pillW = isCore ? 52 : 44;
+          const pillH = isCore ? 20 : 18;
 
-        <g transform="translate(16, 16)">
-          <rect width="130" height="52" rx="8" fill="rgba(17,17,19,0.9)" stroke="rgba(56,189,248,0.15)" strokeWidth="0.8" />
-          <circle cx="14" cy="17" r="3.5" fill="#38BDF8">
-            <animate attributeName="opacity" values="1;0.3;1" dur="2.5s" repeatCount="indefinite" />
+          return (
+            <g key={node.id}>
+              {/* Pulse ring — only on 3 nodes */}
+              {node.pulse && (
+                <circle cx={node.x} cy={node.y} fill="none" stroke="#38BDF8" strokeWidth="1.5" opacity="0">
+                  <animate attributeName="r"       values={`${node.r + 4};${node.r + 28}`} dur="3s" repeatCount="indefinite" />
+                  <animate attributeName="opacity" values="0.45;0"                           dur="3s" repeatCount="indefinite" />
+                </circle>
+              )}
+
+              {/* Halo — no filter */}
+              <circle
+                cx={node.x} cy={node.y}
+                r={node.r + (isCore ? 12 : 7)}
+                fill={isCore ? "rgba(56,189,248,0.12)" : "rgba(56,189,248,0.06)"}
+              />
+
+              {/* Dot — single shared filter */}
+              <circle
+                cx={node.x} cy={node.y} r={node.r}
+                fill="#38BDF8"
+                fillOpacity={isCore ? 1 : 0.85}
+                filter="url(#nodeGlow)"
+              />
+
+              {/* Label pill */}
+              <rect
+                x={node.x - pillW / 2}
+                y={node.y - node.r - pillH - 6}
+                width={pillW} height={pillH}
+                rx={pillH / 2}
+                fill="rgba(9,9,11,0.85)"
+                stroke="rgba(56,189,248,0.25)"
+                strokeWidth="1"
+              />
+              <text
+                x={node.x}
+                y={node.y - node.r - 6 - pillH / 2}
+                textAnchor="middle"
+                dominantBaseline="middle"
+                fontSize={isCore ? "11" : "10"}
+                fontFamily="ui-monospace, monospace"
+                fontWeight={isCore ? "700" : "500"}
+                fill={isCore ? "#38BDF8" : "rgba(56,189,248,0.9)"}
+                letterSpacing="0.08em"
+              >
+                {node.label}
+              </text>
+            </g>
+          );
+        })}
+
+        {/* ── Status panel ── */}
+        <g transform="translate(18, 18)">
+          <rect width="152" height="80" rx="10"
+            fill="rgba(17,17,19,0.9)" stroke="rgba(56,189,248,0.2)" strokeWidth="1" />
+          <circle cx="18" cy="21" r="5" fill="#38BDF8">
+            <animate attributeName="opacity" values="1;0.2;1" dur="2.5s" repeatCount="indefinite" />
           </circle>
-          <text x="24" y="20" fontSize="9" fontFamily="ui-monospace,monospace" fontWeight="600" fill="rgba(56,189,248,0.9)">NETWORK LIVE</text>
-          <text x="12" y="38" fontSize="8" fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.35)">UPTIME</text>
-          <text x="62" y="38" fontSize="8" fontFamily="ui-monospace,monospace" fontWeight="600" fill="rgba(56,189,248,0.8)">99.97%</text>
+          <text x="30" y="25" fontSize="11" fontFamily="ui-monospace,monospace" fontWeight="600" fill="rgba(56,189,248,0.95)">NETWORK LIVE</text>
+          <text x="14" y="46" fontSize="10" fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.4)">NODES</text>
+          <text x="80" y="46" fontSize="10" fontFamily="ui-monospace,monospace" fontWeight="600" fill="rgba(56,189,248,0.85)">10 ACTIVE</text>
+          <text x="14" y="64" fontSize="10" fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.4)">UPTIME</text>
+          <text x="80" y="64" fontSize="10" fontFamily="ui-monospace,monospace" fontWeight="600" fill="rgba(56,189,248,0.85)">99.97%</text>
         </g>
 
-        <g transform="translate(440, 460)">
-          <rect width="130" height="32" rx="7" fill="rgba(17,17,19,0.88)" stroke="rgba(56,189,248,0.12)" strokeWidth="0.8" />
-          <text x="12" y="20" fontSize="8" fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.3)">AVG LATENCY</text>
-          <text x="96" y="20" fontSize="8" fontFamily="ui-monospace,monospace" fontWeight="700" fill="#38BDF8">{"<2ms"}</text>
+        {/* ── Latency badge ── */}
+        <g transform="translate(560, 572)">
+          <rect width="162" height="40" rx="9"
+            fill="rgba(17,17,19,0.88)" stroke="rgba(56,189,248,0.18)" strokeWidth="1" />
+          <text x="14" y="24" fontSize="10" fontFamily="ui-monospace,monospace" fill="rgba(255,255,255,0.38)">AVG LATENCY</text>
+          <text x="114" y="24" fontSize="10" fontFamily="ui-monospace,monospace" fontWeight="700" fill="#38BDF8">{"<2ms"}</text>
         </g>
-
-        <circle cx="300" cy="260" fill="none" stroke="#38BDF8" strokeWidth="1" opacity="0">
-          <animate attributeName="r" values="10;50" dur="3s" repeatCount="indefinite" />
-          <animate attributeName="opacity" values="0.4;0" dur="3s" repeatCount="indefinite" />
-        </circle>
       </svg>
-    ),
-    []
-  );
-}
-
-// ── Word reveal animation ──
-function RevealText({
-  text,
-  className,
-  delay = 0,
-  style,
-}: {
-  text: string;
-  className?: string;
-  delay?: number;
-  style?: React.CSSProperties;
-}) {
-  const words = useMemo(() => text.split(" "), [text]);
-  return (
-    <span className={className} style={style}>
-      {words.map((word, i) => (
-        <span key={i} className="inline-block overflow-hidden mr-[0.26em] last:mr-0 pb-[0.18em] mb-[-0.18em]">
-          <motion.span
-            className="inline-block will-change-transform"
-            initial={{ y: "110%", opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 0.72, delay: delay + i * 0.08, ease: EXPO_OUT }}
-          >
-            {word}
-          </motion.span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
-export default function Hero() {
-  const t = useTranslations("hero");
-  const sectionRef = useRef<HTMLElement>(null);
-
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end start"],
-  });
-
-  const textY = useTransform(scrollYProgress, [0, 1], [0, 60]);
-  const visualY = useTransform(scrollYProgress, [0, 1], [0, 30]);
-  const bgY = useTransform(scrollYProgress, [0, 1], [0, -40]);
-  const opacity = useTransform(scrollYProgress, [0, 0.55], [1, 0]);
-
-  return (
-    <section
-      ref={sectionRef}
-      className="relative min-h-[100dvh] w-full flex items-center overflow-hidden"
-    >
-      {/* ── Background — Hero image + gradient overlays ── */}
-      <motion.div className="absolute inset-0 pointer-events-none will-change-transform" style={{ y: bgY }}>
-        <Image src="/images/hero-bg.webp" alt="" fill priority className="object-cover" sizes="100vw" />
-
-        <div className="absolute inset-0" style={{
-          background: "linear-gradient(to bottom, rgba(9,9,11,0.4) 0%, rgba(9,9,11,0.5) 40%, rgba(9,9,11,0.7) 70%, var(--color-base) 100%)",
-        }} />
-
-        <div className="absolute inset-0" style={{
-          background: "radial-gradient(ellipse 80% 80% at 50% 50%, transparent 30%, rgba(9,9,11,0.5) 100%)",
-        }} />
-
-        <div className="absolute inset-0 opacity-[0.02]" style={{
-          backgroundImage: "linear-gradient(rgba(56,189,248,1) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,1) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-        }} />
-      </motion.div>
-
-      {/* ── Canvas particle system — data flow, LEDs, ambient ── */}
-      <DataCenterAlive />
-
-      {/* ── Corner accents ── */}
-      <div className="absolute top-6 left-6 pointer-events-none opacity-20 z-[3]">
-        <div className="w-12 h-[1px] bg-accent" />
-        <div className="w-[1px] h-12 bg-accent" />
-      </div>
-      <div className="absolute top-6 right-6 pointer-events-none opacity-20 z-[3]">
-        <div className="w-12 h-[1px] bg-accent ms-auto" />
-        <div className="w-[1px] h-12 bg-accent ms-auto" />
-      </div>
-
-      {/* ── Status indicator ── */}
-      <motion.div
-        className="absolute bottom-20 right-6 flex items-center gap-2 pointer-events-none z-[3]"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 2.5, duration: 1 }}
-      >
-        <motion.div
-          className="w-1.5 h-1.5 rounded-full bg-green-400"
-          animate={{ opacity: [1, 0.3, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-        />
-        <span className="font-mono tracking-[0.15em] uppercase" style={{ fontSize: "8px", color: "rgba(74,222,128,0.4)" }}>
-          Systems Online
-        </span>
-      </motion.div>
-
-      {/* ── Fiber Optic Visual overlay ── */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none hidden lg:block z-[4]"
-        style={{ y: visualY }}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 0.3 }}
-        transition={{ duration: 1.5, delay: 0.5, ease: EXPO_OUT }}
-      >
-        <div className="absolute top-1/2 left-[58%] -translate-x-1/2 -translate-y-1/2 w-[550px] h-[480px]">
-          <FiberOpticVisual />
-        </div>
-      </motion.div>
-
-      {/* ── Main Content ── */}
-      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 flex flex-col justify-center min-h-[100dvh]">
-        <motion.div style={{ y: textY, opacity }} className="flex flex-col items-start will-change-transform max-w-2xl">
-          <motion.div
-            className="mb-8"
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1, ease: EXPO_OUT }}
-          >
-            <div
-              className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full backdrop-blur-sm"
-              style={{ background: "rgba(56,189,248,0.06)", border: "1px solid rgba(56,189,248,0.25)", boxShadow: "0 0 20px rgba(56,189,248,0.08)" }}
-            >
-              <span className="relative flex h-2 w-2 shrink-0">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-accent opacity-50" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-accent" />
-              </span>
-              <span className="text-xs font-body tracking-widest whitespace-nowrap" style={{ color: "rgba(56,189,248,0.85)" }}>
-                {t("badge")}
-              </span>
-            </div>
-          </motion.div>
-
-          <h1 className="font-heading font-bold" style={{ fontSize: "clamp(2.75rem, 5.5vw, 6rem)", letterSpacing: "-0.03em", lineHeight: 1.05 }}>
-            <RevealText text={t("title_line1")} className="block" delay={0.3} style={{ color: "#FFFFFF", textShadow: "0 0 60px rgba(255,255,255,0.12)" }} />
-            <RevealText text={t("title_line2")} className="block" delay={0.55} style={{ background: "linear-gradient(135deg, #FFFFFF 0%, #7DD3FC 40%, #38BDF8 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }} />
-          </h1>
-
-          <motion.p
-            className="mt-7 font-body max-w-[480px]"
-            style={{ fontSize: "17px", lineHeight: "1.8", color: "rgba(180, 200, 220, 0.8)", fontWeight: 400 }}
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.0, ease: EXPO_OUT }}
-          >
-            {t("description")}
-          </motion.p>
-
-          <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto"
-            initial={{ opacity: 0, y: 14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.2, ease: EXPO_OUT }}
-          >
-            <Link href="/contact" className="block w-full sm:w-auto">
-              <motion.span
-                className="relative flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-sm cursor-pointer overflow-hidden"
-                style={{ background: "rgba(56,189,248,0.1)", color: "#F4F4F5", border: "1px solid rgba(56,189,248,0.35)", boxShadow: "0 0 20px rgba(56,189,248,0.1)", backdropFilter: "blur(8px)" }}
-                whileHover={{ scale: 1.03, y: -2, background: "rgba(56,189,248,0.15)", borderColor: "rgba(56,189,248,0.55)", boxShadow: "0 0 36px rgba(56,189,248,0.2), 0 8px 24px rgba(0,0,0,0.35)" }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.2, ease: EXPO_OUT }}
-              >
-                <motion.span className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(105deg, transparent 35%, rgba(255,255,255,0.06) 50%, transparent 65%)", backgroundSize: "300% 100%", backgroundPosition: "-100% 0" }} whileHover={{ backgroundPosition: "250% 0" }} transition={{ duration: 0.5, ease: "linear" }} />
-                {t("cta_primary")}
-                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ color: "rgba(56,189,248,0.9)" }}>
-                  <path d="M1 7h12M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </motion.span>
-            </Link>
-
-            <Link href="/services" className="block w-full sm:w-auto">
-              <motion.span
-                className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 rounded-lg font-medium text-sm cursor-pointer"
-                style={{ color: "var(--color-text-secondary)", border: "1px solid rgba(255,255,255,0.1)", backdropFilter: "blur(4px)" }}
-                whileHover={{ scale: 1.03, y: -2, color: "#F4F4F5", borderColor: "rgba(255,255,255,0.2)", background: "rgba(255,255,255,0.03)" }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.2, ease: EXPO_OUT }}
-              >
-                {t("cta_secondary")}
-              </motion.span>
-            </Link>
-          </motion.div>
-        </motion.div>
-      </div>
-
-      {/* ── Technologies + Scroll ── */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3.5 w-max">
-        <motion.div className="flex flex-col items-center gap-2.5" initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 1.5, ease: EXPO_OUT }}>
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-px" style={{ background: "linear-gradient(to right, transparent, rgba(255,255,255,0.12))" }} />
-            <span className="font-body tracking-[0.25em] uppercase whitespace-nowrap" style={{ fontSize: "9px", color: "rgba(255,255,255,0.25)" }}>{t("trusted_by")}</span>
-            <div className="w-8 h-px" style={{ background: "linear-gradient(to left, transparent, rgba(255,255,255,0.12))" }} />
-          </div>
-          <div className="flex items-center gap-0">
-            {techBrands.map((brand, i) => (
-              <motion.span key={brand} className="flex items-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.6 + i * 0.06, duration: 0.5 }}>
-                <span className="font-body font-medium tracking-[0.1em] uppercase px-3" style={{ fontSize: "10px", color: "rgba(255,255,255,0.32)" }}>{brand}</span>
-                {i < techBrands.length - 1 && <span style={{ color: "rgba(56,189,248,0.2)", fontSize: "9px" }}>·</span>}
-              </motion.span>
-            ))}
-          </div>
-        </motion.div>
-        <ScrollIndicator />
-      </div>
-
-      <div className="absolute bottom-0 left-0 right-0 h-40 z-[2] pointer-events-none" style={{ background: "linear-gradient(to top, var(--color-base) 0%, rgba(9,9,11,0.85) 40%, rgba(9,9,11,0.3) 75%, transparent 100%)" }} />
-    </section>
+    </motion.div>
   );
 }

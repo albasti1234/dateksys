@@ -12,7 +12,7 @@ export function OrganizationJsonLd() {
     logo: "https://dateksys.com/images/logo.png",
     description:
       "Enterprise-grade networking, data center solutions, security systems, and custom software development.",
-    foundingDate: "2026",
+    foundingDate: "2013",
     address: {
       "@type": "PostalAddress",
       addressLocality: "Amman",
