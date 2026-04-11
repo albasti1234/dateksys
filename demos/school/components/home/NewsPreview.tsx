@@ -3,65 +3,63 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Calendar, ArrowUpRight } from "lucide-react";
+import type { Locale } from "@/i18n/config";
 
 // ============================================
-// Latest News & Events Preview
+// Latest News & Events Preview — bilingual
 // ============================================
 
-const news = [
-  {
-    category: "Achievement",
-    date: "Mar 28, 2026",
-    title:
-      "Al-Nakhla students sweep top honors at National Robotics Championship",
-    excerpt:
-      "Our Grade 9 robotics team won first place, outperforming 45 schools across Jordan in the annual STEM competition.",
-    image:
-      "url('https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80')",
-  },
-  {
-    category: "Event",
-    date: "Apr 02, 2026",
-    title: "Annual International Day celebrates diversity and cultures",
-    excerpt:
-      "Students, families, and faculty celebrated the rich cultural tapestry that makes our community unique.",
-    image:
-      "url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80')",
-  },
-  {
-    category: "Academics",
-    date: "Apr 05, 2026",
-    title:
-      "IB Diploma students achieve record average score of 38 this year",
-    excerpt:
-      "The graduating class of 2026 has set a new benchmark with an average IB score significantly above the global average.",
-    image:
-      "url('https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80')",
-  },
+type NewsDict = {
+  eyebrow: string;
+  title: string;
+  items: readonly {
+    category: string;
+    date: string;
+    title: string;
+    excerpt: string;
+  }[];
+  cta: string;
+};
+
+const newsImages = [
+  "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=800&q=80",
+  "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&q=80",
+  "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=800&q=80",
 ];
 
-export default function NewsPreview() {
+export default function NewsPreview({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: NewsDict;
+}) {
+  const isRTL = locale === "ar";
+  const headlineClass = isRTL
+    ? "font-arabic-display text-4xl md:text-5xl font-bold text-[var(--color-navy)] leading-[1.4]"
+    : "font-serif text-4xl md:text-5xl font-bold text-[var(--color-navy)] leading-tight";
+  const cardTitleClass = isRTL
+    ? "font-arabic-display text-lg font-bold text-[var(--color-navy)] mb-3 leading-[1.6] group-hover:text-[var(--color-gold-dark)] transition-colors"
+    : "font-serif text-lg font-bold text-[var(--color-navy)] mb-3 leading-snug group-hover:text-[var(--color-gold-dark)] transition-colors";
+
   return (
     <section className="py-24 lg:py-32 bg-[var(--color-cream)]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Header */}
         <div className="flex items-end justify-between flex-wrap gap-6 mb-16">
           <div className="max-w-xl">
-            <p className="section-label mb-4">Latest News</p>
-            <h2 className="font-serif text-4xl md:text-5xl font-bold text-[var(--color-navy)] leading-tight">
-              What&apos;s happening on{" "}
-              <span className="italic text-[var(--color-gold)]">campus</span>
-            </h2>
+            <p className="section-label mb-4">{dict.eyebrow}</p>
+            <h2 className={headlineClass}>{dict.title}</h2>
           </div>
-          <Link href="/news" className="btn-outline">
-            All News & Events
-            <ArrowUpRight className="w-4 h-4" />
+          <Link href={`/${locale}/news`} className="btn-outline">
+            {dict.cta}
+            <ArrowUpRight className={`w-4 h-4 ${isRTL ? "-scale-x-100" : ""}`} />
           </Link>
         </div>
 
         {/* News grid */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {news.map((item, i) => (
+          {dict.items.map((item, i) => (
             <motion.article
               key={item.title}
               initial={{ opacity: 0, y: 30 }}
@@ -74,7 +72,7 @@ export default function NewsPreview() {
               <div className="h-56 overflow-hidden">
                 <div
                   className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{ backgroundImage: item.image }}
+                  style={{ backgroundImage: `url('${newsImages[i]}')` }}
                 />
               </div>
 
@@ -82,7 +80,7 @@ export default function NewsPreview() {
               <div className="p-6">
                 <div className="flex items-center gap-3 mb-3 text-xs">
                   <span
-                    className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-white"
+                    className="px-2.5 py-1 text-[10px] font-bold tracking-wider text-white"
                     style={{ background: "#C19A4B" }}
                   >
                     {item.category}
@@ -93,17 +91,10 @@ export default function NewsPreview() {
                   </span>
                 </div>
 
-                <h3 className="font-serif text-lg font-bold text-[var(--color-navy)] mb-3 leading-snug group-hover:text-[var(--color-gold-dark)] transition-colors">
-                  {item.title}
-                </h3>
+                <h3 className={cardTitleClass}>{item.title}</h3>
                 <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-3">
                   {item.excerpt}
                 </p>
-
-                <div className="mt-5 pt-4 border-t border-[var(--color-border-soft)] flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[var(--color-navy)]">
-                  <span>Read More</span>
-                  <ArrowUpRight className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                </div>
               </div>
             </motion.article>
           ))}

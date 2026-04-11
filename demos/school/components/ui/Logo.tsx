@@ -3,12 +3,16 @@
 // Stylized palm tree + shield badge
 // ============================================
 
+import type { Locale } from "@/i18n/config";
+
 export default function Logo({
   className = "",
   variant = "full",
+  locale = "en",
 }: {
   className?: string;
   variant?: "full" | "mark";
+  locale?: Locale;
 }) {
   if (variant === "mark") {
     return (
@@ -78,14 +82,25 @@ export default function Logo({
         </g>
         <circle cx="24" cy="33" r="1.5" fill="url(#goldGradFull)" />
       </svg>
-      <div className="flex flex-col leading-none">
-        <span className="font-serif text-lg font-bold text-[var(--color-navy)] tracking-tight">
-          Al-Nakhla
-        </span>
-        <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-[var(--color-gold)]">
-          International Academy
-        </span>
-      </div>
+      {locale === "ar" ? (
+        <div className="flex flex-col leading-none">
+          <span className="font-arabic-display text-xl font-bold text-[var(--color-navy)] tracking-tight">
+            أكاديمية النخلة
+          </span>
+          <span className="font-arabic text-[10px] font-semibold tracking-[0.15em] text-[var(--color-gold)] mt-0.5">
+            الدَّوليّة
+          </span>
+        </div>
+      ) : (
+        <div className="flex flex-col leading-none">
+          <span className="font-serif text-lg font-bold text-[var(--color-navy)] tracking-tight">
+            Al-Nakhla
+          </span>
+          <span className="text-[10px] font-medium tracking-[0.25em] uppercase text-[var(--color-gold)]">
+            International Academy
+          </span>
+        </div>
+      )}
     </div>
   );
 }

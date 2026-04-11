@@ -2,56 +2,45 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown, LogIn } from "lucide-react";
+import { Menu, X, ChevronDown, LogIn, Globe } from "lucide-react";
 import Logo from "@/components/ui/Logo";
+import type { Locale } from "@/i18n/config";
 
 // ============================================
-// Main Navigation
-// Sticky, elegant, with mega-menu dropdown
+// Main Navigation — locale-aware, RTL-aware
 // ============================================
 
-const links = [
-  { label: "Home", href: "/" },
-  {
-    label: "About",
-    href: "/about",
-    dropdown: [
-      { label: "Our Story", href: "/about" },
-      { label: "Leadership", href: "/about#leadership" },
-      { label: "Campus", href: "/about#campus" },
-      { label: "Accreditation", href: "/about#accreditation" },
-    ],
-  },
-  {
-    label: "Academics",
-    href: "/programs",
-    dropdown: [
-      { label: "Early Years (KG1-KG2)", href: "/programs#early" },
-      { label: "Primary (Grades 1-5)", href: "/programs#primary" },
-      { label: "Middle School (6-8)", href: "/programs#middle" },
-      { label: "High School (9-12)", href: "/programs#high" },
-      { label: "IB Programme", href: "/programs#ib" },
-    ],
-  },
-  { label: "Admissions", href: "/admissions" },
-  { label: "Faculty", href: "/faculty" },
-  { label: "News", href: "/news" },
-  { label: "Contact", href: "/contact" },
-];
+type NavDict = {
+  home: string;
+  about: { label: string; items: readonly { label: string; href: string }[] };
+  academics: {
+    label: string;
+    items: readonly { label: string; href: string }[];
+  };
+  admissions: string;
+  faculty: string;
+  news: string;
+  contact: string;
+  portalLogin: string;
+  portals: readonly { label: string; href: string }[];
+  toggleMenu: string;
+  switchLanguage: string;
+};
 
-const portals = [
-  { label: "Parent Portal", href: "/portal/parent" },
-  { label: "Teacher Portal", href: "/portal/teacher" },
-  { label: "Student Portal", href: "/portal/student" },
-  { label: "Admin Dashboard", href: "/portal/admin" },
-];
-
-export default function Navbar() {
+export default function Navbar({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: NavDict;
+}) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [portalOpen, setPortalOpen] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -59,6 +48,39 @@ export default function Navbar() {
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Build locale-prefixed hrefs (Next.js trailingSlash: true adds a trailing /)
+  const prefix = `/${locale}`;
+  const p = (href: string) => `${prefix}${href === "/" ? "" : href}`;
+
+  const links = [
+    { label: dict.home, href: p("/") },
+    {
+      label: dict.about.label,
+      href: p("/about"),
+      dropdown: dict.about.items.map((it) => ({ ...it, href: p(it.href) })),
+    },
+    {
+      label: dict.academics.label,
+      href: p("/programs"),
+      dropdown: dict.academics.items.map((it) => ({ ...it, href: p(it.href) })),
+    },
+    { label: dict.admissions, href: p("/admissions") },
+    { label: dict.faculty, href: p("/faculty") },
+    { label: dict.news, href: p("/news") },
+    { label: dict.contact, href: p("/contact") },
+  ];
+
+  const portals = dict.portals.map((pt) => ({ ...pt, href: p(pt.href) }));
+
+  // Language switcher target: swap /ar ↔ /en in the current pathname
+  const otherLocale: Locale = locale === "ar" ? "en" : "ar";
+  const switchHref = pathname
+    ? pathname.replace(
+        /^\/demos\/school\/(ar|en)/,
+        `/demos/school/${otherLocale}`
+      )
+    : `/demos/school/${otherLocale}`;
 
   return (
     <header
@@ -70,8 +92,8 @@ export default function Navbar() {
     >
       <nav className="max-w-[1400px] mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="shrink-0">
-          <Logo />
+        <Link href={p("/")} className="shrink-0">
+          <Logo locale={locale} />
         </Link>
 
         {/* Desktop links */}
@@ -98,7 +120,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.2 }}
-                    className="absolute top-full start-0 mt-1 min-w-[240px] bg-white border border-[var(--color-border)] shadow-xl"
+                    className="absolute top-full start-0 mt-1 min-w-[260px] bg-white border border-[var(--color-border)] shadow-xl"
                   >
                     <div className="py-2">
                       {link.dropdown.map((item) => (
@@ -118,8 +140,20 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Portal login */}
+        {/* Portal login + Language */}
         <div className="hidden lg:flex items-center gap-3 relative">
+          <Link
+            href={switchHref}
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--color-ink-soft)] hover:text-[var(--color-navy)] transition-colors border border-[var(--color-border)] hover:border-[var(--color-gold)]"
+            lang={otherLocale}
+            aria-label="Switch language"
+          >
+            <Globe className="w-3.5 h-3.5" />
+            <span className={otherLocale === "ar" ? "font-arabic" : ""}>
+              {dict.switchLanguage}
+            </span>
+          </Link>
+
           <div
             onMouseEnter={() => setPortalOpen(true)}
             onMouseLeave={() => setPortalOpen(false)}
@@ -127,7 +161,7 @@ export default function Navbar() {
           >
             <button className="btn-primary">
               <LogIn className="w-4 h-4" />
-              <span>Portal Login</span>
+              <span>{dict.portalLogin}</span>
             </button>
 
             <AnimatePresence>
@@ -137,16 +171,16 @@ export default function Navbar() {
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0, y: 8 }}
                   transition={{ duration: 0.2 }}
-                  className="absolute top-full end-0 mt-1 min-w-[220px] bg-white border border-[var(--color-border)] shadow-xl"
+                  className="absolute top-full end-0 mt-1 min-w-[240px] bg-white border border-[var(--color-border)] shadow-xl"
                 >
                   <div className="py-2">
-                    {portals.map((p) => (
+                    {portals.map((pt) => (
                       <Link
-                        key={p.href}
-                        href={p.href}
+                        key={pt.href}
+                        href={pt.href}
                         className="block px-5 py-2.5 text-sm text-[var(--color-ink-soft)] hover:bg-[var(--color-cream)] hover:text-[var(--color-navy)] transition-colors border-s-2 border-transparent hover:border-[var(--color-gold)]"
                       >
-                        {p.label}
+                        {pt.label}
                       </Link>
                     ))}
                   </div>
@@ -160,7 +194,7 @@ export default function Navbar() {
         <button
           onClick={() => setMobileOpen(!mobileOpen)}
           className="lg:hidden p-2 text-[var(--color-navy)]"
-          aria-label="Toggle menu"
+          aria-label={dict.toggleMenu}
         >
           {mobileOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
@@ -186,11 +220,24 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+
+              <Link
+                href={switchHref}
+                onClick={() => setMobileOpen(false)}
+                className="py-3 border-b border-[var(--color-border-soft)] text-[var(--color-ink-soft)] font-medium flex items-center gap-2"
+                lang={otherLocale}
+              >
+                <Globe className="w-4 h-4" />
+                <span className={otherLocale === "ar" ? "font-arabic" : ""}>
+                  {dict.switchLanguage}
+                </span>
+              </Link>
+
               <div className="mt-4">
-                <Link href="/portal/parent" onClick={() => setMobileOpen(false)}>
+                <Link href={p("/portal/parent")} onClick={() => setMobileOpen(false)}>
                   <button className="btn-primary w-full justify-center">
                     <LogIn className="w-4 h-4" />
-                    Portal Login
+                    {dict.portalLogin}
                   </button>
                 </Link>
               </div>

@@ -48,9 +48,14 @@
   --color-ink: var(--color-ink);
   --color-border: var(--color-border);
 
+  /* Latin (English) */
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-arabic: "Noto Sans Arabic", Tahoma, sans-serif;
+
+  /* Arabic — loaded via <link> in layout */
+  --font-arabic-body: "IBM Plex Sans Arabic", "Tajawal", Tahoma, sans-serif;
+  --font-arabic-display: "Noto Kufi Arabic", "IBM Plex Sans Arabic", Tahoma,
+    sans-serif;
 }
 
 * {
@@ -70,14 +75,52 @@ body {
   overflow-x: hidden;
 }
 
-/* ─── Typography helpers ─── */
-.font-serif {
+/* ═════════ LOCALE-SPECIFIC TYPOGRAPHY ═════════ */
+
+/* Arabic pages — use Arabic body font by default */
+html[lang="ar"] body {
+  font-family: var(--font-arabic-body);
+  font-feature-settings: "kern", "liga", "calt";
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+html[lang="ar"] h1,
+html[lang="ar"] h2,
+html[lang="ar"] h3,
+html[lang="ar"] h4,
+html[lang="ar"] h5,
+html[lang="ar"] h6,
+html[lang="ar"] .font-serif,
+html[lang="ar"] .font-display {
+  font-family: var(--font-arabic-display);
+  font-feature-settings: "kern", "liga", "calt";
+  letter-spacing: 0;
+  line-height: 1.35;
+}
+
+/* English pages — keep Playfair for serif headings */
+html[lang="en"] .font-serif {
   font-family: var(--font-serif);
   letter-spacing: -0.02em;
 }
 
+/* Utility that forces Arabic regardless of page locale (used in
+   language switcher / mixed-content labels) */
 .font-arabic {
-  font-family: var(--font-arabic);
+  font-family: var(--font-arabic-body);
+  font-feature-settings: "kern", "liga", "calt";
+}
+.font-arabic-display {
+  font-family: var(--font-arabic-display);
+}
+
+/* Keep numbers readable/LTR inside Arabic RTL text */
+html[lang="ar"] .num,
+html[lang="ar"] .tabular {
+  direction: ltr;
+  display: inline-block;
+  unicode-bidi: embed;
 }
 
 /* ─── Gold gradient text ─── */

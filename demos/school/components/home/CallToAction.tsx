@@ -3,12 +3,35 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Calendar, Phone } from "lucide-react";
+import type { Locale } from "@/i18n/config";
 
 // ============================================
-// Final CTA — Schedule visit
+// Final CTA — Schedule visit / Apply
 // ============================================
 
-export default function CallToAction() {
+type CtaDict = {
+  eyebrow: string;
+  title: string;
+  body: string;
+  ctaPrimary: string;
+  ctaSecondary: string;
+};
+
+export default function CallToAction({
+  locale,
+  dict,
+}: {
+  locale: Locale;
+  dict: CtaDict;
+}) {
+  const isRTL = locale === "ar";
+  const titleClass = isRTL
+    ? "font-arabic-display text-4xl md:text-5xl lg:text-6xl font-bold leading-[1.35] mb-6"
+    : "font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6";
+  const bodyClass = isRTL
+    ? "font-arabic text-lg text-white/70 leading-[2] max-w-xl"
+    : "text-lg text-white/70 leading-relaxed max-w-xl";
+
   return (
     <section className="py-24 lg:py-32 bg-white relative overflow-hidden">
       {/* Background imagery */}
@@ -47,39 +70,33 @@ export default function CallToAction() {
           <div className="relative grid lg:grid-cols-12 gap-10 items-center">
             <div className="lg:col-span-8">
               <p className="section-label !text-[var(--color-gold-light)] mb-6">
-                Discover Al-Nakhla
+                {dict.eyebrow}
               </p>
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-                Ready to begin your child&apos;s{" "}
-                <span className="italic text-[var(--color-gold-light)]">
-                  journey
-                </span>
-                ?
-              </h2>
-              <p className="text-lg text-white/70 leading-relaxed max-w-xl">
-                Schedule a personalized campus visit, meet our faculty, and
-                experience the Al-Nakhla difference firsthand. Applications for
-                2026-2027 are now open.
-              </p>
+              <h2 className={titleClass}>{dict.title}</h2>
+              <p className={bodyClass}>{dict.body}</p>
             </div>
 
             <div className="lg:col-span-4 flex flex-col gap-4">
-              <Link href="/admissions">
+              <Link href={`/${locale}/admissions`}>
                 <button className="w-full btn-gold !bg-[var(--color-gold)] !text-white !border-[var(--color-gold)] group">
-                  Apply Now
-                  <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  {dict.ctaPrimary}
+                  <ArrowRight
+                    className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
+                      isRTL ? "rotate-180" : ""
+                    }`}
+                  />
                 </button>
               </Link>
               <button className="w-full btn-outline !border-white/30 !text-white hover:!bg-white hover:!text-[var(--color-navy)] group">
                 <Calendar className="w-4 h-4" />
-                Schedule Visit
+                {dict.ctaSecondary}
               </button>
               <a
                 href="tel:+96265551234"
                 className="mt-2 flex items-center justify-center gap-2 text-sm text-white/60 hover:text-[var(--color-gold-light)] transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                <span>or call +962 6 555 1234</span>
+                <span className="num">+962 6 555 1234</span>
               </a>
             </div>
           </div>

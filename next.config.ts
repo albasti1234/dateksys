@@ -13,24 +13,28 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: false,
   },
 
+  async redirects() {
+    return [
+      // ─── School demo is bilingual (ar/en). Root hits the Arabic
+      //     landing page (default locale for the Jordanian audience).
+      {
+        source: "/demos/school",
+        destination: "/demos/school/ar",
+        permanent: false,
+      },
+    ];
+  },
+
   async rewrites() {
     return [
       // ─── Demos: Static HTML Exports ───
       // Each demo lives self-contained in `demos/<name>/` and is built
       // locally to static HTML. The `out/` folder is copied to
       // `public/demos/<name>/` and served as static files. These
-      // rewrites turn directory URLs (/demos/school/about/) into the
-      // actual file paths (/demos/school/about/index.html) Next.js can
-      // serve. Asset requests for /_next/static/... already hit real
-      // files in public/ and bypass the rewrite.
-      {
-        source: "/demos/school",
-        destination: "/demos/school/index.html",
-      },
-      {
-        source: "/demos/school/",
-        destination: "/demos/school/index.html",
-      },
+      // rewrites turn directory URLs (/demos/school/ar/about/) into the
+      // actual file paths (/demos/school/ar/about/index.html) Next.js
+      // can serve. Asset requests for /_next/static/... already hit
+      // real files in public/ and bypass the rewrite.
       {
         source: "/demos/school/:path+/",
         destination: "/demos/school/:path+/index.html",
