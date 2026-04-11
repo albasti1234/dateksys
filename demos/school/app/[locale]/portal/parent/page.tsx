@@ -1,5 +1,6 @@
 "use client";
 
+import { use } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import {
@@ -15,41 +16,38 @@ import {
   Sparkles,
   CreditCard,
 } from "lucide-react";
+import { getDictionary } from "@/i18n/getDictionary";
+import type { Locale } from "@/i18n/config";
 
-// ============================================
-// Parent Dashboard — Overview of all children
-// ============================================
+const statIcons = [TrendingUp, Calendar, BookOpen, Clock];
+const statColors = ["#2D8659", "#4A90E2", "#C19A4B", "#0F2C5C"];
+const quickActionIcons = [CreditCard, Bus, MessageSquare, Sparkles];
+const quickActionColors = ["#C19A4B", "#4A90E2", "#2D8659", "#0F2C5C"];
 
-const child = {
-  name: "Leila Al-Masri",
-  grade: "Grade 8-B",
-  avatar: "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=200&q=80",
-  studentId: "ALN-2024-0847",
-};
+export default function ParentDashboard({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = use(params);
+  const locale: Locale = raw === "en" ? "en" : "ar";
+  const dict = getDictionary(locale);
+  const p = dict.portals.parent.dashboard;
+  const isRTL = locale === "ar";
 
-const overviewStats = [
-  { label: "Overall Grade", value: "A-", sub: "92.5%", icon: TrendingUp, color: "#2D8659" },
-  { label: "Attendance", value: "96%", sub: "This term", icon: Calendar, color: "#4A90E2" },
-  { label: "Homework Done", value: "18/20", sub: "This week", icon: BookOpen, color: "#C19A4B" },
-  { label: "On-Time", value: "100%", sub: "Perfect record", icon: Clock, color: "#0F2C5C" },
-];
+  const h1Class = isRTL
+    ? "font-arabic-display text-3xl md:text-4xl font-bold text-[var(--color-navy)] leading-[1.4]"
+    : "font-serif text-3xl md:text-4xl font-bold text-[var(--color-navy)]";
+  const cardTitleClass = isRTL
+    ? "font-arabic-display text-xl font-bold text-[var(--color-navy)]"
+    : "font-serif text-xl font-bold text-[var(--color-navy)]";
+  const bigNumClass = isRTL
+    ? "font-arabic-display text-4xl font-bold text-[var(--color-navy)] mb-1"
+    : "font-serif text-4xl font-bold text-[var(--color-navy)] mb-1";
 
-const recentGrades = [
-  { subject: "Mathematics", grade: "A", score: "94/100", teacher: "Dr. James Wilson", date: "Mar 28" },
-  { subject: "English Literature", grade: "A-", score: "88/100", teacher: "Ms. Lina Haddad", date: "Mar 27" },
-  { subject: "Science", grade: "A", score: "91/100", teacher: "Mr. David Chen", date: "Mar 26" },
-  { subject: "Arabic", grade: "B+", score: "86/100", teacher: "Dr. Amira Saleh", date: "Mar 25" },
-  { subject: "History", grade: "A", score: "93/100", teacher: "Dr. Omar Qasim", date: "Mar 24" },
-];
+  const childAvatar =
+    "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=200&q=80";
 
-const upcomingEvents = [
-  { title: "Parent-Teacher Conference", date: "Apr 15", time: "3:00 PM", type: "Meeting" },
-  { title: "Spring Science Fair", date: "Apr 20", time: "10:00 AM", type: "Event" },
-  { title: "End of Term 2", date: "Apr 25", time: "All day", type: "Milestone" },
-  { title: "Mathematics Test — Algebra", date: "Apr 10", time: "9:00 AM", type: "Test" },
-];
-
-export default function ParentDashboard() {
   return (
     <div className="p-6 lg:p-10">
       {/* Welcome */}
@@ -59,13 +57,11 @@ export default function ParentDashboard() {
         transition={{ duration: 0.5 }}
         className="mb-8"
       >
-        <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-[var(--color-gold)] mb-2">
+        <div className="flex items-center gap-2 text-xs tracking-widest text-[var(--color-gold)] mb-2">
           <Sparkles className="w-3 h-3" />
-          <span>Welcome back, Rania</span>
+          <span>{p.welcomeTemplate}</span>
         </div>
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-[var(--color-navy)]">
-          Your daughter&apos;s journey at a glance
-        </h1>
+        <h1 className={h1Class}>{p.subtitle}</h1>
       </motion.div>
 
       {/* Child card */}
@@ -83,31 +79,37 @@ export default function ParentDashboard() {
         <div className="relative flex items-center gap-6 flex-wrap">
           <div
             className="w-24 h-24 rounded-full bg-cover bg-center border-4 shrink-0"
-            style={{ backgroundImage: `url('${child.avatar}')`, borderColor: "#C19A4B" }}
+            style={{
+              backgroundImage: `url('${childAvatar}')`,
+              borderColor: "#C19A4B",
+            }}
           />
           <div className="flex-1 min-w-0">
-            <p className="section-label !text-[var(--color-gold)] mb-2">Viewing Profile</p>
-            <h2 className="font-serif text-3xl font-bold mb-1">{child.name}</h2>
+            <p className="section-label !text-[var(--color-gold)] mb-2">
+              {p.childProfile.viewing}
+            </p>
+            <h2
+              className={`text-3xl font-bold mb-1 ${
+                isRTL ? "font-arabic-display" : "font-serif"
+              }`}
+            >
+              {p.childProfile.name}
+            </h2>
             <div className="flex items-center gap-3 text-sm text-white/70 flex-wrap">
-              <span>{child.grade}</span>
-              <span className="w-1 h-1 rounded-full bg-white/30" />
-              <span>ID: {child.studentId}</span>
+              <span>{p.childProfile.grade}</span>
               <span className="w-1 h-1 rounded-full bg-white/30" />
               <span className="inline-flex items-center gap-1 text-[var(--color-gold-light)]">
-                <CheckCircle2 className="w-3 h-3" /> Good standing
+                <CheckCircle2 className="w-3 h-3" /> {p.childProfile.status}
               </span>
             </div>
           </div>
-          <button className="btn-gold !bg-[var(--color-gold)] !text-white !border-[var(--color-gold)]">
-            View Full Profile <ArrowRight className="w-4 h-4" />
-          </button>
         </div>
       </motion.div>
 
       {/* Stats grid */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        {overviewStats.map((stat, i) => {
-          const Icon = stat.icon;
+        {p.stats.map((stat, i) => {
+          const Icon = statIcons[i];
           return (
             <motion.div
               key={stat.label}
@@ -118,21 +120,18 @@ export default function ParentDashboard() {
             >
               <div
                 className="absolute top-0 end-0 w-20 h-20 rounded-full blur-2xl opacity-10 group-hover:opacity-20 transition-opacity"
-                style={{ background: stat.color }}
+                style={{ background: statColors[i] }}
               />
               <div className="relative flex items-start justify-between mb-4">
-                <Icon className="w-5 h-5" style={{ color: stat.color }} />
+                <Icon className="w-5 h-5" style={{ color: statColors[i] }} />
                 <div
                   className="w-2 h-2 rounded-full"
-                  style={{ background: stat.color }}
+                  style={{ background: statColors[i] }}
                 />
               </div>
               <div className="relative">
-                <div className="font-serif text-4xl font-bold text-[var(--color-navy)] mb-1">
-                  {stat.value}
-                </div>
-                <div className="text-xs text-[var(--color-ink-soft)] mb-2">{stat.sub}</div>
-                <div className="text-xs uppercase tracking-wider font-semibold text-[var(--color-ink)]">
+                <div className={bigNumClass}>{stat.value}</div>
+                <div className="text-xs tracking-wider font-semibold text-[var(--color-ink)]">
                   {stat.label}
                 </div>
               </div>
@@ -143,38 +142,55 @@ export default function ParentDashboard() {
 
       {/* Main grid */}
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Recent grades — 2 cols */}
+        {/* Recent grades */}
         <div className="lg:col-span-2 bg-white border border-[var(--color-border)]">
           <div className="p-6 border-b border-[var(--color-border)] flex items-center justify-between">
             <div>
-              <h3 className="font-serif text-xl font-bold text-[var(--color-navy)]">Recent Grades</h3>
-              <p className="text-xs text-[var(--color-ink-soft)] mt-1">Last 5 assessments</p>
+              <h3 className={cardTitleClass}>{p.recentGrades.title}</h3>
+              <p className="text-xs text-[var(--color-ink-soft)] mt-1">
+                {p.recentGrades.subtitle}
+              </p>
             </div>
-            <Link href="/portal/parent/grades" className="text-xs font-semibold uppercase tracking-wider text-[var(--color-gold)] hover:text-[var(--color-gold-dark)] flex items-center gap-1">
-              View All <ArrowRight className="w-3 h-3" />
+            <Link
+              href={`/${locale}/portal/parent/grades`}
+              className="text-xs font-semibold tracking-wider text-[var(--color-gold)] hover:text-[var(--color-gold-dark)] flex items-center gap-1"
+            >
+              {dict.common.viewAll}{" "}
+              <ArrowRight
+                className={`w-3 h-3 ${isRTL ? "rotate-180" : ""}`}
+              />
             </Link>
           </div>
           <div>
-            {recentGrades.map((g, i) => (
-              <div key={g.subject} className={`p-5 flex items-center justify-between gap-4 ${i < recentGrades.length - 1 ? "border-b border-[var(--color-border-soft)]" : ""}`}>
+            {p.recentGrades.items.map((g, i) => (
+              <div
+                key={g.subject}
+                className={`p-5 flex items-center justify-between gap-4 ${
+                  i < p.recentGrades.items.length - 1
+                    ? "border-b border-[var(--color-border-soft)]"
+                    : ""
+                }`}
+              >
                 <div className="flex items-center gap-4 flex-1 min-w-0">
                   <div
                     className="w-12 h-12 flex items-center justify-center font-serif text-lg font-bold shrink-0"
-                    style={{
-                      background: g.grade.startsWith("A") ? "#2D8659" : "#C19A4B",
-                      color: "white",
-                    }}
+                    style={{ background: "#2D8659", color: "white" }}
                   >
-                    {g.grade}
+                    <span className="num">{g.score}</span>
                   </div>
                   <div className="min-w-0">
-                    <div className="font-semibold text-[var(--color-navy)] truncate">{g.subject}</div>
-                    <div className="text-xs text-[var(--color-ink-soft)] truncate">{g.teacher}</div>
+                    <div className="font-semibold text-[var(--color-navy)] truncate">
+                      {g.subject}
+                    </div>
+                    <div className="text-xs text-[var(--color-ink-soft)] truncate">
+                      {g.teacher}
+                    </div>
                   </div>
                 </div>
                 <div className="text-end shrink-0">
-                  <div className="font-serif text-lg font-bold text-[var(--color-navy)]">{g.score}</div>
-                  <div className="text-[10px] uppercase tracking-wider text-[var(--color-ink-soft)]">{g.date}</div>
+                  <div className="text-[10px] tracking-wider text-[var(--color-ink-soft)]">
+                    {g.date}
+                  </div>
                 </div>
               </div>
             ))}
@@ -184,16 +200,17 @@ export default function ParentDashboard() {
         {/* Upcoming events */}
         <div className="bg-white border border-[var(--color-border)]">
           <div className="p-6 border-b border-[var(--color-border)]">
-            <h3 className="font-serif text-xl font-bold text-[var(--color-navy)]">Upcoming</h3>
-            <p className="text-xs text-[var(--color-ink-soft)] mt-1">This month</p>
+            <h3 className={cardTitleClass}>{p.upcoming.title}</h3>
           </div>
           <div className="p-4 space-y-3">
-            {upcomingEvents.map((e) => (
-              <div key={e.title} className="p-4 bg-[var(--color-cream)] border-s-4 border-[var(--color-gold)]">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[10px] font-bold uppercase tracking-wider text-[var(--color-gold)]">{e.type}</span>
+            {p.upcoming.items.map((e) => (
+              <div
+                key={e.title}
+                className="p-4 bg-[var(--color-cream)] border-s-4 border-[var(--color-gold)]"
+              >
+                <div className="font-semibold text-sm text-[var(--color-navy)] mb-1">
+                  {e.title}
                 </div>
-                <div className="font-semibold text-sm text-[var(--color-navy)] mb-1">{e.title}</div>
                 <div className="text-xs text-[var(--color-ink-soft)] flex items-center gap-2">
                   <Calendar className="w-3 h-3" />
                   {e.date} · {e.time}
@@ -205,30 +222,30 @@ export default function ParentDashboard() {
       </div>
 
       {/* Quick actions */}
-      <div className="mt-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-        {[
-          { label: "Pay Fees", icon: CreditCard, href: "/portal/parent/fees", color: "#C19A4B" },
-          { label: "Track Bus", icon: Bus, href: "/portal/parent/bus", color: "#4A90E2" },
-          { label: "Messages", icon: MessageSquare, href: "/portal/parent/messages", color: "#2D8659" },
-          { label: "AI Helper", icon: Sparkles, href: "/portal/parent/homework", color: "#0F2C5C" },
-        ].map((action) => {
-          const Icon = action.icon;
-          return (
-            <Link
-              key={action.label}
-              href={action.href}
-              className="p-6 bg-white border border-[var(--color-border)] hover:border-[var(--color-gold)] hover:shadow-xl transition-all flex flex-col items-center text-center group"
-            >
-              <div
-                className="w-14 h-14 flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
-                style={{ background: action.color }}
+      <div className="mt-8">
+        <h3 className={`${cardTitleClass} mb-4`}>{p.quickActions.title}</h3>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {p.quickActions.items.map((action, i) => {
+            const Icon = quickActionIcons[i];
+            return (
+              <Link
+                key={action.label}
+                href={`/${locale}${action.href}`}
+                className="p-6 bg-white border border-[var(--color-border)] hover:border-[var(--color-gold)] hover:shadow-xl transition-all flex flex-col items-center text-center group"
               >
-                <Icon className="w-6 h-6 text-white" />
-              </div>
-              <span className="font-semibold text-sm text-[var(--color-navy)]">{action.label}</span>
-            </Link>
-          );
-        })}
+                <div
+                  className="w-14 h-14 flex items-center justify-center mb-3 transition-transform group-hover:scale-110"
+                  style={{ background: quickActionColors[i] }}
+                >
+                  <Icon className="w-6 h-6 text-white" />
+                </div>
+                <span className="font-semibold text-sm text-[var(--color-navy)]">
+                  {action.label}
+                </span>
+              </Link>
+            );
+          })}
+        </div>
       </div>
 
       {/* Notification banner */}
@@ -242,11 +259,22 @@ export default function ParentDashboard() {
           <AlertCircle className="w-6 h-6 text-white" />
         </div>
         <div className="flex-1 min-w-0">
-          <div className="font-serif text-lg font-bold mb-1">Fees payment due soon</div>
-          <p className="text-sm text-white/70">Your Term 3 fees of 2,100 JOD are due on April 15th. Pay online to avoid late charges.</p>
+          <div
+            className={`text-lg font-bold mb-1 ${
+              isRTL ? "font-arabic-display" : "font-serif"
+            }`}
+          >
+            {p.feesDue.title}
+          </div>
+          <p className="text-sm text-white/70">
+            <span className="font-semibold">{p.feesDue.amount}</span> · {p.feesDue.dueDate}
+          </p>
         </div>
-        <Link href="/portal/parent/fees" className="btn-gold !border-[var(--color-gold)] !bg-[var(--color-gold)] !text-white">
-          Pay Now
+        <Link
+          href={`/${locale}/portal/parent/fees`}
+          className="btn-gold !border-[var(--color-gold)] !bg-[var(--color-gold)] !text-white"
+        >
+          {p.feesDue.button}
         </Link>
       </motion.div>
     </div>

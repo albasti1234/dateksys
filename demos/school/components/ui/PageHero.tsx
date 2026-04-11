@@ -3,9 +3,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
+import type { Locale } from "@/i18n/config";
 
 // ============================================
-// Reusable page hero for inner pages
+// Reusable page hero for inner pages — bilingual
 // ============================================
 
 export default function PageHero({
@@ -14,19 +15,27 @@ export default function PageHero({
   subtitle,
   breadcrumbs = [],
   image,
+  locale,
+  homeLabel,
 }: {
   label: string;
   title: string;
   subtitle?: string;
   breadcrumbs?: { label: string; href?: string }[];
   image?: string;
+  locale: Locale;
+  homeLabel: string;
 }) {
+  const isRTL = locale === "ar";
+  const titleClass = isRTL
+    ? "font-arabic-display text-5xl md:text-6xl lg:text-7xl font-bold leading-[1.25] tracking-tight max-w-4xl"
+    : "font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight max-w-4xl";
+
   return (
     <section
       className="relative bg-[var(--color-navy)] text-white overflow-hidden"
       style={{ minHeight: 420 }}
     >
-      {/* Background image if provided */}
       {image && (
         <div
           className="absolute inset-0 bg-cover bg-center opacity-30"
@@ -46,7 +55,7 @@ export default function PageHero({
 
       {/* Gold gradient glow */}
       <div
-        className="absolute top-1/2 right-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-10 -translate-y-1/2 pointer-events-none"
+        className="absolute top-1/2 end-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-10 -translate-y-1/2 pointer-events-none"
         style={{ background: "#C19A4B" }}
       />
 
@@ -58,19 +67,29 @@ export default function PageHero({
           transition={{ duration: 0.5 }}
           className="flex items-center gap-2 text-xs text-white/50 mb-6"
         >
-          <Link href="/" className="flex items-center gap-1 hover:text-[var(--color-gold)]">
+          <Link
+            href={`/${locale}`}
+            className="flex items-center gap-1 hover:text-[var(--color-gold)]"
+          >
             <Home className="w-3 h-3" />
-            Home
+            {homeLabel}
           </Link>
           {breadcrumbs.map((b) => (
             <span key={b.label} className="flex items-center gap-2">
-              <ChevronRight className="w-3 h-3" />
+              <ChevronRight
+                className={`w-3 h-3 ${isRTL ? "-scale-x-100" : ""}`}
+              />
               {b.href ? (
-                <Link href={b.href} className="hover:text-[var(--color-gold)]">
+                <Link
+                  href={`/${locale}${b.href}`}
+                  className="hover:text-[var(--color-gold)]"
+                >
                   {b.label}
                 </Link>
               ) : (
-                <span className="text-[var(--color-gold-light)]">{b.label}</span>
+                <span className="text-[var(--color-gold-light)]">
+                  {b.label}
+                </span>
               )}
             </span>
           ))}
@@ -91,7 +110,7 @@ export default function PageHero({
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2 }}
-          className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold leading-tight tracking-tight max-w-4xl"
+          className={titleClass}
         >
           {title}
         </motion.h1>
@@ -102,7 +121,9 @@ export default function PageHero({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.35 }}
-            className="mt-6 text-lg text-white/70 leading-relaxed max-w-2xl"
+            className={`mt-6 text-lg text-white/70 max-w-2xl ${
+              isRTL ? "leading-[2]" : "leading-relaxed"
+            }`}
           >
             {subtitle}
           </motion.p>
@@ -113,7 +134,7 @@ export default function PageHero({
           initial={{ scaleX: 0 }}
           animate={{ scaleX: 1 }}
           transition={{ duration: 1, delay: 0.5 }}
-          className="mt-12 h-px origin-left"
+          className={`mt-12 h-px ${isRTL ? "origin-right" : "origin-left"}`}
           style={{
             background: "linear-gradient(90deg, #C19A4B, transparent)",
             width: 180,

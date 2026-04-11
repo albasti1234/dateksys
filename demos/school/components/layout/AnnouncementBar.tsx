@@ -39,11 +39,12 @@ export default function AnnouncementBar({
 
   if (!visible) return null;
 
-  // Swap /ar/... ↔ /en/... while preserving the rest of the path
+  // usePathname() returns path WITHOUT basePath — swap first segment.
+  // Next.js Link re-adds basePath automatically.
   const otherLocale: Locale = locale === "ar" ? "en" : "ar";
   const switchHref = pathname
-    ? pathname.replace(/^\/demos\/school\/(ar|en)/, `/demos/school/${otherLocale}`)
-    : `/demos/school/${otherLocale}`;
+    ? pathname.replace(/^\/(ar|en)/, `/${otherLocale}`)
+    : `/${otherLocale}`;
   const switchLabel = locale === "ar" ? "English" : "العربية";
 
   return (

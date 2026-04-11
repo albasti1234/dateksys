@@ -1,69 +1,93 @@
 "use client";
 
+import { use } from "react";
 import { motion } from "framer-motion";
-import { Users, GraduationCap, CreditCard, TrendingUp, AlertCircle, BookOpen, Activity } from "lucide-react";
+import {
+  Users,
+  GraduationCap,
+  CreditCard,
+  TrendingUp,
+  AlertCircle,
+  Activity,
+} from "lucide-react";
+import { getDictionary } from "@/i18n/getDictionary";
+import type { Locale } from "@/i18n/config";
 
-const kpis = [
-  { label: "Total Students", value: "854", change: "+23", trend: "up", icon: Users, color: "#4A90E2" },
-  { label: "Active Faculty", value: "67", change: "+2", trend: "up", icon: GraduationCap, color: "#2D8659" },
-  { label: "Revenue (YTD)", value: "5.4M", unit: "JOD", change: "+12%", trend: "up", icon: CreditCard, color: "#C19A4B" },
-  { label: "Avg. Attendance", value: "94.2%", change: "+0.8%", trend: "up", icon: Activity, color: "#0F2C5C" },
-];
+const kpiIcons = [Users, GraduationCap, CreditCard, Activity];
+const kpiColors = ["#4A90E2", "#2D8659", "#C19A4B", "#0F2C5C"];
+const gradeColors = ["#4A90E2", "#2D8659", "#C19A4B", "#0F2C5C"];
 
-const gradeDistribution = [
-  { grade: "KG1-KG2", count: 85, color: "#4A90E2" },
-  { grade: "Grades 1-5", count: 280, color: "#2D8659" },
-  { grade: "Grades 6-8", count: 195, color: "#C19A4B" },
-  { grade: "Grades 9-12", count: 294, color: "#0F2C5C" },
-];
+export default function AdminDashboard({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = use(params);
+  const locale: Locale = raw === "en" ? "en" : "ar";
+  const dict = getDictionary(locale);
+  const a = dict.portals.admin.dashboard;
+  const isRTL = locale === "ar";
 
-const alerts = [
-  { severity: "high", title: "15 overdue fee payments", sub: "Total: 31,500 JOD · Requires follow-up", time: "Today" },
-  { severity: "medium", title: "Grade 9-A attendance dropping", sub: "Below 90% this week · Investigation needed", time: "2h ago" },
-  { severity: "low", title: "Teacher contract renewal", sub: "3 contracts expire next month", time: "1d ago" },
-];
+  const h1Class = isRTL
+    ? "font-arabic-display text-3xl md:text-4xl font-bold text-[var(--color-navy)] leading-[1.4]"
+    : "font-serif text-3xl md:text-4xl font-bold text-[var(--color-navy)]";
+  const cardTitleClass = isRTL
+    ? "font-arabic-display text-xl font-bold text-[var(--color-navy)]"
+    : "font-serif text-xl font-bold text-[var(--color-navy)]";
+  const bigNumClass = isRTL
+    ? "font-arabic-display text-4xl font-bold text-[var(--color-navy)]"
+    : "font-serif text-4xl font-bold text-[var(--color-navy)]";
 
-const recentEnrollments = [
-  { name: "Rania Zahra", grade: "Grade 4", date: "Apr 08", status: "active" },
-  { name: "Fadi Al-Rashid", grade: "Grade 7", date: "Apr 07", status: "active" },
-  { name: "Layla Mansour", grade: "KG2", date: "Apr 05", status: "pending" },
-  { name: "Yazan Haddad", grade: "Grade 10", date: "Apr 03", status: "active" },
-  { name: "Sara Nasser", grade: "Grade 1", date: "Apr 02", status: "active" },
-];
-
-export default function AdminDashboard() {
-  const totalStudents = gradeDistribution.reduce((s, g) => s + g.count, 0);
+  const totalStudents = a.distribution.grades.reduce(
+    (s, g) => s + parseInt(g.value.replace(/[^0-9]/g, ""), 10) || 0,
+    0
+  );
 
   return (
     <div className="p-6 lg:p-10">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8">
-        <p className="section-label mb-3">School Administration</p>
-        <h1 className="font-serif text-3xl md:text-4xl font-bold text-[var(--color-navy)]">Academic Year 2025-2026</h1>
-        <p className="text-[var(--color-ink-soft)] mt-2">Real-time overview of school operations</p>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="mb-8"
+      >
+        <p className="section-label mb-3">{a.welcome}</p>
+        <h1 className={h1Class}>{a.academicYear}</h1>
+        <p className="text-[var(--color-ink-soft)] mt-2">{a.subtitle}</p>
       </motion.div>
 
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
-        {kpis.map((k, i) => {
-          const Icon = k.icon;
+        {a.kpis.map((k, i) => {
+          const Icon = kpiIcons[i];
           return (
-            <motion.div key={k.label} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }} className="bg-white p-6 border border-[var(--color-border)] relative overflow-hidden">
-              <div className="absolute top-0 end-0 w-32 h-32 rounded-full blur-3xl opacity-10" style={{ background: k.color }} />
+            <motion.div
+              key={k.label}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.08 }}
+              className="bg-white p-6 border border-[var(--color-border)] relative overflow-hidden"
+            >
+              <div
+                className="absolute top-0 end-0 w-32 h-32 rounded-full blur-3xl opacity-10"
+                style={{ background: kpiColors[i] }}
+              />
               <div className="relative">
                 <div className="flex items-start justify-between mb-4">
-                  <div className="w-10 h-10 flex items-center justify-center" style={{ background: k.color }}>
+                  <div
+                    className="w-10 h-10 flex items-center justify-center"
+                    style={{ background: kpiColors[i] }}
+                  >
                     <Icon className="w-5 h-5 text-white" />
                   </div>
                   <span className="inline-flex items-center gap-1 text-xs font-bold text-green-700">
                     <TrendingUp className="w-3 h-3" />
-                    {k.change}
+                    {k.trend}
                   </span>
                 </div>
-                <div className="font-serif text-4xl font-bold text-[var(--color-navy)]">
-                  {k.value}
-                  {k.unit && <span className="text-base text-[var(--color-ink-soft)] ms-1">{k.unit}</span>}
+                <div className={bigNumClass}>{k.value}</div>
+                <div className="text-xs tracking-wider font-semibold text-[var(--color-ink-soft)] mt-2">
+                  {k.label}
                 </div>
-                <div className="text-xs uppercase tracking-wider font-semibold text-[var(--color-ink-soft)] mt-2">{k.label}</div>
               </div>
             </motion.div>
           );
@@ -73,15 +97,24 @@ export default function AdminDashboard() {
       <div className="grid lg:grid-cols-3 gap-6 mb-8">
         {/* Grade distribution chart */}
         <div className="lg:col-span-2 bg-white border border-[var(--color-border)] p-6">
-          <h3 className="font-serif text-xl font-bold text-[var(--color-navy)] mb-6">Student Distribution</h3>
+          <h3 className={`${cardTitleClass} mb-6`}>{a.distribution.title}</h3>
           <div className="space-y-5">
-            {gradeDistribution.map((g) => {
-              const pct = (g.count / totalStudents) * 100;
+            {a.distribution.grades.map((g, i) => {
+              const count = parseInt(g.value.replace(/[^0-9]/g, ""), 10) || 0;
+              const pct = totalStudents > 0 ? (count / totalStudents) * 100 : 0;
               return (
-                <div key={g.grade}>
+                <div key={g.label}>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm font-semibold text-[var(--color-navy)]">{g.grade}</span>
-                    <span className="font-serif text-lg font-bold text-[var(--color-navy)]">{g.count} <span className="text-xs text-[var(--color-ink-soft)]">({pct.toFixed(1)}%)</span></span>
+                    <span className="text-sm font-semibold text-[var(--color-navy)]">
+                      {g.label}
+                    </span>
+                    <span
+                      className={`text-lg font-bold text-[var(--color-navy)] ${
+                        isRTL ? "font-arabic-display" : "font-serif"
+                      }`}
+                    >
+                      {g.value}
+                    </span>
                   </div>
                   <div className="h-3 bg-[var(--color-cream)] overflow-hidden">
                     <motion.div
@@ -89,7 +122,7 @@ export default function AdminDashboard() {
                       animate={{ width: `${pct}%` }}
                       transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
                       className="h-full"
-                      style={{ background: g.color }}
+                      style={{ background: gradeColors[i] }}
                     />
                   </div>
                 </div>
@@ -101,18 +134,23 @@ export default function AdminDashboard() {
         {/* Alerts */}
         <div className="bg-white border border-[var(--color-border)]">
           <div className="p-6 border-b border-[var(--color-border)]">
-            <h3 className="font-serif text-xl font-bold text-[var(--color-navy)]">Alerts</h3>
-            <p className="text-xs text-[var(--color-ink-soft)] mt-1">{alerts.length} items need attention</p>
+            <h3 className={cardTitleClass}>{a.alerts.title}</h3>
           </div>
           <div className="p-4 space-y-3">
-            {alerts.map((a, i) => (
-              <div key={i} className={`p-4 border-s-4 ${a.severity === "high" ? "border-red-500 bg-red-50" : a.severity === "medium" ? "border-[var(--color-gold)] bg-[var(--color-cream)]" : "border-blue-400 bg-blue-50"}`}>
+            {a.alerts.items.map((item, i) => (
+              <div
+                key={i}
+                className="p-4 border-s-4 border-[var(--color-gold)] bg-[var(--color-cream)]"
+              >
                 <div className="flex items-start gap-3">
-                  <AlertCircle className={`w-4 h-4 shrink-0 mt-0.5 ${a.severity === "high" ? "text-red-600" : a.severity === "medium" ? "text-[var(--color-gold)]" : "text-blue-600"}`} />
+                  <AlertCircle className="w-4 h-4 shrink-0 mt-0.5 text-[var(--color-gold)]" />
                   <div className="min-w-0">
-                    <div className="text-sm font-semibold text-[var(--color-navy)]">{a.title}</div>
-                    <div className="text-xs text-[var(--color-ink-soft)] mt-1">{a.sub}</div>
-                    <div className="text-[10px] text-[var(--color-ink-soft)] mt-1 uppercase tracking-wider">{a.time}</div>
+                    <div className="text-sm font-semibold text-[var(--color-navy)]">
+                      {item.title}
+                    </div>
+                    <div className="text-xs text-[var(--color-ink-soft)] mt-1">
+                      {item.sub}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -123,31 +161,49 @@ export default function AdminDashboard() {
 
       {/* Recent enrollments */}
       <div className="bg-white border border-[var(--color-border)]">
-        <div className="p-6 border-b border-[var(--color-border)] flex items-center justify-between">
-          <div>
-            <h3 className="font-serif text-xl font-bold text-[var(--color-navy)]">Recent Enrollments</h3>
-            <p className="text-xs text-[var(--color-ink-soft)] mt-1">New students this month</p>
-          </div>
-          <button className="btn-outline !py-2 text-xs">View All</button>
+        <div className="p-6 border-b border-[var(--color-border)]">
+          <h3 className={cardTitleClass}>{a.enrollments.title}</h3>
         </div>
         <table className="w-full">
           <thead className="bg-[var(--color-cream)]">
             <tr>
-              <th className="text-start p-4 text-[10px] font-bold uppercase tracking-wider text-[var(--color-ink-soft)]">Student</th>
-              <th className="text-start p-4 text-[10px] font-bold uppercase tracking-wider text-[var(--color-ink-soft)]">Grade</th>
-              <th className="text-start p-4 text-[10px] font-bold uppercase tracking-wider text-[var(--color-ink-soft)]">Date</th>
-              <th className="text-start p-4 text-[10px] font-bold uppercase tracking-wider text-[var(--color-ink-soft)]">Status</th>
+              <th className="text-start p-4 text-[10px] font-bold tracking-wider text-[var(--color-ink-soft)]">
+                {a.enrollments.headers.name}
+              </th>
+              <th className="text-start p-4 text-[10px] font-bold tracking-wider text-[var(--color-ink-soft)]">
+                {a.enrollments.headers.grade}
+              </th>
+              <th className="text-start p-4 text-[10px] font-bold tracking-wider text-[var(--color-ink-soft)]">
+                {a.enrollments.headers.date}
+              </th>
+              <th className="text-start p-4 text-[10px] font-bold tracking-wider text-[var(--color-ink-soft)]">
+                {a.enrollments.headers.status}
+              </th>
             </tr>
           </thead>
           <tbody>
-            {recentEnrollments.map((e, i) => (
+            {a.enrollments.rows.map((row, i) => (
               <tr key={i} className="border-t border-[var(--color-border-soft)]">
-                <td className="p-4 font-semibold text-[var(--color-navy)]">{e.name}</td>
-                <td className="p-4 text-sm">{e.grade}</td>
-                <td className="p-4 text-sm text-[var(--color-ink-soft)]">{e.date}</td>
+                <td className="p-4 font-semibold text-[var(--color-navy)]">
+                  {row.name}
+                </td>
+                <td className="p-4 text-sm">{row.grade}</td>
+                <td className="p-4 text-sm text-[var(--color-ink-soft)]">
+                  {row.date}
+                </td>
                 <td className="p-4">
-                  <span className={`inline-flex items-center gap-1 px-3 py-1 text-[10px] font-bold uppercase tracking-wider ${e.status === "active" ? "bg-green-50 text-green-700" : "bg-amber-50 text-amber-700"}`}>
-                    {e.status}
+                  <span
+                    className={`inline-flex items-center gap-1 px-3 py-1 text-[10px] font-bold tracking-wider ${
+                      row.status === "active"
+                        ? "bg-green-50 text-green-700"
+                        : "bg-amber-50 text-amber-700"
+                    }`}
+                  >
+                    {
+                      a.enrollments.statusLabels[
+                        row.status as "active" | "pending"
+                      ]
+                    }
                   </span>
                 </td>
               </tr>

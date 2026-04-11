@@ -1,6 +1,7 @@
 "use client";
 
-import PortalShell, { NavItem } from "@/components/portal/PortalShell";
+import { use } from "react";
+import PortalShell, { type NavItem } from "@/components/portal/PortalShell";
 import {
   LayoutDashboard,
   BookOpen,
@@ -12,28 +13,55 @@ import {
   MessageSquare,
   Settings,
 } from "lucide-react";
+import { getDictionary } from "@/i18n/getDictionary";
+import type { Locale } from "@/i18n/config";
 
-const nav: NavItem[] = [
-  { href: "/portal/student", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/portal/student/homework", label: "Homework", icon: BookOpen, badge: 4 },
-  { href: "/portal/student/grades", label: "My Grades", icon: GraduationCap },
-  { href: "/portal/student/schedule", label: "Schedule", icon: Calendar },
-  { href: "/portal/student/ai-helper", label: "AI Study Buddy", icon: Sparkles },
-  { href: "/portal/student/achievements", label: "Achievements", icon: Trophy },
-  { href: "/portal/student/library", label: "Library", icon: Library },
-  { href: "/portal/student/messages", label: "Messages", icon: MessageSquare },
-  { href: "/portal/student/settings", label: "Settings", icon: Settings },
+const icons = [
+  LayoutDashboard,
+  BookOpen,
+  GraduationCap,
+  Calendar,
+  Sparkles,
+  Trophy,
+  Library,
+  MessageSquare,
+  Settings,
 ];
 
-export default function StudentLayout({ children }: { children: React.ReactNode }) {
+export default function StudentLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = use(params);
+  const locale: Locale = raw === "en" ? "en" : "ar";
+  const dict = getDictionary(locale);
+
+  const nav: NavItem[] = dict.portals.student.nav.map((item, i) => ({
+    href: `/${locale}${item.href}`,
+    label: item.label,
+    icon: icons[i],
+    ...(i === 1 ? { badge: 4 } : {}),
+  }));
+
   return (
     <PortalShell
       nav={nav}
-      role="Student Portal"
+      locale={locale}
+      brandName={locale === "ar" ? "النخلة" : "Al-Nakhla"}
+      dict={{
+        signOut: dict.portals.common.signOut,
+        search: dict.portals.common.search,
+        switchLanguageLabel: dict.portals.common.switchLanguageLabel,
+        roleLabel: dict.portals.common.roles.student,
+      }}
       user={{
-        name: "Leila Al-Masri",
-        email: "leila.almasri@student.alnakhla.edu.jo",
-        avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80",
+        name: locale === "ar" ? "ليلى الحوراني" : "Leila Al-Hourani",
+        email: "leila.alhourani@student.alnakhla.edu.jo",
+        avatar:
+          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=200&q=80",
       }}
     >
       {children}

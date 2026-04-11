@@ -10,14 +10,13 @@ import {
   Search,
   Menu,
   X,
-  ChevronRight,
+  Globe,
   LucideIcon,
 } from "lucide-react";
-import Logo from "@/components/ui/Logo";
+import type { Locale } from "@/i18n/config";
 
 // ============================================
-// Portal Shell — shared sidebar + topbar layout
-// Used by Parent, Teacher, Student, Admin portals
+// Portal Shell — shared sidebar + topbar, bilingual
 // ============================================
 
 export type NavItem = {
@@ -27,20 +26,41 @@ export type NavItem = {
   badge?: string | number;
 };
 
+type ShellDict = {
+  signOut: string;
+  search: string;
+  online?: string;
+  switchLanguageLabel: string;
+  roleLabel: string;
+};
+
 export default function PortalShell({
   children,
   nav,
   user,
-  role,
+  locale,
+  dict,
+  brandName,
 }: {
   children: ReactNode;
   nav: NavItem[];
   user: { name: string; email: string; avatar: string };
-  role: string;
+  locale: Locale;
+  dict: ShellDict;
+  brandName: string;
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
+  const isRTL = locale === "ar";
+
+  // Language switch: usePathname returns path WITHOUT basePath.
+  // Swap first segment (/ar or /en) and let Next.js add basePath.
+  const otherLocale: Locale = locale === "ar" ? "en" : "ar";
+  const switchHref = pathname
+    ? pathname.replace(/^\/(ar|en)/, `/${otherLocale}`)
+    : `/${otherLocale}`;
+
+  const homeHref = `/${locale}`;
 
   return (
     <div className="min-h-screen bg-[var(--color-cream)] flex">
@@ -60,21 +80,35 @@ export default function PortalShell({
       {/* ── Sidebar ── */}
       <aside
         className={`fixed lg:sticky top-0 start-0 h-screen w-[280px] bg-[var(--color-navy)] text-white z-50 transition-transform duration-300 flex flex-col ${
-          sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
+          sidebarOpen
+            ? "translate-x-0"
+            : isRTL
+              ? "translate-x-full lg:translate-x-0"
+              : "-translate-x-full lg:translate-x-0"
         }`}
       >
         {/* Sidebar header */}
         <div className="px-6 py-5 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <svg viewBox="0 0 48 48" className="h-10 w-10" fill="none">
+            <svg viewBox="0 0 48 48" className="h-10 w-10 shrink-0" fill="none">
               <defs>
                 <linearGradient id="sbgold" x1="0" y1="0" x2="1" y2="1">
                   <stop offset="0%" stopColor="#D4B26A" />
                   <stop offset="100%" stopColor="#A07E34" />
                 </linearGradient>
               </defs>
-              <path d="M24 4 L40 10 L40 24 Q40 36 24 44 Q8 36 8 24 L8 10 Z" fill="#0F2C5C" stroke="url(#sbgold)" strokeWidth="1" />
-              <g stroke="url(#sbgold)" strokeWidth="1.5" strokeLinecap="round" fill="none">
+              <path
+                d="M24 4 L40 10 L40 24 Q40 36 24 44 Q8 36 8 24 L8 10 Z"
+                fill="#0F2C5C"
+                stroke="url(#sbgold)"
+                strokeWidth="1"
+              />
+              <g
+                stroke="url(#sbgold)"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                fill="none"
+              >
                 <path d="M24 32 L24 18" />
                 <path d="M24 22 Q18 18 14 20" />
                 <path d="M24 22 Q30 18 34 20" />
@@ -83,13 +117,27 @@ export default function PortalShell({
               </g>
             </svg>
             <div className="leading-tight">
-              <div className="font-serif font-bold text-base">Al-Nakhla</div>
-              <div className="text-[10px] uppercase tracking-widest text-[var(--color-gold-light)]">
-                {role}
+              <div
+                className={`font-bold text-base ${
+                  isRTL ? "font-arabic-display" : "font-serif"
+                }`}
+              >
+                {brandName}
+              </div>
+              <div
+                className={`text-[10px] tracking-widest text-[var(--color-gold-light)] ${
+                  isRTL ? "font-arabic" : "uppercase"
+                }`}
+              >
+                {dict.roleLabel}
               </div>
             </div>
           </div>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-white/70">
+          <button
+            onClick={() => setSidebarOpen(false)}
+            className="lg:hidden text-white/70"
+            aria-label="Close sidebar"
+          >
             <X className="w-5 h-5" />
           </button>
         </div>
@@ -98,8 +146,11 @@ export default function PortalShell({
         <div className="px-6 py-4 border-b border-white/10">
           <div className="flex items-center gap-3">
             <div
-              className="w-11 h-11 rounded-full bg-cover bg-center border-2"
-              style={{ backgroundImage: `url('${user.avatar}')`, borderColor: "#C19A4B" }}
+              className="w-11 h-11 rounded-full bg-cover bg-center border-2 shrink-0"
+              style={{
+                backgroundImage: `url('${user.avatar}')`,
+                borderColor: "#C19A4B",
+              }}
             />
             <div className="min-w-0 flex-1">
               <div className="font-semibold text-sm truncate">{user.name}</div>
@@ -112,7 +163,9 @@ export default function PortalShell({
         <nav className="flex-1 overflow-y-auto py-4">
           {nav.map((item) => {
             const Icon = item.icon;
-            const active = pathname === item.href || (item.href !== "/portal/parent" && pathname?.startsWith(item.href));
+            const normalizedHref = item.href.replace(/\/$/, "");
+            const normalizedPath = pathname?.replace(/\/$/, "") ?? "";
+            const active = normalizedPath === normalizedHref;
             return (
               <Link
                 key={item.href}
@@ -145,35 +198,67 @@ export default function PortalShell({
           })}
         </nav>
 
-        {/* Footer */}
-        <div className="px-6 py-4 border-t border-white/10">
-          <Link href="/" className="flex items-center gap-3 px-2 py-2 text-sm text-white/60 hover:text-white transition-colors">
+        {/* Language switcher + sign out */}
+        <div className="px-6 py-4 border-t border-white/10 space-y-2">
+          <Link
+            href={switchHref}
+            className="flex items-center gap-3 px-2 py-2 text-sm text-white/60 hover:text-[var(--color-gold-light)] transition-colors"
+            lang={otherLocale}
+          >
+            <Globe className="w-4 h-4" />
+            <span className={otherLocale === "ar" ? "font-arabic" : ""}>
+              {dict.switchLanguageLabel}
+            </span>
+          </Link>
+          <Link
+            href={homeHref}
+            className="flex items-center gap-3 px-2 py-2 text-sm text-white/60 hover:text-white transition-colors"
+          >
             <LogOut className="w-4 h-4" />
-            <span>Sign Out</span>
+            <span>{dict.signOut}</span>
           </Link>
         </div>
       </aside>
 
       {/* ── Main area ── */}
-      <div className="flex-1 flex flex-col min-w-0 lg:ms-0">
+      <div className="flex-1 flex flex-col min-w-0">
         {/* Top bar */}
         <header className="sticky top-0 z-30 bg-white border-b border-[var(--color-border)] h-16 flex items-center justify-between px-6 lg:px-8">
           <div className="flex items-center gap-4 flex-1">
-            <button onClick={() => setSidebarOpen(true)} className="lg:hidden text-[var(--color-navy)]">
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="lg:hidden text-[var(--color-navy)]"
+              aria-label="Open sidebar"
+            >
               <Menu className="w-5 h-5" />
             </button>
             <div className="hidden lg:flex items-center gap-2 max-w-md flex-1">
               <Search className="w-4 h-4 text-[var(--color-ink-soft)]" />
               <input
                 type="text"
-                placeholder="Search students, classes, reports..."
+                placeholder={dict.search}
                 className="flex-1 bg-transparent focus:outline-none text-sm text-[var(--color-ink)] placeholder-[var(--color-ink-soft)]"
               />
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <button className="relative p-2 text-[var(--color-ink-soft)] hover:text-[var(--color-navy)] transition-colors">
+            {/* Quick language toggle in topbar */}
+            <Link
+              href={switchHref}
+              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-[var(--color-ink-soft)] hover:text-[var(--color-navy)] transition-colors border border-[var(--color-border)] hover:border-[var(--color-gold)]"
+              lang={otherLocale}
+            >
+              <Globe className="w-3.5 h-3.5" />
+              <span className={otherLocale === "ar" ? "font-arabic" : ""}>
+                {dict.switchLanguageLabel}
+              </span>
+            </Link>
+
+            <button
+              className="relative p-2 text-[var(--color-ink-soft)] hover:text-[var(--color-navy)] transition-colors"
+              aria-label="Notifications"
+            >
               <Bell className="w-5 h-5" />
               <span
                 className="absolute top-1 end-1 w-2 h-2 rounded-full"
@@ -182,12 +267,20 @@ export default function PortalShell({
             </button>
             <div className="hidden lg:flex items-center gap-3 ps-3 border-s border-[var(--color-border)]">
               <div
-                className="w-9 h-9 rounded-full bg-cover bg-center"
+                className="w-9 h-9 rounded-full bg-cover bg-center shrink-0"
                 style={{ backgroundImage: `url('${user.avatar}')` }}
               />
               <div className="leading-tight">
-                <div className="text-sm font-semibold text-[var(--color-navy)]">{user.name.split(" ")[0]}</div>
-                <div className="text-[10px] uppercase tracking-wider text-[var(--color-gold)]">{role}</div>
+                <div className="text-sm font-semibold text-[var(--color-navy)]">
+                  {user.name.split(" ")[0]}
+                </div>
+                <div
+                  className={`text-[10px] tracking-wider text-[var(--color-gold)] ${
+                    isRTL ? "font-arabic" : "uppercase"
+                  }`}
+                >
+                  {dict.roleLabel}
+                </div>
               </div>
             </div>
           </div>

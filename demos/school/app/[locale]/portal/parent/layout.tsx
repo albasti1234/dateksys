@@ -1,6 +1,7 @@
 "use client";
 
-import PortalShell, { NavItem } from "@/components/portal/PortalShell";
+import { use } from "react";
+import PortalShell, { type NavItem } from "@/components/portal/PortalShell";
 import {
   LayoutDashboard,
   GraduationCap,
@@ -12,28 +13,56 @@ import {
   FileText,
   Settings,
 } from "lucide-react";
+import { getDictionary } from "@/i18n/getDictionary";
+import type { Locale } from "@/i18n/config";
 
-const nav: NavItem[] = [
-  { href: "/portal/parent", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/portal/parent/grades", label: "Grades & Reports", icon: GraduationCap },
-  { href: "/portal/parent/attendance", label: "Attendance", icon: Calendar },
-  { href: "/portal/parent/fees", label: "Fees & Payments", icon: CreditCard, badge: "Due" },
-  { href: "/portal/parent/messages", label: "Messages", icon: MessageSquare, badge: 3 },
-  { href: "/portal/parent/bus", label: "Bus Tracking", icon: Bus },
-  { href: "/portal/parent/homework", label: "AI Homework Helper", icon: Sparkles },
-  { href: "/portal/parent/documents", label: "Documents", icon: FileText },
-  { href: "/portal/parent/settings", label: "Settings", icon: Settings },
+const icons = [
+  LayoutDashboard,
+  GraduationCap,
+  Calendar,
+  CreditCard,
+  MessageSquare,
+  Bus,
+  Sparkles,
+  FileText,
+  Settings,
 ];
 
-export default function ParentLayout({ children }: { children: React.ReactNode }) {
+export default function ParentLayout({
+  children,
+  params,
+}: {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale: raw } = use(params);
+  const locale: Locale = raw === "en" ? "en" : "ar";
+  const dict = getDictionary(locale);
+
+  const nav: NavItem[] = dict.portals.parent.nav.map((item, i) => ({
+    href: `/${locale}${item.href}`,
+    label: item.label,
+    icon: icons[i],
+    ...(i === 3 ? { badge: locale === "ar" ? "مستحقّة" : "Due" } : {}),
+    ...(i === 4 ? { badge: 3 } : {}),
+  }));
+
   return (
     <PortalShell
       nav={nav}
-      role="Parent Portal"
+      locale={locale}
+      brandName={locale === "ar" ? "النخلة" : "Al-Nakhla"}
+      dict={{
+        signOut: dict.portals.common.signOut,
+        search: dict.portals.common.search,
+        switchLanguageLabel: dict.portals.common.switchLanguageLabel,
+        roleLabel: dict.portals.common.roles.parent,
+      }}
       user={{
-        name: "Rania Al-Masri",
-        email: "rania.almasri@email.com",
-        avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
+        name: locale === "ar" ? "رانيا الحوراني" : "Rania Al-Hourani",
+        email: "rania.alhourani@email.com",
+        avatar:
+          "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80",
       }}
     >
       {children}

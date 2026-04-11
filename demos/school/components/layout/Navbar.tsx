@@ -73,14 +73,13 @@ export default function Navbar({
 
   const portals = dict.portals.map((pt) => ({ ...pt, href: p(pt.href) }));
 
-  // Language switcher target: swap /ar ↔ /en in the current pathname
+  // Language switcher target: usePathname() returns the path WITHOUT
+  // the basePath (/demos/school), so we swap the first segment.
+  // Next.js Link auto-prepends basePath when rendering the href.
   const otherLocale: Locale = locale === "ar" ? "en" : "ar";
   const switchHref = pathname
-    ? pathname.replace(
-        /^\/demos\/school\/(ar|en)/,
-        `/demos/school/${otherLocale}`
-      )
-    : `/demos/school/${otherLocale}`;
+    ? pathname.replace(/^\/(ar|en)/, `/${otherLocale}`)
+    : `/${otherLocale}`;
 
   return (
     <header
