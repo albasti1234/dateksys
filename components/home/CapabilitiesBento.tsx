@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, MouseEvent } from "react";
-import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import { useRef, useState, useEffect, MouseEvent } from "react";
+import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 
@@ -182,6 +182,18 @@ function BentoCard({
   const ref = useRef<HTMLDivElement>(null);
   const theme = themes[item.color] || themes.blue;
 
+  // Mobile auto-activation on scroll
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const update = () => setIsMobile(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  const inView = useInView(ref, { margin: "-40% 0px -40% 0px" });
+  const isActive = isMobile && inView;
+
   // Mouse position (normalized 0-1)
   const mx = useMotionValue(0.5);
   const my = useMotionValue(0.5);
@@ -280,9 +292,11 @@ function BentoCard({
         }}
       />
 
-      {/* Animated background layer — parallax, fades out on hover */}
+      {/* Animated background layer — parallax, fades out on hover/active */}
       <motion.div
-        className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
+        className={`absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 ${
+          isActive ? "opacity-0" : "opacity-100"
+        }`}
         style={{ x: txBg, y: tyBg }}
       >
         {bgMap[bgKind]}
@@ -300,24 +314,32 @@ function BentoCard({
           src={item.image}
           alt={item.title}
           fill
-          className="object-cover opacity-40 mix-blend-luminosity transition-all duration-500 group-hover:opacity-100 group-hover:mix-blend-normal group-hover:scale-[1.04]"
+          className={`object-cover transition-all duration-500 group-hover:opacity-100 group-hover:mix-blend-normal group-hover:scale-[1.04] ${
+            isActive
+              ? "opacity-100 mix-blend-normal scale-[1.04]"
+              : "opacity-40 mix-blend-luminosity"
+          }`}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </motion.div>
 
-      {/* Gradient overlay — fades out on hover so image shows cleanly */}
+      {/* Gradient overlay — fades out on hover/active so image shows cleanly */}
       <div
-        className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
+        className={`absolute inset-0 transition-opacity duration-500 group-hover:opacity-0 ${
+          isActive ? "opacity-0" : "opacity-100"
+        }`}
         style={{
           background: `linear-gradient(180deg, rgba(9,9,11,0.2) 0%, rgba(9,9,11,0.75) 60%, rgba(9,9,11,0.95) 100%)`,
         }}
       />
 
-      {/* Subtle bottom gradient on hover — keeps text readable without hiding image */}
+      {/* Subtle bottom gradient on hover/active — keeps text readable without hiding image */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className={`absolute inset-0 pointer-events-none transition-opacity duration-500 group-hover:opacity-100 ${
+          isActive ? "opacity-100" : "opacity-0"
+        }`}
         style={{
-          background: `linear-gradient(180deg, transparent 40%, rgba(9,9,11,0.85) 100%)`,
+          background: `linear-gradient(180deg, transparent 40%, rgba(9,9,11,0.9) 100%)`,
         }}
       />
 
@@ -346,7 +368,9 @@ function BentoCard({
 
       {/* Hover border glow */}
       <div
-        className="absolute inset-0 rounded-2xl pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className={`absolute inset-0 rounded-2xl pointer-events-none transition-opacity duration-500 group-hover:opacity-100 ${
+          isActive ? "opacity-100" : "opacity-0"
+        }`}
         style={{
           boxShadow: `inset 0 0 0 1px ${theme.border}, 0 0 40px -10px ${theme.glow}`,
         }}
@@ -354,7 +378,9 @@ function BentoCard({
 
       {/* Glass shine on top */}
       <div
-        className="absolute top-0 left-0 right-0 h-px opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        className={`absolute top-0 left-0 right-0 h-px transition-opacity duration-500 group-hover:opacity-100 ${
+          isActive ? "opacity-100" : "opacity-0"
+        }`}
         style={{
           background: `linear-gradient(90deg, transparent, ${theme.accent}, transparent)`,
         }}
@@ -362,15 +388,15 @@ function BentoCard({
 
       {/* ── Content — with stronger parallax ── */}
       <motion.div
-        className="relative z-20 h-full flex flex-col justify-end p-4 sm:p-6 lg:p-8"
+        className="relative z-20 h-full flex flex-col p-4 sm:p-6 lg:p-8"
         style={{
           x: txContent,
           y: tyContent,
           transform: "translateZ(30px)",
         }}
       >
-        {/* Top row: type badge + metrics */}
-        <div className="absolute top-4 start-4 end-4 sm:top-5 sm:start-5 sm:end-5 flex items-start justify-between gap-2 sm:gap-3">
+        {/* Top row: type badge */}
+        <div className="flex items-start justify-between gap-2 sm:gap-3 mb-auto">
           <span
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-heading font-semibold uppercase tracking-wider backdrop-blur-md"
             style={{
@@ -390,7 +416,7 @@ function BentoCard({
           </span>
 
           {size === "lg" && (
-            <div className="flex flex-wrap gap-1.5 justify-end max-w-[60%]">
+            <div className="hidden sm:flex flex-wrap gap-1.5 justify-end max-w-[60%]">
               {item.metrics.slice(0, 3).map((m, i) => (
                 <span
                   key={i}
@@ -408,55 +434,60 @@ function BentoCard({
           )}
         </div>
 
-        {/* Accent line */}
-        <div
-          className="h-[2px] rounded-full mb-4 transition-all duration-500 group-hover:w-16"
-          style={{
-            width: 32,
-            background: `linear-gradient(90deg, ${theme.accent}, transparent)`,
-            boxShadow: `0 0 10px ${theme.glow}`,
-          }}
-        />
+        {/* Bottom content block */}
+        <div className="mt-4">
+          {/* Accent line */}
+          <div
+            className="h-[2px] rounded-full mb-3 sm:mb-4 transition-all duration-500 group-hover:w-16"
+            style={{
+              width: 32,
+              background: `linear-gradient(90deg, ${theme.accent}, transparent)`,
+              boxShadow: `0 0 10px ${theme.glow}`,
+            }}
+          />
 
-        {/* Title */}
-        <h3
-          className={`font-heading font-bold text-white mb-3 ${titleSize}`}
-          style={{
-            letterSpacing: "-0.02em",
-            textShadow: `0 2px 20px rgba(0,0,0,0.5)`,
-          }}
-        >
-          {item.title}
-        </h3>
+          {/* Title */}
+          <h3
+            className={`font-heading font-bold text-white mb-2 sm:mb-3 ${titleSize}`}
+            style={{
+              letterSpacing: "-0.02em",
+              textShadow: `0 2px 20px rgba(0,0,0,0.5)`,
+            }}
+          >
+            {item.title}
+          </h3>
 
-        {/* Description */}
-        <p
-          className={`text-text-secondary leading-relaxed font-body font-light mb-4 ${descClass}`}
-        >
-          {item.desc}
-        </p>
+          {/* Description */}
+          <p
+            className={`text-text-secondary leading-relaxed font-body font-light mb-3 sm:mb-4 ${descClass}`}
+          >
+            {item.desc}
+          </p>
 
-        {/* Tech tags */}
-        <div className="flex flex-wrap gap-1.5 mt-auto">
-          {item.tech.split(" · ").slice(0, size === "lg" ? 4 : 3).map((tech, i) => (
-            <span
-              key={i}
-              className="px-2.5 py-1 rounded-md text-[10px] font-heading font-medium backdrop-blur-sm"
-              style={{
-                background: theme.bgTint,
-                border: `1px solid ${theme.border}`,
-                color: theme.accent,
-              }}
-            >
-              {tech}
-            </span>
-          ))}
+          {/* Tech tags */}
+          <div className="flex flex-wrap gap-1.5">
+            {item.tech.split(" · ").slice(0, size === "lg" ? 4 : 3).map((tech, i) => (
+              <span
+                key={i}
+                className="px-2.5 py-1 rounded-md text-[10px] font-heading font-medium backdrop-blur-sm"
+                style={{
+                  background: theme.bgTint,
+                  border: `1px solid ${theme.border}`,
+                  color: theme.accent,
+                }}
+              >
+                {tech}
+              </span>
+            ))}
+          </div>
         </div>
       </motion.div>
 
-      {/* Bottom accent line — animated on hover */}
+      {/* Bottom accent line — animated on hover/active */}
       <div
-        className="absolute bottom-0 left-0 right-0 h-px z-30 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+        className={`absolute bottom-0 left-0 right-0 h-px z-30 transition-opacity duration-700 group-hover:opacity-100 ${
+          isActive ? "opacity-100" : "opacity-0"
+        }`}
         style={{
           background: `linear-gradient(90deg, transparent 5%, ${theme.accent} 50%, transparent 95%)`,
           boxShadow: `0 0 14px ${theme.glow}`,
