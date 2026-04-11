@@ -1,7 +1,8 @@
 "use client";
 
 import { use } from "react";
-import { motion } from "framer-motion";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Users,
   GraduationCap,
@@ -9,9 +10,16 @@ import {
   TrendingUp,
   AlertCircle,
   Activity,
+  Sparkles,
+  ArrowRight,
 } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+import {
+  useApplications,
+  formatApplicationDate,
+  type Application,
+} from "@/lib/applicationsStorage";
 
 const kpiIcons = [Users, GraduationCap, CreditCard, Activity];
 const kpiColors = ["#4A90E2", "#2D8659", "#C19A4B", "#0F2C5C"];
@@ -27,6 +35,7 @@ export default function AdminDashboard({
   const dict = getDictionary(locale);
   const a = dict.portals.admin.dashboard;
   const isRTL = locale === "ar";
+  const liveApplications = useApplications();
 
   const h1Class = isRTL
     ? "font-arabic-display text-3xl md:text-4xl font-bold text-[var(--color-navy)] leading-[1.4]"
@@ -159,10 +168,17 @@ export default function AdminDashboard({
         </div>
       </div>
 
-      {/* Recent enrollments */}
+      {/* Recent enrollments — merges live applications with seed rows */}
       <div className="bg-white border border-[var(--color-border)]">
-        <div className="p-6 border-b border-[var(--color-border)]">
+        <div className="p-6 border-b border-[var(--color-border)] flex items-center justify-between flex-wrap gap-3">
           <h3 className={cardTitleClass}>{a.enrollments.title}</h3>
+          <Link
+            href={`/${locale}/portal/admin/applications`}
+            className="text-xs font-semibold tracking-wider text-[var(--color-gold)] hover:text-[var(--color-gold-dark)] flex items-center gap-1"
+          >
+            {dict.common.viewAll}
+            <ArrowRight className={`w-3 h-3 ${isRTL ? "rotate-180" : ""}`} />
+          </Link>
         </div>
         <table className="w-full">
           <thead className="bg-[var(--color-cream)]">
@@ -182,6 +198,16 @@ export default function AdminDashboard({
             </tr>
           </thead>
           <tbody>
+            <AnimatePresence initial={false}>
+              {liveApplications.slice(0, 5).map((app) => (
+                <LiveRow
+                  key={app.ref}
+                  app={app}
+                  locale={locale}
+                  dict={dict}
+                />
+              ))}
+            </AnimatePresence>
             {a.enrollments.rows.map((row, i) => (
               <tr key={i} className="border-t border-[var(--color-border-soft)]">
                 <td className="p-4 font-semibold text-[var(--color-navy)]">
@@ -212,5 +238,77 @@ export default function AdminDashboard({
         </table>
       </div>
     </div>
+  );
+}
+
+// ============================================
+// Live row — shows user-submitted applications with a gold highlight
+// ============================================
+function LiveRow({
+  app,
+  locale,
+  dict,
+}: {
+  app: Application;
+  locale: Locale;
+  dict: ReturnType<typeof getDictionary>;
+}) {
+  const gradeOption = dict.pages.admissions.apply.steps.student.gradeOptions.find(
+    (g) => g.value === app.student.applyingFor
+  );
+  const statusClass =
+    app.status === "accepted"
+      ? "bg-green-50 text-green-700"
+      : app.status === "rejected"
+        ? "bg-red-50 text-red-700"
+        : app.status === "reviewing"
+          ? "bg-blue-50 text-blue-700"
+          : "bg-amber-50 text-amber-700";
+  const statusLabel =
+    locale === "ar"
+      ? {
+          pending: "جديد",
+          reviewing: "قيد المراجعة",
+          accepted: "مقبول",
+          rejected: "مرفوض",
+        }[app.status]
+      : {
+          pending: "New",
+          reviewing: "Reviewing",
+          accepted: "Accepted",
+          rejected: "Rejected",
+        }[app.status];
+
+  return (
+    <motion.tr
+      initial={{ backgroundColor: "rgba(193,154,75,0.25)" }}
+      animate={{ backgroundColor: "rgba(193,154,75,0)" }}
+      exit={{ opacity: 0, height: 0 }}
+      transition={{ duration: 3, ease: "easeOut" }}
+      className="border-t border-[var(--color-border-soft)]"
+    >
+      <td className="p-4 font-semibold text-[var(--color-navy)]">
+        <div className="flex items-center gap-2">
+          <Sparkles className="w-3.5 h-3.5 text-[var(--color-gold)]" />
+          {app.student.firstName} {app.student.lastName}
+        </div>
+        <div className="text-[10px] font-mono text-[var(--color-ink-soft)] mt-0.5 font-normal">
+          {app.ref}
+        </div>
+      </td>
+      <td className="p-4 text-sm">
+        {gradeOption?.label.split("—")[0].trim() || app.student.applyingFor}
+      </td>
+      <td className="p-4 text-sm text-[var(--color-ink-soft)]">
+        {formatApplicationDate(app.createdAt, locale)}
+      </td>
+      <td className="p-4">
+        <span
+          className={`inline-flex items-center gap-1 px-3 py-1 text-[10px] font-bold tracking-wider ${statusClass}`}
+        >
+          {statusLabel}
+        </span>
+      </td>
+    </motion.tr>
   );
 }

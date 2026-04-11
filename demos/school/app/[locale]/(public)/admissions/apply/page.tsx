@@ -2,7 +2,7 @@
 
 import { use, useState } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import PageHero from "@/components/ui/PageHero";
 import {
   User,
@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+import { saveApplication } from "@/lib/applicationsStorage";
 
 type StudentData = {
   firstName: string;
@@ -112,12 +113,8 @@ export default function ApplyPage({
   };
 
   const handleSubmit = () => {
-    const ref =
-      "ALN-" +
-      new Date().getFullYear() +
-      "-" +
-      Math.floor(Math.random() * 9000 + 1000);
-    setRefNumber(ref);
+    const application = saveApplication(student, parent);
+    setRefNumber(application.ref);
     setSubmitted(true);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };

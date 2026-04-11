@@ -4,6 +4,7 @@ import { use } from "react";
 import PortalShell, { type NavItem } from "@/components/portal/PortalShell";
 import {
   LayoutDashboard,
+  FileText,
   Users,
   GraduationCap,
   BookOpen,
@@ -15,9 +16,11 @@ import {
 } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+import { usePendingCount } from "@/lib/applicationsStorage";
 
 const icons = [
   LayoutDashboard,
+  FileText,
   Users,
   GraduationCap,
   BookOpen,
@@ -39,10 +42,14 @@ export default function AdminLayout({
   const locale: Locale = raw === "en" ? "en" : "ar";
   const dict = getDictionary(locale);
 
+  const pending = usePendingCount();
+
   const nav: NavItem[] = dict.portals.admin.nav.map((item, i) => ({
     href: `/${locale}${item.href}`,
     label: item.label,
     icon: icons[i],
+    // Applications nav item is always at index 1 — show pending count as badge
+    ...(i === 1 && pending > 0 ? { badge: pending } : {}),
   }));
 
   return (

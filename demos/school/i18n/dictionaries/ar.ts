@@ -994,6 +994,7 @@ const dict = {
     admin: {
       nav: [
         { label: "الرئيسية", href: "/portal/admin" },
+        { label: "طلبات التسجيل", href: "/portal/admin/applications" },
         { label: "الطلبة", href: "/portal/admin/students" },
         { label: "المعلّمون", href: "/portal/admin/teachers" },
         { label: "الصفوف", href: "/portal/admin/classes" },
@@ -1003,6 +1004,63 @@ const dict = {
         { label: "التقويم الدراسي", href: "/portal/admin/calendar" },
         { label: "الإعدادات", href: "/portal/admin/settings" },
       ],
+      applications: {
+        hero: {
+          title: "طلبات التسجيل",
+          subtitle: "جميع طلبات القبول المستلمة من ولياء الأمور",
+        },
+        filters: {
+          all: "الكل",
+          pending: "جديد",
+          reviewing: "قيد المراجعة",
+          accepted: "مقبول",
+          rejected: "مرفوض",
+        },
+        headers: {
+          ref: "الرقم المرجعي",
+          student: "الطالب/ة",
+          grade: "المرحلة",
+          submittedOn: "تاريخ التقديم",
+          status: "الحالة",
+          actions: "",
+        },
+        actions: {
+          view: "عرض",
+          accept: "قبول",
+          reject: "رفض",
+          markReviewing: "بدء المراجعة",
+          backToList: "العودة للقائمة",
+        },
+        empty: {
+          title: "لا توجد طلبات تسجيل بعد",
+          description:
+            "جرّب تقديم طلب من صفحة /admissions/apply لترى كيف تظهر الطلبات هنا.",
+          cta: "ذهاب لصفحة التقديم",
+        },
+        details: {
+          studentSection: "بيانات الطالب",
+          parentSection: "بيانات ولي الأمر",
+          submissionInfo: "معلومات التقديم",
+          ref: "الرقم المرجعي",
+          submittedAt: "وقت التقديم",
+          currentStatus: "الحالة الحالية",
+        },
+        stats: {
+          total: "إجمالي الطلبات",
+          pending: "جديدة",
+          reviewing: "قيد المراجعة",
+          accepted: "مقبولة",
+        },
+        clearDemo: {
+          button: "مسح بيانات الـ demo",
+          confirm: "هل أنت متأكد من مسح جميع الطلبات؟",
+        },
+        toast: {
+          accepted: "تم قبول الطلب",
+          rejected: "تم رفض الطلب",
+          reviewing: "بدأت مراجعة الطلب",
+        },
+      },
       dashboard: {
         welcome: "إدارة الأكاديمية",
         subtitle: "نظرة شاملة مُحدَّثة لحظياً على جميع أنشطة المدرسة.",

@@ -1002,6 +1002,7 @@ const dict: Dictionary = {
     admin: {
       nav: [
         { label: "Overview", href: "/portal/admin" },
+        { label: "Applications", href: "/portal/admin/applications" },
         { label: "Students", href: "/portal/admin/students" },
         { label: "Teachers", href: "/portal/admin/teachers" },
         { label: "Classes", href: "/portal/admin/classes" },
@@ -1011,6 +1012,63 @@ const dict: Dictionary = {
         { label: "School Calendar", href: "/portal/admin/calendar" },
         { label: "Settings", href: "/portal/admin/settings" },
       ],
+      applications: {
+        hero: {
+          title: "Admissions Applications",
+          subtitle: "All applications received from parents",
+        },
+        filters: {
+          all: "All",
+          pending: "New",
+          reviewing: "Reviewing",
+          accepted: "Accepted",
+          rejected: "Rejected",
+        },
+        headers: {
+          ref: "Reference",
+          student: "Student",
+          grade: "Grade",
+          submittedOn: "Submitted",
+          status: "Status",
+          actions: "",
+        },
+        actions: {
+          view: "View",
+          accept: "Accept",
+          reject: "Reject",
+          markReviewing: "Start Reviewing",
+          backToList: "Back to list",
+        },
+        empty: {
+          title: "No applications yet",
+          description:
+            "Try submitting an application from /admissions/apply to see how they appear here.",
+          cta: "Go to apply page",
+        },
+        details: {
+          studentSection: "Student Information",
+          parentSection: "Parent / Guardian Information",
+          submissionInfo: "Submission Details",
+          ref: "Reference number",
+          submittedAt: "Submitted at",
+          currentStatus: "Current status",
+        },
+        stats: {
+          total: "Total applications",
+          pending: "New",
+          reviewing: "Reviewing",
+          accepted: "Accepted",
+        },
+        clearDemo: {
+          button: "Clear demo data",
+          confirm: "Are you sure you want to clear all applications?",
+        },
+        toast: {
+          accepted: "Application accepted",
+          rejected: "Application rejected",
+          reviewing: "Application under review",
+        },
+      },
       dashboard: {
         welcome: "School Administration",
         subtitle: "Real-time overview of every school activity.",
