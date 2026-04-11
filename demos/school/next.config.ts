@@ -6,27 +6,22 @@ import path from "path";
 // Mounted under /demos/school via Vercel rewrites
 // ============================================
 
-// turbopack.root MUST always be set (even on Vercel) — otherwise Turbopack
-// walks up and tries to compile files from the parent dateksys repo
-// (proxy.ts, i18n/routing.ts), which depend on next-intl that this demo
-// doesn't install.
+// Both outputFileTracingRoot AND turbopack.root MUST always be set to the
+// same value, otherwise:
+// - On Vercel, outputFileTracingRoot gets auto-detected to the repo root
+//   (/vercel/path0), which then overrides turbopack.root, causing Turbopack
+//   to walk up and try to compile files from the parent dateksys repo
+//   (proxy.ts, i18n/routing.ts), failing with "next-intl/middleware not found".
+// - Locally, pnpm-workspace tries to hoist deps and breaks resolution.
 //
-// outputFileTracingRoot is only needed locally for the pnpm-workspace
-// isolation. On Vercel, it seems to confuse the onBuildComplete hook into
-// looking for routes-manifest-deterministic.json at the wrong path, so we
-// skip it in that environment.
-const isVercel = !!process.env.VERCEL;
+// Pinning both to __dirname isolates this demo completely.
+const projectRoot = path.join(__dirname);
 
 const nextConfig: NextConfig = {
+  outputFileTracingRoot: projectRoot,
   turbopack: {
-    root: path.join(__dirname),
+    root: projectRoot,
   },
-
-  ...(isVercel
-    ? {}
-    : {
-        outputFileTracingRoot: path.join(__dirname),
-      }),
 
   // Mount under /demos/school path so it works
   // when rewritten from dateksys.com/demos/school
