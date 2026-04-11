@@ -280,9 +280,9 @@ function BentoCard({
         }}
       />
 
-      {/* Animated background layer — parallax */}
+      {/* Animated background layer — parallax, fades out on hover */}
       <motion.div
-        className="absolute inset-0"
+        className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
         style={{ x: txBg, y: tyBg }}
       >
         {bgMap[bgKind]}
@@ -300,16 +300,24 @@ function BentoCard({
           src={item.image}
           alt={item.title}
           fill
-          className="object-cover opacity-40 mix-blend-luminosity"
+          className="object-cover opacity-40 mix-blend-luminosity transition-all duration-500 group-hover:opacity-100 group-hover:mix-blend-normal group-hover:scale-[1.04]"
           sizes="(max-width: 768px) 100vw, 50vw"
         />
       </motion.div>
 
-      {/* Gradient overlay */}
+      {/* Gradient overlay — fades out on hover so image shows cleanly */}
       <div
-        className="absolute inset-0"
+        className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-0"
         style={{
           background: `linear-gradient(180deg, rgba(9,9,11,0.2) 0%, rgba(9,9,11,0.75) 60%, rgba(9,9,11,0.95) 100%)`,
+        }}
+      />
+
+      {/* Subtle bottom gradient on hover — keeps text readable without hiding image */}
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+        style={{
+          background: `linear-gradient(180deg, transparent 40%, rgba(9,9,11,0.85) 100%)`,
         }}
       />
 
