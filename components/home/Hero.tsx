@@ -97,14 +97,14 @@ export default function Hero() {
       </motion.div>
 
       {/* ── Main Content ── */}
-      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-28 sm:pt-32 pb-20 flex flex-col justify-center min-h-[100dvh]">
+      <div className="relative z-10 w-full px-[5%] lg:px-[6%] pt-24 sm:pt-32 pb-32 sm:pb-20 flex flex-col justify-center min-h-[100dvh]">
         <motion.div
           style={{ y: textY, opacity }}
           className="flex flex-col items-start will-change-transform max-w-6xl"
         >
           {/* Badge */}
           <motion.div
-            className="mb-8"
+            className="mb-5 sm:mb-8"
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1, ease: EXPO_OUT }}
@@ -134,7 +134,7 @@ export default function Hero() {
           <h1
             className="font-heading font-extrabold"
             style={{
-              fontSize: "clamp(3.2rem, 6.5vw, 7rem)",
+              fontSize: "clamp(2.4rem, 6.5vw, 7rem)",
               letterSpacing: "-0.03em",
               lineHeight: 1.05,
             }}
@@ -160,10 +160,10 @@ export default function Hero() {
 
           {/* Description */}
           <motion.p
-            className="mt-8 font-body max-w-[520px]"
+            className="mt-5 sm:mt-8 font-body max-w-[520px]"
             style={{
-              fontSize: "18px",
-              lineHeight: "1.85",
+              fontSize: "clamp(15px, 2.5vw, 18px)",
+              lineHeight: "1.75",
               color: "rgba(180, 200, 220, 0.75)",
               fontWeight: 400,
             }}
@@ -176,7 +176,7 @@ export default function Hero() {
 
           {/* CTAs */}
           <motion.div
-            className="mt-10 flex flex-col sm:flex-row gap-3.5 w-full sm:w-auto"
+            className="mt-6 sm:mt-10 flex flex-col sm:flex-row gap-3 w-full sm:w-auto"
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.2, ease: EXPO_OUT }}
@@ -234,7 +234,7 @@ export default function Hero() {
       </div>
 
       {/* ── Technologies + Scroll ── */}
-      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3.5 w-max">
+      <div className="absolute bottom-5 left-1/2 -translate-x-1/2 z-10 hidden sm:flex flex-col items-center gap-3.5 w-max">
         <motion.div
           className="flex flex-col items-center gap-2.5"
           initial={{ opacity: 0, y: 8 }}
