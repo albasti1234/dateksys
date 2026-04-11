@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowRight, Play, Award, X } from "lucide-react";
+import { ArrowRight, Award } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 
 // ============================================
@@ -33,7 +32,6 @@ export default function Hero({
 }) {
   const isRTL = locale === "ar";
   const enterX = isRTL ? -30 : 30;
-  const [tourOpen, setTourOpen] = useState(false);
 
   const headlineClass = isRTL
     ? "font-arabic-display text-5xl md:text-6xl lg:text-[5rem] font-bold text-[var(--color-navy)] leading-[1.25] tracking-tight"
@@ -124,13 +122,14 @@ export default function Hero({
                 />
               </button>
             </Link>
-            <button
-              onClick={() => setTourOpen(true)}
-              className="btn-outline group"
-            >
-              <Play className="w-4 h-4" />
+            <Link href={`/${locale}/about`} className="btn-outline group">
               {dict.ctaSecondary}
-            </button>
+              <ArrowRight
+                className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
+                  isRTL ? "rotate-180" : ""
+                }`}
+              />
+            </Link>
           </motion.div>
 
           {/* Stats */}
@@ -245,42 +244,6 @@ export default function Hero({
           clipPath: "polygon(0 100%, 100% 100%, 100% 40%, 50% 0, 0 40%)",
         }}
       />
-
-      {/* Virtual Tour Modal */}
-      <AnimatePresence>
-        {tourOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setTourOpen(false)}
-            className="fixed inset-0 z-[100] bg-black/80 backdrop-blur-sm flex items-center justify-center p-4"
-          >
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full max-w-5xl aspect-video bg-black shadow-2xl"
-            >
-              <button
-                onClick={() => setTourOpen(false)}
-                className="absolute -top-12 end-0 text-white/80 hover:text-white flex items-center gap-2 text-sm"
-                aria-label="Close"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              <iframe
-                src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1&rel=0"
-                title={dict.ctaSecondary}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </section>
   );
 }

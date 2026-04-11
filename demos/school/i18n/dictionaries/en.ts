@@ -80,7 +80,7 @@ const dict: Dictionary = {
       subtitle:
         "An international academy in the heart of Amman, rooted in the Arabic tradition and shaped by world-class academics. We raise students who honour where they come from and speak confidently to the world.",
       ctaPrimary: "Apply for Admission",
-      ctaSecondary: "Watch Campus Tour",
+      ctaSecondary: "Discover Al-Nakhla",
       stats: [
         { num: "850+", label: "Students" },
         { num: "65+", label: "Faculty" },
