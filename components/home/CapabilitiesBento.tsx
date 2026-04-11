@@ -244,15 +244,15 @@ function BentoCard({
 
   const titleSize =
     size === "lg"
-      ? "text-2xl lg:text-3xl"
+      ? "text-lg sm:text-xl md:text-2xl lg:text-3xl"
       : size === "md"
-      ? "text-lg lg:text-xl"
-      : "text-base lg:text-lg";
+      ? "text-base sm:text-lg lg:text-xl"
+      : "text-sm sm:text-base lg:text-lg";
 
   const descClass =
     size === "lg"
-      ? "text-sm lg:text-base line-clamp-3"
-      : "text-xs lg:text-sm line-clamp-2";
+      ? "text-xs sm:text-sm lg:text-base line-clamp-2 sm:line-clamp-3"
+      : "text-[11px] sm:text-xs lg:text-sm line-clamp-2";
 
   return (
     <motion.div
@@ -362,7 +362,7 @@ function BentoCard({
 
       {/* ── Content — with stronger parallax ── */}
       <motion.div
-        className="relative z-20 h-full flex flex-col justify-end p-6 lg:p-8"
+        className="relative z-20 h-full flex flex-col justify-end p-4 sm:p-6 lg:p-8"
         style={{
           x: txContent,
           y: tyContent,
@@ -370,7 +370,7 @@ function BentoCard({
         }}
       >
         {/* Top row: type badge + metrics */}
-        <div className="absolute top-5 start-5 end-5 flex items-start justify-between gap-3">
+        <div className="absolute top-4 start-4 end-4 sm:top-5 sm:start-5 sm:end-5 flex items-start justify-between gap-2 sm:gap-3">
           <span
             className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-[10px] font-heading font-semibold uppercase tracking-wider backdrop-blur-md"
             style={{
@@ -510,21 +510,8 @@ export default function CapabilitiesBento() {
       </motion.div>
 
       {/* ── Bento Grid ── */}
-      <div
-        className="relative grid gap-5 lg:gap-6"
-        style={{
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gridTemplateAreas: `
-            "network network datacenter"
-            "network network security"
-            "software webdev webdev"
-          `,
-        }}
-      >
-        <div
-          className="min-h-[380px] lg:min-h-[520px]"
-          style={{ gridArea: "network" }}
-        >
+      <div className="relative grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 bento-grid">
+        <div className="min-h-[340px] md:min-h-[380px] lg:min-h-[520px] md:col-span-2 md:row-span-2">
           <BentoCard
             item={items[0]}
             bgKind={bgKinds[0]}
@@ -532,10 +519,7 @@ export default function CapabilitiesBento() {
             className="h-full"
           />
         </div>
-        <div
-          className="min-h-[180px] lg:min-h-[250px]"
-          style={{ gridArea: "datacenter" }}
-        >
+        <div className="min-h-[220px] md:min-h-[180px] lg:min-h-[250px]">
           <BentoCard
             item={items[1]}
             bgKind={bgKinds[1]}
@@ -543,10 +527,7 @@ export default function CapabilitiesBento() {
             className="h-full"
           />
         </div>
-        <div
-          className="min-h-[180px] lg:min-h-[250px]"
-          style={{ gridArea: "security" }}
-        >
+        <div className="min-h-[220px] md:min-h-[180px] lg:min-h-[250px]">
           <BentoCard
             item={items[2]}
             bgKind={bgKinds[2]}
@@ -554,10 +535,7 @@ export default function CapabilitiesBento() {
             className="h-full"
           />
         </div>
-        <div
-          className="min-h-[260px] lg:min-h-[320px]"
-          style={{ gridArea: "software" }}
-        >
+        <div className="min-h-[240px] md:min-h-[260px] lg:min-h-[320px]">
           <BentoCard
             item={items[3]}
             bgKind={bgKinds[3]}
@@ -565,10 +543,7 @@ export default function CapabilitiesBento() {
             className="h-full"
           />
         </div>
-        <div
-          className="min-h-[260px] lg:min-h-[320px]"
-          style={{ gridArea: "webdev" }}
-        >
+        <div className="min-h-[240px] md:min-h-[260px] lg:min-h-[320px] md:col-span-2">
           <BentoCard
             item={items[4]}
             bgKind={bgKinds[4]}
@@ -577,21 +552,6 @@ export default function CapabilitiesBento() {
           />
         </div>
       </div>
-
-      {/* Mobile layout — single column */}
-      <style>{`
-        @media (max-width: 768px) {
-          .grid[style*="gridTemplateAreas"] {
-            grid-template-columns: 1fr !important;
-            grid-template-areas:
-              "network"
-              "datacenter"
-              "security"
-              "software"
-              "webdev" !important;
-          }
-        }
-      `}</style>
     </section>
   );
 }
