@@ -3,12 +3,6 @@ import type { NextConfig } from "next";
 
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
-// Demo deployment URLs (set in Vercel env vars)
-// Each demo is deployed as a separate Vercel project
-// and rewritten under /demos/<name> on dateksys.com
-const SCHOOL_DEMO_URL =
-  process.env.SCHOOL_DEMO_URL || "https://dateksys-school-demo.vercel.app";
-
 const nextConfig: NextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
@@ -21,15 +15,29 @@ const nextConfig: NextConfig = {
 
   async rewrites() {
     return [
-      // ─── Demo: School Management System ───
-      // dateksys.com/demos/school → school demo Vercel project
+      // ─── Demos: Static HTML Exports ───
+      // Each demo lives self-contained in `demos/<name>/` and is built
+      // locally to static HTML. The `out/` folder is copied to
+      // `public/demos/<name>/` and served as static files. These
+      // rewrites turn directory URLs (/demos/school/about/) into the
+      // actual file paths (/demos/school/about/index.html) Next.js can
+      // serve. Asset requests for /_next/static/... already hit real
+      // files in public/ and bypass the rewrite.
       {
         source: "/demos/school",
-        destination: `${SCHOOL_DEMO_URL}/demos/school`,
+        destination: "/demos/school/index.html",
       },
       {
-        source: "/demos/school/:path*",
-        destination: `${SCHOOL_DEMO_URL}/demos/school/:path*`,
+        source: "/demos/school/",
+        destination: "/demos/school/index.html",
+      },
+      {
+        source: "/demos/school/:path+/",
+        destination: "/demos/school/:path+/index.html",
+      },
+      {
+        source: "/demos/school/:path+",
+        destination: "/demos/school/:path+/index.html",
       },
     ];
   },
@@ -38,7 +46,7 @@ const nextConfig: NextConfig = {
     return [
       {
         // Apply security headers to everything EXCEPT /demos/*
-        // (demos are external apps and need different CSP)
+        // (each demo is self-contained static HTML with its own styles)
         source: "/((?!demos).*)",
         headers: [
           { key: "X-Content-Type-Options", value: "nosniff" },

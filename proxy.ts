@@ -5,6 +5,8 @@ export default createMiddleware(routing)
 
 export const config = {
   matcher: [
-    '/((?!api|_next|_vercel|.*\\..*).*)'
+    // Skip: api routes, Next.js internals, files with extensions,
+    // and /demos/* (self-contained static HTML demos with no locale)
+    '/((?!api|_next|_vercel|demos|.*\\..*).*)'
   ]
 }
