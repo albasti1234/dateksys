@@ -1,7 +1,8 @@
 "use client";
 
-import { use } from "react";
-import { motion } from "framer-motion";
+import { use, useState } from "react";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import PageHero from "@/components/ui/PageHero";
 import { Calendar, ArrowUpRight } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
@@ -26,6 +27,7 @@ export default function NewsPage({
   const dict = getDictionary(locale);
   const n = dict.pages.news;
   const isRTL = locale === "ar";
+  const [activeCategory, setActiveCategory] = useState("all");
 
   const categories = [
     { key: "all", label: n.categories.all },
@@ -35,6 +37,23 @@ export default function NewsPage({
     { key: "community", label: n.categories.community },
     { key: "sports", label: n.categories.sports },
   ];
+
+  // Map Arabic/English category labels to keys for filtering
+  const categoryKeyMap: Record<string, string> = {
+    [n.categories.achievements.toLowerCase()]: "achievements",
+    [n.categories.events.toLowerCase()]: "events",
+    [n.categories.academic.toLowerCase()]: "academic",
+    [n.categories.community.toLowerCase()]: "community",
+    [n.categories.sports.toLowerCase()]: "sports",
+  };
+
+  const filteredNews =
+    activeCategory === "all"
+      ? n.items
+      : n.items.filter(
+          (item) =>
+            categoryKeyMap[item.category.toLowerCase()] === activeCategory
+        );
 
   const featuredTitleClass = isRTL
     ? "font-arabic-display text-3xl md:text-4xl font-bold text-[var(--color-navy)] mb-4 leading-[1.4]"
@@ -58,11 +77,12 @@ export default function NewsPage({
         <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
           {/* Categories */}
           <div className="flex flex-wrap gap-2 mb-12 justify-center">
-            {categories.map((c, i) => (
+            {categories.map((c) => (
               <button
                 key={c.key}
+                onClick={() => setActiveCategory(c.key)}
                 className={`px-5 py-2.5 text-xs font-semibold tracking-wider transition-all ${
-                  i === 0
+                  activeCategory === c.key
                     ? "bg-[var(--color-navy)] text-white"
                     : "bg-[var(--color-cream)] text-[var(--color-ink-soft)] hover:bg-[var(--color-navy)] hover:text-white"
                 }`}
@@ -100,52 +120,78 @@ export default function NewsPage({
               >
                 {n.featured.excerpt}
               </p>
-              <button className="btn-outline w-fit group">
+              <Link
+                href={`/${locale}/news/1`}
+                className="btn-outline w-fit group inline-flex"
+              >
                 {n.featured.readMore}
                 <ArrowUpRight
                   className={`w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ${
                     isRTL ? "-scale-x-100" : ""
                   }`}
                 />
-              </button>
+              </Link>
             </div>
           </motion.article>
 
           {/* Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {n.items.map((p, i) => (
-              <motion.article
-                key={p.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="academic-card overflow-hidden group cursor-pointer"
-              >
-                <div
-                  className="h-56 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{
-                    backgroundImage: `url('${images[(i + 1) % images.length]}')`,
-                  }}
-                />
-                <div className="p-6">
-                  <div className="flex items-center gap-3 mb-3 text-xs">
-                    <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider bg-[var(--color-navy)] text-white">
-                      {p.category}
-                    </span>
-                    <span className="inline-flex items-center gap-1 text-[var(--color-ink-soft)]">
-                      <Calendar className="w-3 h-3" />
-                      {p.date}
-                    </span>
-                  </div>
-                  <h3 className={cardTitleClass}>{p.title}</h3>
-                  <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-3">
-                    {p.excerpt}
-                  </p>
-                </div>
-              </motion.article>
-            ))}
-          </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeCategory}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {filteredNews.length === 0 ? (
+                <p className="col-span-full text-center py-16 text-[var(--color-ink-soft)]">
+                  {locale === "ar"
+                    ? "لا توجد أخبار في هذا التصنيف حالياً"
+                    : "No news in this category right now"}
+                </p>
+              ) : (
+                filteredNews.map((p, i) => {
+                  const newsIndex = n.items.indexOf(p);
+                  return (
+                    <motion.article
+                      key={p.title}
+                      initial={{ opacity: 0, y: 30 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.5, delay: i * 0.08 }}
+                      className="academic-card overflow-hidden group"
+                    >
+                      <Link
+                        href={`/${locale}/news/${newsIndex + 2}`}
+                        className="block cursor-pointer"
+                      >
+                        <div
+                          className="h-56 bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                          style={{
+                            backgroundImage: `url('${images[(newsIndex + 1) % images.length]}')`,
+                          }}
+                        />
+                        <div className="p-6">
+                          <div className="flex items-center gap-3 mb-3 text-xs">
+                            <span className="px-2.5 py-1 text-[10px] font-bold tracking-wider bg-[var(--color-navy)] text-white">
+                              {p.category}
+                            </span>
+                            <span className="inline-flex items-center gap-1 text-[var(--color-ink-soft)]">
+                              <Calendar className="w-3 h-3" />
+                              {p.date}
+                            </span>
+                          </div>
+                          <h3 className={cardTitleClass}>{p.title}</h3>
+                          <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-3">
+                            {p.excerpt}
+                          </p>
+                        </div>
+                      </Link>
+                    </motion.article>
+                  );
+                })
+              )}
+            </motion.div>
+          </AnimatePresence>
         </div>
       </section>
     </>

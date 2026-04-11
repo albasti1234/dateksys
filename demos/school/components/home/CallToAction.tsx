@@ -87,10 +87,13 @@ export default function CallToAction({
                   />
                 </button>
               </Link>
-              <button className="w-full btn-outline !border-white/30 !text-white hover:!bg-white hover:!text-[var(--color-navy)] group">
+              <Link
+                href={`/${locale}/contact`}
+                className="w-full btn-outline !border-white/30 !text-white hover:!bg-white hover:!text-[var(--color-navy)] group !justify-center"
+              >
                 <Calendar className="w-4 h-4" />
                 {dict.ctaSecondary}
-              </button>
+              </Link>
               <a
                 href="tel:+96265551234"
                 className="mt-2 flex items-center justify-center gap-2 text-sm text-white/60 hover:text-[var(--color-gold-light)] transition-colors"

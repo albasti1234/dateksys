@@ -56,6 +56,7 @@ const dict: Dictionary = {
     admissions: "Admissions",
     faculty: "Faculty",
     news: "News",
+    faq: "FAQ",
     contact: "Contact",
     portalLogin: "Portals",
     portals: [
@@ -498,6 +499,105 @@ const dict: Dictionary = {
         primary: "Apply Now",
         secondary: "Book a Campus Tour",
       },
+      apply: {
+        hero: {
+          label: "Admission Application",
+          title: "Start your application",
+          subtitle:
+            "Three simple steps — should take no more than five minutes. You can save and return anytime.",
+          breadcrumb: "Apply",
+        },
+        progress: {
+          step: "Step",
+          of: "of",
+        },
+        steps: {
+          student: {
+            title: "Student Details",
+            subtitle: "Basic information about your child",
+            fields: {
+              firstName: "First name",
+              lastName: "Last name",
+              dateOfBirth: "Date of birth",
+              gender: "Gender",
+              nationality: "Nationality",
+              currentSchool: "Current school",
+              applyingFor: "Applying for grade",
+            },
+            genderOptions: [
+              { value: "male", label: "Male" },
+              { value: "female", label: "Female" },
+            ],
+            gradeOptions: [
+              { value: "kg1", label: "KG1 — First Kindergarten" },
+              { value: "kg2", label: "KG2 — Second Kindergarten" },
+              { value: "g1", label: "Grade 1" },
+              { value: "g2", label: "Grade 2" },
+              { value: "g3", label: "Grade 3" },
+              { value: "g4", label: "Grade 4" },
+              { value: "g5", label: "Grade 5" },
+              { value: "g6", label: "Grade 6" },
+              { value: "g7", label: "Grade 7" },
+              { value: "g8", label: "Grade 8" },
+              { value: "g9", label: "Grade 9" },
+              { value: "g10", label: "Grade 10" },
+              { value: "g11", label: "Grade 11" },
+              { value: "g12", label: "Grade 12" },
+            ],
+            next: "Next",
+          },
+          parent: {
+            title: "Parent / Guardian Details",
+            subtitle: "Basic contact information",
+            fields: {
+              parentFirstName: "Parent first name",
+              parentLastName: "Parent last name",
+              relationship: "Relationship",
+              email: "Email",
+              phone: "Phone",
+              address: "Address",
+              preferredContact: "Preferred contact method",
+            },
+            relationshipOptions: [
+              { value: "father", label: "Father" },
+              { value: "mother", label: "Mother" },
+              { value: "guardian", label: "Guardian" },
+            ],
+            contactOptions: [
+              { value: "phone", label: "Phone" },
+              { value: "email", label: "Email" },
+              { value: "whatsapp", label: "WhatsApp" },
+            ],
+            back: "Back",
+            next: "Next",
+          },
+          review: {
+            title: "Review your application",
+            subtitle: "Please double-check everything before submitting",
+            studentSection: "Student Details",
+            parentSection: "Parent / Guardian Details",
+            agreement:
+              "I confirm that all information provided is accurate, and I agree for Al-Nakhla Academy to contact me to complete the admissions process.",
+            back: "Back",
+            submit: "Submit Application",
+          },
+        },
+        success: {
+          title: "Your application has been received",
+          subtitle:
+            "Thank you for your interest in Al-Nakhla International Academy. Our admissions team will contact you within 48 business hours.",
+          reference: "Reference number:",
+          nextStepsTitle: "Next steps",
+          nextSteps: [
+            "A confirmation email will arrive within minutes",
+            "Our admissions team will call you within 48 business hours",
+            "A campus visit and student interview will be scheduled",
+            "You will receive your admission decision within a week of the interview",
+          ],
+          backHome: "Back to Home",
+          viewAdmissions: "Admissions Info",
+        },
+      },
     },
 
     // ─── Faculty ───
@@ -718,6 +818,111 @@ const dict: Dictionary = {
         { title: "Kindergarten classrooms", category: "campus" },
         { title: "Robotics lab", category: "academics" },
       ],
+    },
+
+    // ─── FAQ ───
+    faq: {
+      hero: {
+        label: "FAQ",
+        title: "What parents want to know",
+        subtitle:
+          "Clear answers to the questions we hear most from our families. Can't find yours? Reach out directly.",
+        breadcrumb: "FAQ",
+      },
+      searchPlaceholder: "Search questions...",
+      categories: [
+        {
+          key: "admissions",
+          label: "Admissions",
+          items: [
+            {
+              q: "When does enrollment for the next academic year start?",
+              a: "Enrollment for the 2026-2027 academic year opens in January 2026. We recommend early registration to secure your spot, especially in grades with high demand.",
+            },
+            {
+              q: "Is there an entrance exam?",
+              a: "For kindergarten, we rely on a friendly interview with the child and parent. For primary grades and above, students take a short assessment that helps us understand their academic level and learning needs.",
+            },
+            {
+              q: "What is the registration fee and when is it paid?",
+              a: "Registration fees range from 300 to 500 JOD depending on the grade, paid upon acceptance. These fees are non-refundable after enrollment.",
+            },
+            {
+              q: "Do you offer scholarships or financial aid?",
+              a: "Yes, we offer a limited number of merit-based scholarships for academically excellent students, and sibling discounts for families enrolling more than one child. Scholarship details are announced annually.",
+            },
+          ],
+        },
+        {
+          key: "academics",
+          label: "Academics",
+          items: [
+            {
+              q: "What curriculum do you follow?",
+              a: "We follow an integrated curriculum combining the Jordanian national curriculum (per the Ministry of Education) with the International Baccalaureate (IB) programme at the high school level. This ensures students receive both nationally and internationally recognized credentials.",
+            },
+            {
+              q: "What language is used for instruction?",
+              a: "We are a bilingual school — Arabic and English are balanced. Science and math are taught in English, while Arabic, Islamic studies, and civics are in Arabic. The goal is native-level fluency in both languages.",
+            },
+            {
+              q: "What is the class size?",
+              a: "We cap classes at 20 students. This allows teachers to know each student by name and provide individual attention to those who need additional support.",
+            },
+            {
+              q: "How do you support students with special needs?",
+              a: "We have a dedicated learning support team that works with families to create individual education plans. We accept mild to moderate cases, with acceptance subject to individual assessment.",
+            },
+          ],
+        },
+        {
+          key: "school-life",
+          label: "School Life",
+          items: [
+            {
+              q: "What are the school hours?",
+              a: "Regular hours are Sunday to Thursday, 8:00 AM to 2:00 PM for lower grades, and until 3:00 PM for high school. Optional after-school activities run until 4:00 PM.",
+            },
+            {
+              q: "Is there a school uniform?",
+              a: "Yes, the uniform is mandatory for all grades. Families can purchase it from the school or approved sources. Uniform details and pricing are in the parent handbook.",
+            },
+            {
+              q: "What meals are offered?",
+              a: "The school cafeteria serves healthy breakfast and lunch prepared daily in a certified school kitchen. The weekly menu is published on the parent portal.",
+            },
+            {
+              q: "Is school transportation available?",
+              a: "Yes, we operate a fleet of buses covering most Amman neighborhoods. Each bus has live tracking, allowing parents to monitor their child's journey through the parent portal.",
+            },
+          ],
+        },
+        {
+          key: "fees",
+          label: "Fees & Payments",
+          items: [
+            {
+              q: "What are the annual tuition fees?",
+              a: "Tuition ranges from 4,200 JOD for kindergarten to 8,000 JOD for the IB programme. Fees include textbooks and educational technology.",
+            },
+            {
+              q: "Can tuition be paid in installments?",
+              a: "Yes, we offer a three-installment payment plan at the start of each term. Full upfront payment at the start of the year receives a 5% discount.",
+            },
+            {
+              q: "What are the additional fees?",
+              a: "Transportation, meals, and uniforms are billed separately. School trips and special activities may require small additional fees, announced to parents in advance.",
+            },
+          ],
+        },
+      ],
+      noResults: "No questions match your search",
+      contactCta: {
+        title: "Didn't find your answer?",
+        description:
+          "Our team is ready to answer any question specific to your child's situation.",
+        button: "Contact us directly",
+      },
     },
 
     // ─── Contact ───

@@ -1,6 +1,7 @@
 "use client";
 
 import { use } from "react";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import PageHero from "@/components/ui/PageHero";
 import {
@@ -87,14 +88,14 @@ export default function AdmissionsPage({
             })}
           </div>
           <div className="text-center mt-16">
-            <button className="btn-primary group">
+            <Link href={`/${locale}/admissions/apply`} className="btn-primary group inline-flex">
               {a.cta.primary}
               <ArrowRight
                 className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
                   isRTL ? "rotate-180" : ""
                 }`}
               />
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -187,10 +188,13 @@ export default function AdmissionsPage({
             >
               {a.cta.description}
             </p>
-            <button className="btn-outline group">
+            <Link
+              href={`/${locale}/contact`}
+              className="btn-outline group inline-flex"
+            >
               <Download className="w-4 h-4" />
               {a.cta.secondary}
-            </button>
+            </Link>
           </div>
           <div className="space-y-3">
             {a.documents.items.map((d, i) => (

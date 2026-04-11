@@ -66,36 +66,41 @@ export default function NewsPreview({
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="bg-white border border-[var(--color-border)] overflow-hidden group hover:border-[var(--color-gold)] transition-all duration-500 hover:shadow-xl cursor-pointer"
+              className="bg-white border border-[var(--color-border)] overflow-hidden group hover:border-[var(--color-gold)] transition-all duration-500 hover:shadow-xl"
             >
-              {/* Image */}
-              <div className="h-56 overflow-hidden">
-                <div
-                  className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
-                  style={{ backgroundImage: `url('${newsImages[i]}')` }}
-                />
-              </div>
-
-              {/* Content */}
-              <div className="p-6">
-                <div className="flex items-center gap-3 mb-3 text-xs">
-                  <span
-                    className="px-2.5 py-1 text-[10px] font-bold tracking-wider text-white"
-                    style={{ background: "#C19A4B" }}
-                  >
-                    {item.category}
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-[var(--color-ink-soft)]">
-                    <Calendar className="w-3 h-3" />
-                    {item.date}
-                  </span>
+              <Link
+                href={`/${locale}/news/${i + 1}`}
+                className="block cursor-pointer"
+              >
+                {/* Image */}
+                <div className="h-56 overflow-hidden">
+                  <div
+                    className="w-full h-full bg-cover bg-center transition-transform duration-700 group-hover:scale-105"
+                    style={{ backgroundImage: `url('${newsImages[i]}')` }}
+                  />
                 </div>
 
-                <h3 className={cardTitleClass}>{item.title}</h3>
-                <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-3">
-                  {item.excerpt}
-                </p>
-              </div>
+                {/* Content */}
+                <div className="p-6">
+                  <div className="flex items-center gap-3 mb-3 text-xs">
+                    <span
+                      className="px-2.5 py-1 text-[10px] font-bold tracking-wider text-white"
+                      style={{ background: "#C19A4B" }}
+                    >
+                      {item.category}
+                    </span>
+                    <span className="inline-flex items-center gap-1 text-[var(--color-ink-soft)]">
+                      <Calendar className="w-3 h-3" />
+                      {item.date}
+                    </span>
+                  </div>
+
+                  <h3 className={cardTitleClass}>{item.title}</h3>
+                  <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed line-clamp-3">
+                    {item.excerpt}
+                  </p>
+                </div>
+              </Link>
             </motion.article>
           ))}
         </div>

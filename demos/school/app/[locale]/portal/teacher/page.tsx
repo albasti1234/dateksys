@@ -86,7 +86,7 @@ export default function TeacherDashboard({
           <div className="p-6 border-b border-[var(--color-border)] flex items-center justify-between">
             <h3 className={cardTitleClass}>{t.classes.title}</h3>
             <Link
-              href={`/${locale}/portal/teacher/schedule`}
+              href={`/${locale}/portal/teacher`}
               className="text-xs font-semibold tracking-wider text-[var(--color-gold)] flex items-center gap-1"
             >
               {t.classes.viewSchedule}{" "}

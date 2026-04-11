@@ -22,6 +22,7 @@ type NavDict = {
   admissions: string;
   faculty: string;
   news: string;
+  faq: string;
   contact: string;
   portalLogin: string;
   portals: readonly { label: string; href: string }[];
@@ -68,6 +69,7 @@ export default function Navbar({
     { label: dict.admissions, href: p("/admissions") },
     { label: dict.faculty, href: p("/faculty") },
     { label: dict.news, href: p("/news") },
+    { label: dict.faq, href: p("/faq") },
     { label: dict.contact, href: p("/contact") },
   ];
 

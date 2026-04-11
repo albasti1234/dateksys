@@ -1,7 +1,8 @@
 "use client";
 
-import { use, useState } from "react";
-import { motion } from "framer-motion";
+import { use, useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import PageHero from "@/components/ui/PageHero";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
@@ -31,6 +32,40 @@ export default function GalleryPage({
   const dict = getDictionary(locale);
   const g = dict.pages.gallery;
   const [filter, setFilter] = useState<string>("all");
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const filteredItems =
+    filter === "all"
+      ? g.items
+      : g.items.filter((i) => i.category === filter);
+
+  const closeLightbox = useCallback(() => setLightboxIndex(null), []);
+
+  const nextImage = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev === null ? null : (prev + 1) % filteredItems.length
+    );
+  }, [filteredItems.length]);
+
+  const prevImage = useCallback(() => {
+    setLightboxIndex((prev) =>
+      prev === null
+        ? null
+        : (prev - 1 + filteredItems.length) % filteredItems.length
+    );
+  }, [filteredItems.length]);
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (lightboxIndex === null) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") closeLightbox();
+      else if (e.key === "ArrowRight") nextImage();
+      else if (e.key === "ArrowLeft") prevImage();
+    };
+    document.addEventListener("keydown", handler);
+    return () => document.removeEventListener("keydown", handler);
+  }, [lightboxIndex, closeLightbox, nextImage, prevImage]);
 
   const categories = [
     { key: "all", label: g.categories.all },
@@ -41,10 +76,7 @@ export default function GalleryPage({
     { key: "events", label: g.categories.events },
   ];
 
-  const filtered =
-    filter === "all"
-      ? g.items
-      : g.items.filter((i) => i.category === filter);
+  const filtered = filteredItems;
 
   return (
     <>
@@ -81,12 +113,13 @@ export default function GalleryPage({
             {filtered.map((img, i) => {
               const srcIdx = g.items.indexOf(img) % imageUrls.length;
               return (
-                <motion.div
+                <motion.button
                   key={img.title}
+                  onClick={() => setLightboxIndex(i)}
                   initial={{ opacity: 0, scale: 0.95 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.5, delay: (i % 8) * 0.06 }}
-                  className={`group relative overflow-hidden cursor-pointer ${
+                  className={`group relative overflow-hidden cursor-pointer text-start ${
                     i % 5 === 0 ? "md:row-span-2" : ""
                   }`}
                   style={{ minHeight: i % 5 === 0 ? 480 : 240 }}
@@ -111,12 +144,95 @@ export default function GalleryPage({
                       {img.title}
                     </h3>
                   </div>
-                </motion.div>
+                </motion.button>
               );
             })}
           </div>
         </div>
       </section>
+
+      {/* Lightbox */}
+      <AnimatePresence>
+        {lightboxIndex !== null && filtered[lightboxIndex] && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={closeLightbox}
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center p-4 md:p-10"
+          >
+            {/* Close */}
+            <button
+              onClick={closeLightbox}
+              className="absolute top-6 end-6 text-white/80 hover:text-white z-10 w-12 h-12 flex items-center justify-center"
+              aria-label="Close"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            {/* Prev */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                prevImage();
+              }}
+              className="absolute start-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white z-10 w-12 h-12 flex items-center justify-center bg-white/5 backdrop-blur-sm"
+              aria-label="Previous"
+            >
+              <ChevronLeft className="w-8 h-8" />
+            </button>
+
+            {/* Next */}
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                nextImage();
+              }}
+              className="absolute end-6 top-1/2 -translate-y-1/2 text-white/80 hover:text-white z-10 w-12 h-12 flex items-center justify-center bg-white/5 backdrop-blur-sm"
+              aria-label="Next"
+            >
+              <ChevronRight className="w-8 h-8" />
+            </button>
+
+            {/* Image */}
+            <motion.div
+              key={lightboxIndex}
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="relative w-full max-w-5xl max-h-[85vh] flex flex-col items-center"
+            >
+              <div
+                className="w-full flex-1 bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url('${imageUrls[g.items.indexOf(filtered[lightboxIndex]) % imageUrls.length]}')`,
+                  minHeight: "60vh",
+                }}
+              />
+              <div className="w-full mt-4 text-center">
+                <p className="text-xs text-[var(--color-gold-light)] tracking-widest">
+                  {
+                    categories.find(
+                      (c) => c.key === filtered[lightboxIndex].category
+                    )?.label
+                  }
+                </p>
+                <p
+                  className={`text-white text-xl mt-1 ${
+                    locale === "ar" ? "font-arabic-display" : "font-serif"
+                  }`}
+                >
+                  {filtered[lightboxIndex].title}
+                </p>
+                <p className="text-white/50 text-xs mt-2">
+                  {lightboxIndex + 1} / {filtered.length}
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

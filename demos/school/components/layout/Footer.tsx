@@ -148,28 +148,36 @@ export default function Footer({
           </h4>
           <div className="flex items-center gap-3 mt-2">
             <a
-              href="#"
+              href="https://facebook.com/alnakhla.edu.jo"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Facebook"
               className="text-white/50 hover:text-[var(--color-gold)] transition-colors"
             >
               <Facebook className="w-4 h-4" />
             </a>
             <a
-              href="#"
+              href="https://instagram.com/alnakhla.edu.jo"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="Instagram"
               className="text-white/50 hover:text-[var(--color-gold)] transition-colors"
             >
               <Instagram className="w-4 h-4" />
             </a>
             <a
-              href="#"
+              href="https://youtube.com/@alnakhla"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="YouTube"
               className="text-white/50 hover:text-[var(--color-gold)] transition-colors"
             >
               <Youtube className="w-4 h-4" />
             </a>
             <a
-              href="#"
+              href="https://linkedin.com/school/alnakhla-academy"
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label="LinkedIn"
               className="text-white/50 hover:text-[var(--color-gold)] transition-colors"
             >
@@ -184,19 +192,25 @@ export default function Footer({
         <div className="max-w-[1400px] mx-auto px-6 lg:px-10 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <p className="text-xs text-white/50">{dict.bottomBar.copyright}</p>
           <div className="flex items-center gap-5 text-xs text-white/50">
-            <a href="#" className="hover:text-[var(--color-gold)]">
+            <Link
+              href={p("/legal/privacy")}
+              className="hover:text-[var(--color-gold)]"
+            >
               {dict.bottomBar.privacy}
-            </a>
-            <a href="#" className="hover:text-[var(--color-gold)]">
+            </Link>
+            <Link
+              href={p("/legal/terms")}
+              className="hover:text-[var(--color-gold)]"
+            >
               {dict.bottomBar.terms}
-            </a>
-            <a href="#" className="hover:text-[var(--color-gold)]">
+            </Link>
+            <Link
+              href={p("/contact")}
+              className="hover:text-[var(--color-gold)]"
+            >
               {dict.bottomBar.sitemap}
-            </a>
+            </Link>
           </div>
-          <p className="text-xs text-white/40">
-            Built by <span className="text-[var(--color-gold)]">DatekSys</span>
-          </p>
         </div>
       </div>
     </footer>
