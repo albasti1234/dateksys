@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/i18n/routing";
 import {
@@ -404,64 +405,16 @@ export default function WebsitesShowcasePage() {
                       </div>
                     </div>
 
-                    {/* Screenshot placeholder — colored gradient mimicking the school site */}
-                    <div
-                      className="relative w-full h-[calc(100%-28px)]"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, #0F2C5C 0%, #1B3F7A 50%, #0F2C5C 100%)",
-                      }}
-                    >
-                      {/* Faux content */}
-                      <div className="absolute inset-0 p-6">
-                        <div className="flex items-center justify-between mb-6">
-                          <div className="flex items-center gap-2">
-                            <div className="w-7 h-7 rounded-sm" style={{ background: "#C19A4B" }} />
-                            <div className="text-white font-bold text-sm">Al-Nakhla</div>
-                          </div>
-                          <div className="flex gap-3 text-[8px] text-white/60">
-                            <span>Home</span>
-                            <span>About</span>
-                            <span>Programs</span>
-                            <span>Contact</span>
-                          </div>
-                        </div>
-
-                        <div className="text-white">
-                          <div className="text-[8px] text-[#C19A4B] mb-1 uppercase tracking-widest">
-                            Where Excellence
-                          </div>
-                          <div className="font-serif text-2xl lg:text-3xl font-bold mb-2">
-                            Takes Root.
-                          </div>
-                          <div className="text-[8px] text-white/60 max-w-[60%] leading-relaxed mb-3">
-                            A premier K-12 international academy in Amman with bilingual education.
-                          </div>
-                          <div className="flex gap-2">
-                            <div
-                              className="px-3 py-1 text-[8px] font-bold uppercase"
-                              style={{ background: "#C19A4B", color: "white" }}
-                            >
-                              Apply Now
-                            </div>
-                            <div className="px-3 py-1 text-[8px] font-bold uppercase border border-white/20 text-white">
-                              Tour Campus
-                            </div>
-                          </div>
-                        </div>
-
-                        {/* Faux stats grid */}
-                        <div className="absolute bottom-6 start-6 end-6 grid grid-cols-3 gap-3">
-                          {["850+", "65+", "22"].map((n, i) => (
-                            <div key={i} className="text-white">
-                              <div className="font-serif text-lg font-bold">{n}</div>
-                              <div className="text-[7px] text-white/50 uppercase tracking-wider">
-                                {["Students", "Faculty", "Years"][i]}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
+                    {/* Real screenshot of the live school demo */}
+                    <div className="relative w-full h-[calc(100%-28px)] bg-[#0F2C5C]">
+                      <Image
+                        src="/showcase/school-demo.png"
+                        alt="Al-Nakhla International Academy — live demo preview"
+                        fill
+                        priority
+                        sizes="(max-width: 1024px) 100vw, 900px"
+                        className="object-cover object-top"
+                      />
                     </div>
                   </div>
 
