@@ -51,12 +51,12 @@ const defaultImages: Record<string, string> = {
   "Data Center": "/images/projects/datacenter.webp",
   "Security Systems": "/images/projects/security.webp",
   Software: "/images/projects/software.webp",
-  "Web Development": "/images/projects/software.webp",
+  "Web Development": "/images/projects/webdev.webp",
   "البنية التحتية للشبكات": "/images/projects/network.webp",
   "مراكز البيانات": "/images/projects/datacenter.webp",
   "أنظمة الحماية": "/images/projects/security.webp",
   البرمجيات: "/images/projects/software.webp",
-  "تطوير المواقع": "/images/projects/software.webp",
+  "تطوير المواقع": "/images/projects/webdev.webp",
 };
 
 const stagger = {
