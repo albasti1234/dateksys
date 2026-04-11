@@ -8,7 +8,14 @@
       "Bash(node -e \"const d=require\\(''e:/netcore/messages/en.json''\\); const keys=Object.keys\\(d\\); console.log\\(''namespaces:'', keys.join\\('', ''\\)\\); console.log\\(''projects keys:'', Object.keys\\(d.projects\\)\\)\")",
       "Bash(node -e \":*)",
       "Bash(git stash:*)",
-      "Bash(node -e ':*)"
+      "Bash(node -e ':*)",
+      "Bash(mv page.tsx \"\\(public\\)/page.tsx\")",
+      "Bash(mv about:*)",
+      "Bash(mv admissions:*)",
+      "Bash(mv contact:*)",
+      "Bash(mv faculty:*)",
+      "Bash(rm e:/netcore/demos/school/pnpm-workspace.yaml)",
+      "Bash(rm -rf node_modules .next)"
     ]
   }
 }

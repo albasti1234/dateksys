@@ -4,6 +4,7 @@ import { useRef, useState, useEffect, MouseEvent } from "react";
 import { motion, useMotionValue, useSpring, useTransform, useInView } from "framer-motion";
 import Image from "next/image";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 // ============================================
 // Capabilities — Bento Grid 3D
@@ -173,11 +174,13 @@ function BentoCard({
   bgKind,
   className,
   size,
+  href,
 }: {
   item: Item;
   bgKind: BgKind;
   className?: string;
   size: "lg" | "md" | "sm";
+  href?: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const theme = themes[item.color] || themes.blue;
@@ -266,7 +269,7 @@ function BentoCard({
       ? "text-xs sm:text-sm lg:text-base line-clamp-2 sm:line-clamp-3"
       : "text-[11px] sm:text-xs lg:text-sm line-clamp-2";
 
-  return (
+  const cardContent = (
     <motion.div
       ref={ref}
       onMouseMove={handleMouseMove}
@@ -281,7 +284,7 @@ function BentoCard({
         transformStyle: "preserve-3d",
         transformPerspective: 1200,
       }}
-      className={`group relative overflow-hidden rounded-2xl cursor-default ${className || ""}`}
+      className={`group relative overflow-hidden rounded-2xl ${href ? "cursor-pointer" : "cursor-default"} ${className || ""}`}
     >
       {/* Base background */}
       <div
@@ -495,6 +498,15 @@ function BentoCard({
       />
     </motion.div>
   );
+
+  if (href) {
+    return (
+      <Link href={href} className="block h-full">
+        {cardContent}
+      </Link>
+    );
+  }
+  return cardContent;
 }
 
 // ──────────────────────────────────────────────
@@ -580,6 +592,7 @@ export default function CapabilitiesBento() {
             bgKind={bgKinds[4]}
             size="md"
             className="h-full"
+            href="/showcase/websites"
           />
         </div>
       </div>
