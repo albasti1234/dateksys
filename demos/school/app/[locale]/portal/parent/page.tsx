@@ -1,7 +1,7 @@
 "use client";
 
-import { use } from "react";
-import { motion } from "framer-motion";
+import { use, useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import {
   TrendingUp,
@@ -15,9 +15,11 @@ import {
   ArrowRight,
   Sparkles,
   CreditCard,
+  ChevronDown,
 } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+import { children as allChildren, useActiveChild } from "@/lib/parentStore";
 
 const statIcons = [TrendingUp, Calendar, BookOpen, Clock];
 const statColors = ["#2D8659", "#4A90E2", "#C19A4B", "#0F2C5C"];
@@ -35,6 +37,25 @@ export default function ParentDashboard({
   const p = dict.portals.parent.dashboard;
   const isRTL = locale === "ar";
 
+  const [activeChild, setActiveChild] = useActiveChild();
+  const [switcherOpen, setSwitcherOpen] = useState(false);
+  const switcherRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (switcherRef.current && !switcherRef.current.contains(e.target as Node)) {
+        setSwitcherOpen(false);
+      }
+    };
+    if (switcherOpen) {
+      document.addEventListener("mousedown", handler);
+      return () => document.removeEventListener("mousedown", handler);
+    }
+  }, [switcherOpen]);
+
+  const childFullName = `${activeChild.firstName[locale]} ${activeChild.lastName[locale]}`;
+  const childGrade = activeChild.grade[locale];
+
   const h1Class = isRTL
     ? "font-arabic-display text-3xl md:text-4xl font-bold text-[var(--color-navy)] leading-[1.4]"
     : "font-serif text-3xl md:text-4xl font-bold text-[var(--color-navy)]";
@@ -44,9 +65,6 @@ export default function ParentDashboard({
   const bigNumClass = isRTL
     ? "font-arabic-display text-4xl font-bold text-[var(--color-navy)] mb-1"
     : "font-serif text-4xl font-bold text-[var(--color-navy)] mb-1";
-
-  const childAvatar =
-    "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=200&q=80";
 
   return (
     <div className="p-6 lg:p-10">
@@ -64,7 +82,7 @@ export default function ParentDashboard({
         <h1 className={h1Class}>{p.subtitle}</h1>
       </motion.div>
 
-      {/* Child card */}
+      {/* Child card + multi-child switcher */}
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -78,9 +96,9 @@ export default function ParentDashboard({
         <div className="absolute top-0 start-0 w-20 h-20 border-t-2 border-s-2 border-[var(--color-gold)] pointer-events-none" />
         <div className="relative flex items-center gap-6 flex-wrap">
           <div
-            className="w-24 h-24 rounded-full bg-cover bg-center border-4 shrink-0"
+            className="w-24 h-24 rounded-full bg-cover bg-center border-4 shrink-0 transition-all"
             style={{
-              backgroundImage: `url('${childAvatar}')`,
+              backgroundImage: `url('${activeChild.avatar}')`,
               borderColor: "#C19A4B",
             }}
           />
@@ -88,28 +106,110 @@ export default function ParentDashboard({
             <p className="section-label !text-[var(--color-gold)] mb-2">
               {p.childProfile.viewing}
             </p>
-            <h2
+            <motion.h2
+              key={activeChild.id}
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
               className={`text-3xl font-bold mb-1 ${
                 isRTL ? "font-arabic-display" : "font-serif"
               }`}
             >
-              {p.childProfile.name}
-            </h2>
+              {childFullName}
+            </motion.h2>
             <div className="flex items-center gap-3 text-sm text-white/70 flex-wrap">
-              <span>{p.childProfile.grade}</span>
+              <span>{childGrade}</span>
               <span className="w-1 h-1 rounded-full bg-white/30" />
               <span className="inline-flex items-center gap-1 text-[var(--color-gold-light)]">
                 <CheckCircle2 className="w-3 h-3" /> {p.childProfile.status}
               </span>
             </div>
           </div>
+
+          {/* Child switcher dropdown */}
+          <div className="relative" ref={switcherRef}>
+            <button
+              onClick={() => setSwitcherOpen(!switcherOpen)}
+              className="flex items-center gap-2 px-4 py-3 bg-white/10 hover:bg-white/15 border border-white/20 transition-colors backdrop-blur-sm"
+            >
+              <span className="text-xs text-[var(--color-gold-light)]">
+                {locale === "ar" ? "تبديل الطفل" : "Switch child"}
+              </span>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform ${
+                  switcherOpen ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+            <AnimatePresence>
+              {switcherOpen && (
+                <motion.div
+                  initial={{ opacity: 0, y: -8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -8 }}
+                  className="absolute top-full end-0 mt-2 w-[260px] bg-white text-[var(--color-ink)] shadow-2xl border border-[var(--color-border)] z-20"
+                >
+                  {allChildren.map((child) => {
+                    const isActive = child.id === activeChild.id;
+                    return (
+                      <button
+                        key={child.id}
+                        onClick={() => {
+                          setActiveChild(child.id);
+                          setSwitcherOpen(false);
+                        }}
+                        className={`w-full flex items-center gap-3 p-4 text-start transition-colors ${
+                          isActive
+                            ? "bg-[var(--color-cream)] border-s-4 border-[var(--color-gold)]"
+                            : "hover:bg-[var(--color-cream)]/50 border-s-4 border-transparent"
+                        }`}
+                      >
+                        <div
+                          className="w-11 h-11 rounded-full bg-cover bg-center border-2 shrink-0"
+                          style={{
+                            backgroundImage: `url('${child.avatar}')`,
+                            borderColor: isActive
+                              ? "#C19A4B"
+                              : "transparent",
+                          }}
+                        />
+                        <div className="flex-1 min-w-0">
+                          <div
+                            className={`font-semibold text-[var(--color-navy)] ${
+                              isRTL ? "font-arabic-display" : "font-serif"
+                            }`}
+                          >
+                            {child.firstName[locale]} {child.lastName[locale]}
+                          </div>
+                          <div className="text-xs text-[var(--color-ink-soft)]">
+                            {child.gradeShort[locale]}
+                          </div>
+                        </div>
+                        {isActive && (
+                          <CheckCircle2 className="w-4 h-4 text-[var(--color-gold)] shrink-0" />
+                        )}
+                      </button>
+                    );
+                  })}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
         </div>
       </motion.div>
 
-      {/* Stats grid */}
+      {/* Stats grid — values update when switching child */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
         {p.stats.map((stat, i) => {
           const Icon = statIcons[i];
+          // Pull live values from active child
+          const liveValue =
+            i === 0
+              ? activeChild.stats.overallAverage
+              : i === 1
+                ? activeChild.stats.classRank
+                : i === 2
+                  ? activeChild.stats.attendance
+                  : activeChild.stats.subjectsPassing;
           return (
             <motion.div
               key={stat.label}
@@ -130,7 +230,14 @@ export default function ParentDashboard({
                 />
               </div>
               <div className="relative">
-                <div className={bigNumClass}>{stat.value}</div>
+                <motion.div
+                  key={`${activeChild.id}-${i}`}
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className={bigNumClass}
+                >
+                  {liveValue}
+                </motion.div>
                 <div className="text-xs tracking-wider font-semibold text-[var(--color-ink)]">
                   {stat.label}
                 </div>

@@ -1,10 +1,11 @@
 "use client";
 
 import { use, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Camera, CheckCircle2, XCircle, Sparkles, Users, Scan } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+import { saveAttendanceRecord } from "@/lib/schoolStore";
 
 const portraits = [
   "https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?w=200&q=80",
@@ -31,6 +32,8 @@ export default function SmartAttendancePage({
   const isRTL = locale === "ar";
   const [scanning, setScanning] = useState(false);
   const [scanned, setScanned] = useState(false);
+  const [saved, setSaved] = useState(false);
+  const [toast, setToast] = useState<string | null>(null);
 
   const handleScan = () => {
     setScanning(true);
@@ -38,6 +41,36 @@ export default function SmartAttendancePage({
       setScanning(false);
       setScanned(true);
     }, 2500);
+  };
+
+  const handleSave = () => {
+    const present = a.students
+      .filter((s) => s.status === "present")
+      .map((s) => s.name);
+    const absent = a.students
+      .filter((s) => s.status === "absent")
+      .map((s) => s.name);
+
+    saveAttendanceRecord({
+      classId: "grade-10-a-math",
+      date: new Date().toISOString(),
+      present,
+      absent,
+      savedAt: new Date().toISOString(),
+    });
+
+    setSaved(true);
+    setToast(
+      locale === "ar"
+        ? `تمّ حفظ الحضور بنجاح · ${present.length} حاضر، ${absent.length} غائب`
+        : `Attendance saved · ${present.length} present, ${absent.length} absent`
+    );
+
+    setTimeout(() => setToast(null), 3500);
+    setTimeout(() => {
+      setScanned(false);
+      setSaved(false);
+    }, 3500);
   };
 
   const h1Class = isRTL
@@ -195,12 +228,42 @@ export default function SmartAttendancePage({
               ))}
             </div>
 
-            <button className="mt-6 btn-primary w-full justify-center">
-              {a.confirmButton}
+            <button
+              onClick={handleSave}
+              disabled={saved}
+              className={`mt-6 w-full justify-center ${
+                saved
+                  ? "btn-outline !border-green-500 !text-green-700"
+                  : "btn-primary"
+              }`}
+            >
+              {saved ? (
+                <>
+                  <CheckCircle2 className="w-4 h-4" />
+                  {locale === "ar" ? "تمّ الحفظ" : "Saved"}
+                </>
+              ) : (
+                a.confirmButton
+              )}
             </button>
           </div>
         </>
       )}
+
+      {/* Toast */}
+      <AnimatePresence>
+        {toast && (
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 30 }}
+            className="fixed bottom-6 start-1/2 -translate-x-1/2 z-[60] bg-[var(--color-navy)] text-white px-6 py-4 shadow-xl flex items-center gap-3 max-w-md"
+          >
+            <CheckCircle2 className="w-5 h-5 text-[var(--color-gold)] shrink-0" />
+            <span className="font-semibold text-sm">{toast}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

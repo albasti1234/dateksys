@@ -1,10 +1,23 @@
 "use client";
 
 import { use } from "react";
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
-import { Bus, MapPin, Clock, Phone, Navigation2, CheckCircle2 } from "lucide-react";
+import { Clock, Phone, CheckCircle2 } from "lucide-react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
+
+// Leaflet must be client-only (uses window on mount)
+const BusMap = dynamic(() => import("@/components/portal/BusMap"), {
+  ssr: false,
+  loading: () => (
+    <div className="w-full h-full flex items-center justify-center bg-[var(--color-cream)]">
+      <div className="text-sm text-[var(--color-ink-soft)]">
+        Loading map...
+      </div>
+    </div>
+  ),
+});
 
 export default function BusPage({
   params,
@@ -80,87 +93,12 @@ export default function BusPage({
       </motion.div>
 
       <div className="grid lg:grid-cols-3 gap-6">
-        {/* Map */}
+        {/* Real Leaflet map — OpenStreetMap tiles, animated bus marker */}
         <div
           className="lg:col-span-2 bg-white border border-[var(--color-border)] overflow-hidden relative"
           style={{ minHeight: 500 }}
         >
-          <div className="absolute inset-0 bg-[var(--color-cream)]">
-            <div
-              className="absolute inset-0"
-              style={{
-                backgroundImage:
-                  "linear-gradient(#E8E4D8 1px, transparent 1px), linear-gradient(90deg, #E8E4D8 1px, transparent 1px)",
-                backgroundSize: "40px 40px",
-              }}
-            />
-
-            <div className="absolute top-1/4 left-0 right-0 h-1 bg-[var(--color-border)] opacity-60" />
-            <div className="absolute top-2/3 left-0 right-0 h-1 bg-[var(--color-border)] opacity-60" />
-            <div className="absolute left-1/3 top-0 bottom-0 w-1 bg-[var(--color-border)] opacity-60" />
-            <div className="absolute left-3/4 top-0 bottom-0 w-1 bg-[var(--color-border)] opacity-60" />
-
-            <svg
-              className="absolute inset-0 w-full h-full"
-              viewBox="0 0 600 500"
-              preserveAspectRatio="none"
-            >
-              <path
-                d="M 100 50 Q 200 120 250 200 T 350 300 T 480 420"
-                stroke="#C19A4B"
-                strokeWidth="4"
-                strokeDasharray="8,4"
-                fill="none"
-              />
-            </svg>
-
-            {/* School marker */}
-            <div className="absolute top-[10%] left-[16%] flex flex-col items-center">
-              <div className="w-5 h-5 rounded-full bg-[var(--color-forest)] border-2 border-white shadow-lg" />
-              <div className="text-[10px] font-semibold mt-1 bg-white px-2 py-0.5 shadow">
-                {b.timeline.stops[0].name}
-              </div>
-            </div>
-
-            {/* Current bus position */}
-            <motion.div
-              animate={{ y: [0, -6, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="absolute top-[52%] left-[56%] flex flex-col items-center"
-            >
-              <div className="relative">
-                <div className="absolute inset-0 rounded-full bg-[var(--color-gold)] animate-ping" />
-                <div className="relative w-12 h-12 rounded-full bg-[var(--color-gold)] flex items-center justify-center shadow-xl">
-                  <Bus className="w-6 h-6 text-white" />
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Home marker */}
-            <div className="absolute bottom-[10%] right-[12%] flex flex-col items-center">
-              <div className="w-6 h-6 rounded-full bg-[var(--color-navy)] border-2 border-white shadow-lg flex items-center justify-center">
-                <MapPin className="w-3 h-3 text-white" />
-              </div>
-              <div className="text-[10px] font-semibold mt-1 bg-white px-2 py-0.5 shadow">
-                {b.timeline.stops[b.timeline.stops.length - 1].name}
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute top-4 end-4 bg-white shadow-lg">
-            <button
-              className="block p-3 border-b border-[var(--color-border-soft)] hover:bg-[var(--color-cream)]"
-              aria-label="Zoom in"
-            >
-              +
-            </button>
-            <button
-              className="block p-3 hover:bg-[var(--color-cream)]"
-              aria-label="Zoom out"
-            >
-              −
-            </button>
-          </div>
+          <BusMap locale={locale} />
         </div>
 
         {/* Timeline + driver */}
