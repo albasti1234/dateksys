@@ -1,0 +1,113 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { Quote } from "lucide-react";
+
+// ============================================
+// Parent & Student Testimonials
+// ============================================
+
+const testimonials = [
+  {
+    quote:
+      "Al-Nakhla transformed my daughter. The teachers truly know every child and push them to excel with kindness. We couldn't be happier with our choice.",
+    author: "Rania Al-Masri",
+    role: "Parent · Grade 8",
+    image:
+      "url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80')",
+  },
+  {
+    quote:
+      "The IB programme at Al-Nakhla prepared me for Oxford in ways I never imagined. The critical thinking skills I gained here are unmatched.",
+    author: "Omar Nasser",
+    role: "Class of 2024 · Oxford University",
+    image:
+      "url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80')",
+  },
+  {
+    quote:
+      "As a parent of three at Al-Nakhla, I've seen firsthand how the school blends academic rigor with character building. It's a rare combination.",
+    author: "Dr. Layla Khalidi",
+    role: "Parent · Grades 3, 6, 10",
+    image:
+      "url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80')",
+  },
+];
+
+export default function Testimonials() {
+  return (
+    <section className="py-24 lg:py-32 bg-[var(--color-navy)] text-white relative overflow-hidden">
+      {/* Background pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.05]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, #C19A4B 1px, transparent 0)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center max-w-2xl mx-auto mb-20"
+        >
+          <p className="section-label !text-[var(--color-gold)] mb-4 !justify-center">
+            Voices of Our Community
+          </p>
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
+            What families{" "}
+            <span className="italic text-[var(--color-gold-light)]">say</span>
+          </h2>
+        </motion.div>
+
+        {/* Testimonial cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {testimonials.map((t, i) => (
+            <motion.div
+              key={t.author}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ duration: 0.7, delay: i * 0.15 }}
+              className="relative p-8 backdrop-blur-sm"
+              style={{
+                background: "rgba(255,255,255,0.04)",
+                border: "1px solid rgba(193,154,75,0.2)",
+              }}
+            >
+              <Quote
+                className="absolute top-5 end-5 w-10 h-10 opacity-20"
+                style={{ color: "#C19A4B" }}
+              />
+
+              <p className="font-serif text-lg text-white/90 leading-relaxed mb-8 relative">
+                &ldquo;{t.quote}&rdquo;
+              </p>
+
+              <div className="flex items-center gap-4 pt-6 border-t border-white/10">
+                <div
+                  className="w-12 h-12 rounded-full bg-cover bg-center border-2"
+                  style={{
+                    backgroundImage: t.image,
+                    borderColor: "#C19A4B",
+                  }}
+                />
+                <div>
+                  <div className="font-semibold text-white">{t.author}</div>
+                  <div className="text-xs text-[var(--color-gold-light)] mt-0.5">
+                    {t.role}
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
