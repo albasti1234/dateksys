@@ -15,7 +15,8 @@
       "Bash(mv contact:*)",
       "Bash(mv faculty:*)",
       "Bash(rm e:/netcore/demos/school/pnpm-workspace.yaml)",
-      "Bash(rm -rf node_modules .next)"
+      "Bash(rm -rf node_modules .next)",
+      "Bash(pnpm run:*)"
     ]
   }
 }
