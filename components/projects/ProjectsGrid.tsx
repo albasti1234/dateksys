@@ -68,10 +68,12 @@ function ProjectCard({
   project,
   index,
   isFeatured = false,
+  eager = false,
 }: {
   project: ProjectItem;
   index: number;
   isFeatured?: boolean;
+  eager?: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-60px" });
@@ -155,7 +157,7 @@ function ProjectCard({
           src={imageSrc}
           alt={project.title}
           fill
-          priority={isFeatured}
+          priority={isFeatured || eager}
           className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.06]"
           sizes={
             isFeatured
@@ -356,6 +358,7 @@ export default function ProjectsGrid({
             project={project}
             index={i}
             isFeatured={i === 0}
+            eager={i < 2}
           />
         ))}
       </motion.div>
