@@ -31,6 +31,7 @@ function FAQAccordionItem({
     >
       <button
         onClick={onToggle}
+        aria-expanded={isOpen}
         className="w-full flex items-center justify-between py-6 text-start group cursor-pointer"
       >
         <span className="text-base lg:text-lg font-heading font-semibold text-text-primary pe-8 group-hover:text-accent transition-colors duration-300">

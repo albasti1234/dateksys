@@ -7,26 +7,51 @@ export function OrganizationJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "Organization",
+    "@id": "https://dateksys.com/#organization",
     name: "DatekSys",
     url: "https://dateksys.com",
-    logo: "https://dateksys.com/images/logo.png",
+    logo: {
+      "@type": "ImageObject",
+      url: "https://dateksys.com/images/logo.png",
+      width: 512,
+      height: 512,
+    },
     description:
       "Enterprise-grade networking, data center solutions, security systems, and custom software development.",
     foundingDate: "2013",
+    telephone: "+962780104920",
+    email: "info@dateksys.com",
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Amman",
       addressLocality: "Amman",
+      addressRegion: "Amman Governorate",
       addressCountry: "JO",
     },
-    contactPoint: {
-      "@type": "ContactPoint",
-      email: "info@dateksys.com",
-      contactType: "customer service",
-      availableLanguage: ["English", "Arabic"],
-    },
+    contactPoint: [
+      {
+        "@type": "ContactPoint",
+        telephone: "+962780104920",
+        email: "info@dateksys.com",
+        contactType: "customer service",
+        availableLanguage: ["English", "Arabic"],
+      },
+    ],
     sameAs: [
       "https://linkedin.com/company/dateksys",
       "https://instagram.com/dateksys",
+    ],
+    areaServed: {
+      "@type": "Country",
+      name: "Jordan",
+    },
+    knowsAbout: [
+      "Network Infrastructure",
+      "Fiber Optic Installation",
+      "Data Center Solutions",
+      "CCTV Security Systems",
+      "Web Development",
+      "Enterprise IT Solutions",
     ],
   };
 
@@ -42,16 +67,25 @@ export function LocalBusinessJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "ProfessionalService",
+    "@id": "https://dateksys.com/#localbusiness",
     name: "DatekSys",
     url: "https://dateksys.com",
     image: "https://dateksys.com/images/logo.png",
     description:
       "Enterprise IT infrastructure, security systems, and custom software development in Amman, Jordan.",
+    telephone: "+962780104920",
+    email: "info@dateksys.com",
     address: {
       "@type": "PostalAddress",
+      streetAddress: "Amman",
       addressLocality: "Amman",
-      addressRegion: "Amman",
+      addressRegion: "Amman Governorate",
       addressCountry: "JO",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 31.9454,
+      longitude: 35.9284,
     },
     openingHoursSpecification: {
       "@type": "OpeningHoursSpecification",
@@ -100,6 +134,15 @@ export function LocalBusinessJsonLd() {
               "Custom web applications, business platforms, and enterprise software development.",
           },
         },
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Fiber Optic Installation",
+            description:
+              "Professional fiber optic cable deployment, splicing, and testing for enterprise networks.",
+          },
+        },
       ],
     },
   };
@@ -142,9 +185,37 @@ export function WebSiteJsonLd() {
   const data = {
     "@context": "https://schema.org",
     "@type": "WebSite",
+    "@id": "https://dateksys.com/#website",
     name: "DatekSys",
     url: "https://dateksys.com",
     inLanguage: ["en", "ar"],
+    publisher: {
+      "@id": "https://dateksys.com/#organization",
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; url: string }[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 
   return (

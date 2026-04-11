@@ -1,7 +1,23 @@
 {
   "meta": {
     "title": "DatekSys — Enterprise IT Infrastructure & Software Solutions",
-    "description": "Enterprise-grade networking, data center solutions, security systems, and custom software development. Built on 12+ years of field experience in fiber deployment and network infrastructure."
+    "description": "Enterprise-grade networking, data center solutions, security systems, and custom software development. Built on 12+ years of field experience in fiber deployment and network infrastructure.",
+    "services_title": "IT Services — Networking, Security & Software | DatekSys",
+    "services_description": "Professional IT infrastructure services in Jordan: fiber optic installation, enterprise networking, CCTV security systems, data center setup, and custom web development.",
+    "projects_title": "Our Work — Enterprise IT Projects & Case Studies | DatekSys",
+    "projects_description": "Explore our portfolio of enterprise networking, fiber optic, security system, and web development projects delivered across Jordan.",
+    "about_title": "About DatekSys — 12+ Years of IT Infrastructure Excellence",
+    "about_description": "Learn about DatekSys: a Jordan-based IT infrastructure company with 12+ years of field experience in networking, fiber optics, security systems, and software development.",
+    "contact_title": "Contact Us — Get a Free IT Consultation | DatekSys",
+    "contact_description": "Get in touch with DatekSys for enterprise networking, fiber optic installation, security systems, or custom software development in Amman, Jordan.",
+    "careers_title": "Careers at DatekSys — Join Our IT Infrastructure Team",
+    "careers_description": "Join DatekSys and build your career in enterprise IT infrastructure, networking, security systems, and software development in Amman, Jordan.",
+    "faq_title": "FAQ — Frequently Asked Questions | DatekSys",
+    "faq_description": "Find answers to common questions about DatekSys IT services, pricing, project timelines, and support for networking, security, and software solutions.",
+    "pricing_title": "Pricing Plans — IT Infrastructure & Software Services | DatekSys",
+    "pricing_description": "Transparent pricing for enterprise IT services: networking, fiber optic installation, security systems, and custom software development in Jordan.",
+    "blog_title": "Blog — IT Infrastructure Insights & Updates | DatekSys",
+    "blog_description": "Expert insights on enterprise networking, fiber optics, CCTV security, data centers, and web development from the DatekSys team in Jordan."
   },
   "nav": {
     "home": "Home",

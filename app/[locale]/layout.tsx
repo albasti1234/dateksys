@@ -52,22 +52,31 @@ export async function generateMetadata({
       type: "website",
       locale: locale === "ar" ? "ar_JO" : "en_US",
       siteName: "DatekSys",
+      images: [
+        {
+          url: `${process.env.SITE_URL || "https://dateksys.com"}/og-image.png`,
+          width: 1200,
+          height: 630,
+          alt: "DatekSys — Enterprise IT Infrastructure & Software Solutions",
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: t("title"),
       description: t("description"),
+      images: [`${process.env.SITE_URL || "https://dateksys.com"}/og-image.png`],
     },
     robots: {
       index: true,
       follow: true,
     },
     alternates: {
-      canonical: `/${locale}`,
+      canonical: `${process.env.SITE_URL || "https://dateksys.com"}/${locale}`,
       languages: {
-        en: "/en",
-        ar: "/ar",
-        "x-default": "/en",
+        en: `${process.env.SITE_URL || "https://dateksys.com"}/en`,
+        ar: `${process.env.SITE_URL || "https://dateksys.com"}/ar`,
+        "x-default": `${process.env.SITE_URL || "https://dateksys.com"}/en`,
       },
     },
     icons: {

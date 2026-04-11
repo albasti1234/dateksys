@@ -7,7 +7,8 @@
       "Bash(node -e \"const d=require\\(''e:/netcore/messages/en.json''\\); console.log\\(JSON.stringify\\(d.projects, null,2\\)\\)\")",
       "Bash(node -e \"const d=require\\(''e:/netcore/messages/en.json''\\); const keys=Object.keys\\(d\\); console.log\\(''namespaces:'', keys.join\\('', ''\\)\\); console.log\\(''projects keys:'', Object.keys\\(d.projects\\)\\)\")",
       "Bash(node -e \":*)",
-      "Bash(git stash:*)"
+      "Bash(git stash:*)",
+      "Bash(node -e ':*)"
     ]
   }
 }
