@@ -2,17 +2,10 @@
 
 import { motion } from "framer-motion";
 import { useTranslations } from "next-intl";
-import { Link } from "@/i18n/routing";
 import Image from "next/image";
-import { ArrowRight, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 
 const EXPO_OUT = [0.16, 1, 0.3, 1] as const;
-
-const stats = [
-  { value: "23+", labelKey: "stat_pages" },
-  { value: "5", labelKey: "stat_roles" },
-  { value: "3", labelKey: "stat_ai" },
-] as const;
 
 export default function ShowcaseSpotlight() {
   const t = useTranslations("showcase_spotlight");
@@ -69,21 +62,6 @@ export default function ShowcaseSpotlight() {
               {t("title")}
             </motion.h2>
 
-            {/* Tagline */}
-            <motion.p
-              className="mt-3 font-body font-medium"
-              style={{
-                fontSize: "clamp(14px, 2vw, 17px)",
-                color: "rgba(56,189,248,0.85)",
-              }}
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2, ease: EXPO_OUT }}
-            >
-              {t("tagline")}
-            </motion.p>
-
             {/* Description */}
             <motion.p
               className="mt-5 font-body max-w-[480px]"
@@ -95,56 +73,23 @@ export default function ShowcaseSpotlight() {
               initial={{ opacity: 0, y: 12 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.25, ease: EXPO_OUT }}
+              transition={{ duration: 0.6, delay: 0.2, ease: EXPO_OUT }}
             >
               {t("desc")}
             </motion.p>
 
-            {/* Stat badges */}
+            {/* Single CTA */}
             <motion.div
-              className="mt-6 flex flex-wrap gap-3"
-              initial={{ opacity: 0, y: 12 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.3, ease: EXPO_OUT }}
-            >
-              {stats.map((stat) => (
-                <div
-                  key={stat.labelKey}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-                  style={{
-                    background: "rgba(56,189,248,0.08)",
-                    border: "1px solid rgba(56,189,248,0.2)",
-                  }}
-                >
-                  <span
-                    className="font-heading font-bold text-sm"
-                    style={{ color: "#38BDF8" }}
-                  >
-                    {stat.value}
-                  </span>
-                  <span
-                    className="font-body text-xs"
-                    style={{ color: "rgba(56,189,248,0.7)" }}
-                  >
-                    {t(stat.labelKey)}
-                  </span>
-                </div>
-              ))}
-            </motion.div>
-
-            {/* CTAs */}
-            <motion.div
-              className="mt-8 flex flex-col sm:flex-row gap-3"
+              className="mt-8"
               initial={{ opacity: 0, y: 14 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.35, ease: EXPO_OUT }}
+              transition={{ duration: 0.6, delay: 0.25, ease: EXPO_OUT }}
             >
-              {/* Primary CTA — static path, use <a> */}
-              <a href="/demos/school" className="block w-full sm:w-auto">
+              {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
+              <a href="/demos/school" className="inline-block">
                 <motion.span
-                  className="relative flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-sm cursor-pointer overflow-hidden"
+                  className="relative flex items-center justify-center gap-2.5 px-8 py-4 rounded-lg font-semibold text-sm cursor-pointer overflow-hidden"
                   style={{
                     backgroundColor: "rgba(56,189,248,0.1)",
                     color: "#F4F4F5",
@@ -167,30 +112,6 @@ export default function ShowcaseSpotlight() {
                   <ExternalLink size={14} style={{ color: "rgba(56,189,248,0.9)" }} />
                 </motion.span>
               </a>
-
-              {/* Secondary CTA */}
-              <Link href="/showcase/websites" className="block w-full sm:w-auto">
-                <motion.span
-                  className="flex items-center justify-center gap-2 w-full sm:w-auto px-8 py-4 rounded-lg font-medium text-sm cursor-pointer"
-                  style={{
-                    color: "var(--color-text-secondary)",
-                    border: "1px solid var(--color-border)",
-                    backdropFilter: "blur(8px)",
-                  }}
-                  whileHover={{
-                    scale: 1.03,
-                    y: -2,
-                    color: "#F4F4F5",
-                    borderColor: "rgba(255,255,255,0.2)",
-                    backgroundColor: "rgba(255,255,255,0.03)",
-                  }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ duration: 0.2, ease: EXPO_OUT }}
-                >
-                  {t("cta_details")}
-                  <ArrowRight size={14} />
-                </motion.span>
-              </Link>
             </motion.div>
           </motion.div>
 
@@ -220,14 +141,11 @@ export default function ShowcaseSpotlight() {
                     borderBottom: "1px solid rgba(255,255,255,0.06)",
                   }}
                 >
-                  {/* Traffic lights */}
                   <div className="flex items-center gap-1.5">
                     <div className="w-2.5 h-2.5 rounded-full bg-[#FF5F57]" />
                     <div className="w-2.5 h-2.5 rounded-full bg-[#FEBC2E]" />
                     <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
                   </div>
-
-                  {/* URL bar */}
                   <div
                     className="flex-1 flex items-center justify-center px-4 py-1.5 rounded-md"
                     style={{

@@ -229,34 +229,6 @@ export default function Hero() {
                 {t("cta_secondary")}
               </motion.span>
             </Link>
-
-            {/* eslint-disable-next-line @next/next/no-html-link-for-pages */}
-            <a href="/demos/school" className="block w-full sm:w-auto">
-              <motion.span
-                className="flex items-center justify-center gap-2.5 w-full sm:w-auto px-8 py-4 rounded-lg font-semibold text-sm cursor-pointer"
-                style={{
-                  background: "linear-gradient(135deg, rgba(56,189,248,0.12), rgba(56,189,248,0.04))",
-                  color: "#38BDF8",
-                  border: "1px solid rgba(56,189,248,0.25)",
-                  backdropFilter: "blur(8px)",
-                }}
-                whileHover={{
-                  scale: 1.03,
-                  y: -2,
-                  borderColor: "rgba(56,189,248,0.5)",
-                  boxShadow: "0 0 30px rgba(56,189,248,0.15)",
-                }}
-                whileTap={{ scale: 0.97 }}
-                transition={{ duration: 0.2, ease: EXPO_OUT }}
-              >
-                {t("cta_showcase")}
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-                  <polyline points="15 3 21 3 21 9" />
-                  <line x1="10" y1="14" x2="21" y2="3" />
-                </svg>
-              </motion.span>
-            </a>
           </motion.div>
         </motion.div>
       </div>
