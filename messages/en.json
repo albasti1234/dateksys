@@ -68,6 +68,10 @@
     "subtitle": "From fiber deployment to custom software — we handle the full technology stack so you can focus on growing your business.",
     "learn_more": "Learn more",
     "view_all": "Explore All Services",
+    "cta_title": "Ready to start your project?",
+    "cta_subtitle": "Free consultation, transparent pricing, and a team that delivers.",
+    "cta_primary": "Get Free Consultation",
+    "cta_secondary": "View Our Work",
     "categories": {
       "infrastructure": {
         "label": "Infrastructure & Networking",
