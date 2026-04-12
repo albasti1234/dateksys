@@ -72,12 +72,11 @@
       "infrastructure": {
         "label": "Infrastructure & Networking",
         "title": "Network Infrastructure",
-        "description": "Complete enterprise networking solutions — from structured cabling and fiber optic deployment to core switching, wireless coverage, and SD-WAN connectivity. We build networks that scale.",
+        "description": "Full-cycle network infrastructure — we don't just install, we build from scratch. Fiber optic construction and splicing, structured cabling, core switching, wireless coverage, and SD-WAN. End-to-end, hands-on.",
         "capabilities": [
           "LAN/WAN Design & Deployment",
-          "Fiber Optic & GPON/OLT Installation",
           "Wireless Network Solutions (UniFi, Cisco)",
-          "Structured Cabling (Cat6/Cat6A/Fiber)",
+          "Structured Cabling & Termination (Cat6/Cat6A/Fiber)",
           "Network Monitoring & Optimization",
           "Data Center Design & Build"
         ]
@@ -112,7 +111,7 @@
     "items": {
       "network": {
         "title": "Network Infrastructure",
-        "description": "Enterprise-grade network design, fiber optic deployment, and LAN/WAN architecture — built to scale with your business."
+        "description": "Enterprise-grade network design, fiber optic construction and splicing, structured cabling, and LAN/WAN architecture — built from scratch to scale with your business."
       },
       "server": {
         "title": "Server & Data Center",
@@ -174,7 +173,7 @@
     "items": [
       {
         "title": "Field-Tested Expertise",
-        "description": "Our foundation is 12+ years of hands-on experience in fiber deployment, OLT management, and network infrastructure. We don't just plan — we've physically built and maintained hundreds of network sites."
+        "description": "Our foundation is 12+ years of hands-on experience in fiber optic construction, splicing, OLT management, and network infrastructure. We don't just plan — we've physically built and maintained hundreds of network sites from the ground up."
       },
       {
         "title": "End-to-End Delivery",
@@ -213,7 +212,7 @@
         "tech": "Cisco · Ubiquiti · MikroTik · Fiber Optic",
         "color": "blue",
         "metrics": [
-          "Fiber Deployment",
+          "Fiber Construction & Splicing",
           "OLT Configuration",
           "Campus Networks",
           "Point-to-Point Links"
@@ -334,7 +333,7 @@
         "description": "For growing businesses that need robust, scalable infrastructure.",
         "features": [
           "Everything in Essential",
-          "Fiber optic deployment",
+          "Fiber optic construction & splicing",
           "Server & rack setup",
           "Access control & fire systems",
           "Custom web application",
@@ -550,7 +549,7 @@
         "tech": "Cisco · Ubiquiti · MikroTik · Fiber Optic",
         "color": "blue",
         "metrics": [
-          "Fiber Deployment",
+          "Fiber Construction & Splicing",
           "OLT Configuration",
           "Campus Networks",
           "Point-to-Point Links"
