@@ -280,37 +280,25 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
           className="absolute inset-0 flex flex-col justify-center px-[5%] lg:px-[8%]"
           style={{ direction: isRTL ? "rtl" : "ltr" }}
         >
-          {/* Dark backdrop behind text for readability */}
-          <div
-            className="absolute inset-0 pointer-events-none"
+          <h2
+            className={`font-heading font-extrabold text-white mb-4 ${isRTL ? "font-arabic" : ""}`}
             style={{
-              background: isRTL
-                ? "linear-gradient(to left, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, transparent 80%)"
-                : "linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.4) 50%, transparent 80%)",
+              fontSize: "clamp(2rem, 5vw, 3.5rem)",
+              lineHeight: isRTL ? 1.3 : 1.1,
+              textShadow: "0 2px 8px rgba(0,0,0,0.8)",
             }}
-          />
-          <div className="relative z-10">
-            <h2
-              className={`font-heading font-extrabold text-white mb-4 ${isRTL ? "font-arabic" : ""}`}
-              style={{
-                fontSize: "clamp(2rem, 5vw, 3.5rem)",
-                lineHeight: isRTL ? 1.3 : 1.1,
-                textShadow: "0 2px 20px rgba(0,0,0,0.5)",
-              }}
-            >
-              {t(`categories.${tabKey}.title`)}
-            </h2>
-            <p
-              className={`text-white text-sm lg:text-base max-w-xl font-medium ${isRTL ? "font-arabic" : "font-body"}`}
-              style={{
-                lineHeight: isRTL ? 2 : 1.75,
-                textShadow: "0 1px 10px rgba(0,0,0,0.5)",
-                opacity: 0.85,
-              }}
-            >
-              {t(`categories.${tabKey}.description`)}
-            </p>
-          </div>
+          >
+            {t(`categories.${tabKey}.title`)}
+          </h2>
+          <p
+            className={`text-white text-sm lg:text-base max-w-xl font-semibold ${isRTL ? "font-arabic" : "font-body"}`}
+            style={{
+              lineHeight: isRTL ? 2 : 1.75,
+              textShadow: "0 1px 6px rgba(0,0,0,0.8)",
+            }}
+          >
+            {t(`categories.${tabKey}.description`)}
+          </p>
         </div>
       </motion.div>
 
