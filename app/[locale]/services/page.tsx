@@ -101,9 +101,9 @@ const fadeUp = {
 };
 
 // ══════════════════════════════════════════════
-// BENTO CARD — the core visual building block
+// SERVICE CARD
 // ══════════════════════════════════════════════
-function BentoCard({
+function ServiceCard({
   icon: Icon,
   title,
   desc,
@@ -121,13 +121,12 @@ function BentoCard({
   isRTL: boolean;
 }) {
   if (variant === "hero") {
-    // ── HERO CARD — large, with background image, spans 2 cols + 2 rows ──
     return (
       <motion.div
         variants={fadeUp}
-        className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group min-h-[280px] lg:min-h-[340px]"
+        className="md:col-span-2 relative rounded-2xl overflow-hidden group"
+        style={{ border: `1px solid rgba(${accent.rgb},0.2)` }}
       >
-        {/* Background image */}
         {image && (
           <Image
             src={image}
@@ -135,136 +134,84 @@ function BentoCard({
             fill
             priority
             sizes="(max-width: 768px) 100vw, 800px"
-            className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
+            className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
           />
         )}
-        {/* Overlay */}
         <div
           className="absolute inset-0"
           style={{
-            background: `
-              linear-gradient(${isRTL ? "to left" : "to right"}, rgba(9,9,11,0.92) 0%, rgba(9,9,11,0.6) 50%, rgba(9,9,11,0.3) 100%),
-              linear-gradient(to top, rgba(9,9,11,0.7) 0%, transparent 50%)
-            `,
+            background: `linear-gradient(to top, rgba(9,9,11,0.95) 0%, rgba(9,9,11,0.6) 50%, rgba(9,9,11,0.3) 100%)`,
           }}
         />
-        {/* Accent glow */}
         <div
-          className="absolute inset-0 opacity-30 pointer-events-none"
+          className="absolute inset-0 opacity-40 pointer-events-none"
           style={{
-            background: `radial-gradient(ellipse 50% 70% at ${isRTL ? "85%" : "15%"} 80%, rgba(${accent.rgb},0.3), transparent 70%)`,
+            background: `radial-gradient(ellipse 60% 60% at 50% 100%, rgba(${accent.rgb},0.2), transparent 70%)`,
           }}
         />
-        {/* Content */}
-        <div className={`absolute inset-0 flex flex-col justify-end p-8 lg:p-10 ${isRTL ? "items-end text-end" : ""}`}>
+        <div className={`relative z-10 p-8 lg:p-10 flex flex-col justify-end min-h-[220px] lg:min-h-[260px] ${isRTL ? "items-end text-end" : ""}`}>
           <div
-            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
+            className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
             style={{
               background: accent.gradient,
-              boxShadow: `0 0 40px rgba(${accent.rgb},0.3)`,
+              boxShadow: `0 0 30px rgba(${accent.rgb},0.35)`,
             }}
           >
-            <Icon className="w-7 h-7 text-white" />
+            <Icon className="w-6 h-6 text-white" />
           </div>
-          <h3 className="font-heading font-bold text-white text-xl lg:text-2xl mb-2">
-            {title}
-          </h3>
-          {desc && (
-            <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-md">
-              {desc}
-            </p>
-          )}
+          <h3 className="font-heading font-bold text-white text-xl lg:text-2xl mb-2">{title}</h3>
+          {desc && <p className="text-white/55 text-sm leading-relaxed max-w-md">{desc}</p>}
         </div>
       </motion.div>
     );
   }
 
-  if (variant === "featured") {
-    // ── FEATURED CARD — accent gradient bg, prominent icon ──
-    return (
-      <motion.div variants={fadeUp} className="group">
-        <div
-          className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1.5"
-          style={{
-            background: `linear-gradient(160deg, rgba(${accent.rgb},0.12) 0%, rgba(${accent.rgb},0.03) 40%, var(--color-surface) 100%)`,
-            border: `1px solid rgba(${accent.rgb},0.25)`,
-          }}
-        >
-          {/* Corner accent glow */}
-          <div
-            className="absolute -top-20 -end-20 w-40 h-40 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
-            style={{ background: accent.main }}
-          />
-          {/* Hover border glow */}
-          <div
-            className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
-            style={{ boxShadow: `inset 0 0 30px rgba(${accent.rgb},0.05), 0 0 20px rgba(${accent.rgb},0.08)` }}
-          />
-
-          <div className="relative z-10 p-7 lg:p-8">
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
-              style={{
-                background: `rgba(${accent.rgb},0.15)`,
-                border: `1px solid rgba(${accent.rgb},0.3)`,
-                color: accent.main,
-              }}
-            >
-              <Icon className="w-6 h-6" />
-            </div>
-            <h4 className="font-heading font-bold text-white text-lg mb-2 group-hover:text-white transition-colors duration-300">
-              {title}
-            </h4>
-            {desc && (
-              <p className="text-text-muted text-sm leading-relaxed">
-                {desc}
-              </p>
-            )}
-          </div>
-        </div>
-      </motion.div>
-    );
-  }
-
-  // ── STANDARD CARD — clean, lighter surface ──
+  // ── FEATURED + STANDARD — same structure, different intensity ──
+  const isFeatured = variant === "featured";
   return (
     <motion.div variants={fadeUp} className="group">
       <div
-        className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1"
+        className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1.5"
         style={{
-          background: "rgba(17,17,19,0.8)",
-          border: "1px solid rgba(255,255,255,0.06)",
+          background: isFeatured
+            ? `linear-gradient(160deg, rgba(${accent.rgb},0.14) 0%, rgba(${accent.rgb},0.04) 40%, rgba(20,20,22,0.95) 100%)`
+            : "rgba(20,20,22,0.95)",
+          border: isFeatured
+            ? `1px solid rgba(${accent.rgb},0.3)`
+            : `1px solid rgba(${accent.rgb},0.1)`,
         }}
       >
-        {/* Hover accent line on top */}
+        {/* Top accent line — always visible */}
         <div
-          className="absolute top-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          className={`absolute top-0 inset-x-0 h-[2px] ${isFeatured ? "opacity-80" : "opacity-30"} group-hover:opacity-100 transition-opacity duration-500`}
           style={{ background: accent.gradient }}
         />
+        {/* Hover glow */}
+        <div
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-2xl"
+          style={{
+            boxShadow: `0 0 30px rgba(${accent.rgb},0.1)`,
+            background: `radial-gradient(ellipse at 50% 0%, rgba(${accent.rgb},0.06), transparent 60%)`,
+          }}
+        />
 
-        <div className="relative z-10 p-6">
-          <div className="flex items-start gap-4">
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
-              style={{
-                background: `rgba(${accent.rgb},0.08)`,
-                border: `1px solid rgba(${accent.rgb},0.15)`,
-                color: accent.main,
-              }}
-            >
-              <Icon className="w-5 h-5" />
-            </div>
-            <div className="flex-1 min-w-0">
-              <h4 className="font-heading font-semibold text-text-primary text-[15px] group-hover:text-white transition-colors duration-300 mb-1">
-                {title}
-              </h4>
-              {desc && (
-                <p className="text-text-muted text-[13px] leading-relaxed">
-                  {desc}
-                </p>
-              )}
-            </div>
+        <div className="relative z-10 p-6 lg:p-7">
+          <div
+            className={`${isFeatured ? "w-12 h-12" : "w-10 h-10"} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+            style={{
+              background: `rgba(${accent.rgb},0.12)`,
+              border: `1px solid rgba(${accent.rgb},0.25)`,
+              color: accent.main,
+            }}
+          >
+            <Icon className={isFeatured ? "w-6 h-6" : "w-5 h-5"} />
           </div>
+          <h4 className={`font-heading font-bold text-white mb-1.5 ${isFeatured ? "text-[17px]" : "text-[15px]"}`}>
+            {title}
+          </h4>
+          {desc && (
+            <p className="text-text-muted text-[13px] leading-relaxed">{desc}</p>
+          )}
         </div>
       </div>
     </motion.div>
@@ -341,7 +288,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
 
       {/* ═══ BENTO CAPABILITIES GRID ═══ */}
       <motion.div variants={fadeUp}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 auto-rows-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
           {capabilities.map((cap, i) => {
             const Icon = icons[i];
             if (!Icon) return null;
@@ -352,7 +299,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
             else if (i <= 2) variant = "featured";
 
             return (
-              <BentoCard
+              <ServiceCard
                 key={i}
                 icon={Icon}
                 title={cap}
