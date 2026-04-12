@@ -22,6 +22,11 @@ const nextConfig: NextConfig = {
         destination: "/demos/school/ar",
         permanent: false,
       },
+      {
+        source: "/demos/hospital",
+        destination: "/demos/hospital/ar",
+        permanent: false,
+      },
     ];
   },
 
@@ -42,6 +47,14 @@ const nextConfig: NextConfig = {
       {
         source: "/demos/school/:path+",
         destination: "/demos/school/:path+/index.html",
+      },
+      {
+        source: "/demos/hospital/:path+/",
+        destination: "/demos/hospital/:path+/index.html",
+      },
+      {
+        source: "/demos/hospital/:path+",
+        destination: "/demos/hospital/:path+/index.html",
       },
     ];
   },
