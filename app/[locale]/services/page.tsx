@@ -149,7 +149,10 @@ function ServiceCard({
             background: `radial-gradient(ellipse 60% 60% at 50% 100%, rgba(${accent.rgb},0.2), transparent 70%)`,
           }}
         />
-        <div className={`relative z-10 p-8 lg:p-10 flex flex-col justify-end min-h-[220px] lg:min-h-[260px] ${isRTL ? "items-end text-end" : ""}`}>
+        <div
+          className="relative z-10 p-8 lg:p-10 flex flex-col justify-end min-h-[220px] lg:min-h-[260px]"
+          style={{ direction: isRTL ? "rtl" : "ltr" }}
+        >
           <div
             className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4"
             style={{
@@ -160,7 +163,7 @@ function ServiceCard({
             <Icon className="w-6 h-6 text-white" />
           </div>
           <h3 className="font-heading font-bold text-white text-xl lg:text-2xl mb-2">{title}</h3>
-          {desc && <p className="text-white/55 text-sm leading-relaxed max-w-md">{desc}</p>}
+          {desc && <p className="text-white/80 text-sm leading-relaxed max-w-md">{desc}</p>}
         </div>
       </motion.div>
     );
@@ -210,7 +213,7 @@ function ServiceCard({
             {title}
           </h4>
           {desc && (
-            <p className="text-text-muted text-[13px] leading-relaxed">{desc}</p>
+            <p className="text-text-secondary text-[13px] leading-relaxed">{desc}</p>
           )}
         </div>
       </div>
@@ -273,14 +276,17 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
           style={{ background: accent.gradient }}
         />
 
-        <div className={`absolute inset-0 flex flex-col justify-center px-[5%] lg:px-[8%] ${isRTL ? "items-end text-end" : ""}`}>
+        <div
+          className="absolute inset-0 flex flex-col justify-center px-[5%] lg:px-[8%]"
+          style={{ direction: isRTL ? "rtl" : "ltr" }}
+        >
           <h2
-            className="font-heading font-extrabold text-white mb-3"
-            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1 }}
+            className={`font-heading font-extrabold text-white mb-3 ${isRTL ? "font-arabic" : ""}`}
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: isRTL ? 1.3 : 1.1 }}
           >
             {t(`categories.${tabKey}.title`)}
           </h2>
-          <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-xl font-body">
+          <p className={`text-white/90 text-sm lg:text-base leading-relaxed max-w-xl ${isRTL ? "font-arabic" : "font-body"}`} style={{ lineHeight: isRTL ? 2 : 1.6 }}>
             {t(`categories.${tabKey}.description`)}
           </p>
         </div>
