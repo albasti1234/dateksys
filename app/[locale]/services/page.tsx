@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import Image from "next/image";
 import { Link } from "@/i18n/routing";
 import GlowCard from "@/components/ui/GlowCard";
@@ -61,63 +61,11 @@ const heroImages: Record<TabKey, string> = {
   software: "/images/services/software.webp",
 };
 
-// ── Capability icons & descriptions per tab ──
-interface CapMeta {
-  icon: LucideIcon;
-  desc: string;
-}
-
-const capabilityMeta: Record<TabKey, CapMeta[]> = {
-  infrastructure: [
-    { icon: Network, desc: "Enterprise LAN/WAN design with redundancy and failover" },
-    { icon: Wifi, desc: "Full-coverage wireless with UniFi & Cisco" },
-    { icon: Cable, desc: "Cat6/Cat6A/Fiber termination and testing" },
-    { icon: Activity, desc: "Real-time monitoring with alerts and optimization" },
-    { icon: Server, desc: "Rack, power, cooling, and cable management" },
-  ],
-  security: [
-    { icon: Camera, desc: "HD IP & analog cameras with NVR/DVR" },
-    { icon: Fingerprint, desc: "Biometric readers, card systems, turnstiles" },
-    { icon: Flame, desc: "Smoke detection, heat sensors, alarm panels" },
-    { icon: ShieldAlert, desc: "Motion sensors and perimeter protection" },
-    { icon: ShieldCheck, desc: "Next-gen firewalls and endpoint protection" },
-    { icon: MonitorSmartphone, desc: "Centralized dashboards accessible anywhere" },
-  ],
-  software: [
-    { icon: Globe, desc: "Modern, SEO-optimized corporate websites" },
-    { icon: ShoppingCart, desc: "Full-stack stores with payment integration" },
-    { icon: LayoutDashboard, desc: "Custom SaaS platforms and dashboards" },
-    { icon: Megaphone, desc: "High-converting landing pages" },
-    { icon: Building2, desc: "ERP, CRM, and workflow automation" },
-    { icon: Plug, desc: "RESTful APIs and third-party integrations" },
-  ],
-};
-
-// ── Stats per tab ──
-interface Stat {
-  value: string;
-  label: string;
-}
-
-const tabStats: Record<TabKey, Stat[]> = {
-  infrastructure: [
-    { value: "500+", label: "Sites Built" },
-    { value: "12+", label: "Years Experience" },
-    { value: "99.9%", label: "Uptime" },
-    { value: "1hr", label: "Response Time" },
-  ],
-  security: [
-    { value: "1000+", label: "Cameras Installed" },
-    { value: "200+", label: "Access Points" },
-    { value: "24/7", label: "Monitoring" },
-    { value: "100%", label: "Coverage" },
-  ],
-  software: [
-    { value: "50+", label: "Projects Delivered" },
-    { value: "5", label: "Frameworks" },
-    { value: "99", label: "Lighthouse Score" },
-    { value: "< 2s", label: "Load Time" },
-  ],
+// ── Capability icons per tab ──
+const capIcons: Record<TabKey, LucideIcon[]> = {
+  infrastructure: [Network, Wifi, Cable, Activity, Server],
+  security: [Camera, Fingerprint, Flame, ShieldAlert, ShieldCheck, MonitorSmartphone],
+  software: [Globe, ShoppingCart, LayoutDashboard, Megaphone, Building2, Plug],
 };
 
 const tabs: TabKey[] = ["infrastructure", "security", "software"];
@@ -142,9 +90,17 @@ const fadeUp = {
 // ── Tab Content Component ──
 function TabContent({ tabKey }: { tabKey: TabKey }) {
   const t = useTranslations("services");
+  const locale = useLocale();
+  const isRTL = locale === "ar";
   const capabilities = t.raw(`categories.${tabKey}.capabilities`) as string[];
-  const meta = capabilityMeta[tabKey];
-  const stats = tabStats[tabKey];
+  const capDescs = t.raw(`categories.${tabKey}.cap_descs`) as string[];
+  const stats = t.raw(`categories.${tabKey}.stats`) as { value: string; label: string }[];
+  const icons = capIcons[tabKey];
+
+  // RTL-aware gradient direction
+  const heroGradient = isRTL
+    ? "linear-gradient(to left, rgba(9,9,11,0.9) 0%, rgba(9,9,11,0.5) 50%, rgba(9,9,11,0.3) 100%)"
+    : "linear-gradient(to right, rgba(9,9,11,0.9) 0%, rgba(9,9,11,0.5) 50%, rgba(9,9,11,0.3) 100%)";
 
   return (
     <motion.div
@@ -153,7 +109,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
       variants={stagger}
       className="space-y-16"
     >
-      {/* Hero Image */}
+      {/* ── Hero Image ── */}
       <motion.div variants={fadeUp} className="relative w-full h-[300px] sm:h-[350px] lg:h-[400px] rounded-2xl overflow-hidden">
         <Image
           src={heroImages[tabKey]}
@@ -161,12 +117,14 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
           fill
           sizes="(max-width: 768px) 100vw, 1200px"
           className="object-cover"
+          priority
         />
+        <div className="absolute inset-0" style={{ background: heroGradient }} />
+        {/* Extra bottom fade */}
         <div
           className="absolute inset-0"
           style={{
-            background:
-              "linear-gradient(to right, rgba(9,9,11,0.9) 0%, rgba(9,9,11,0.5) 50%, rgba(9,9,11,0.3) 100%)",
+            background: "linear-gradient(to top, rgba(9,9,11,0.6) 0%, transparent 40%)",
           }}
         />
         <div className="absolute inset-0 flex flex-col justify-center p-8 lg:p-12 max-w-2xl">
@@ -190,35 +148,44 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
         </div>
       </motion.div>
 
-      {/* Capabilities Grid */}
+      {/* ── Capabilities Grid ── */}
       <motion.div variants={fadeUp}>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {capabilities.map((cap, i) => {
-            const capMeta = meta[i];
-            if (!capMeta) return null;
-            const Icon = capMeta.icon;
+            const Icon = icons[i];
+            const desc = capDescs?.[i];
+            if (!Icon) return null;
+
+            // First item spans 2 cols on lg for visual variety
+            const isWide = i === 0;
 
             return (
-              <motion.div key={i} variants={fadeUp}>
+              <motion.div
+                key={i}
+                variants={fadeUp}
+                className={isWide ? "lg:col-span-2" : ""}
+              >
                 <GlowCard className="p-6 h-full group">
-                  <div className="flex flex-col gap-3">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-accent transition-colors duration-300"
-                        style={{
-                          background: "rgba(56,189,248,0.08)",
-                          border: "1px solid rgba(56,189,248,0.15)",
-                        }}
-                      >
-                        <Icon className="w-[18px] h-[18px]" />
-                      </div>
-                      <h4 className="font-heading font-semibold text-text-primary text-base group-hover:text-accent transition-colors duration-300">
+                  <div className="flex items-start gap-4">
+                    <div
+                      className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0 text-accent group-hover:scale-110 transition-transform duration-300"
+                      style={{
+                        background: "rgba(56,189,248,0.08)",
+                        border: "1px solid rgba(56,189,248,0.15)",
+                      }}
+                    >
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-heading font-semibold text-text-primary text-base group-hover:text-accent transition-colors duration-300 mb-1">
                         {cap}
                       </h4>
+                      {desc && (
+                        <p className="text-text-muted text-sm leading-relaxed">
+                          {desc}
+                        </p>
+                      )}
                     </div>
-                    <p className="text-text-muted text-sm leading-relaxed ps-12">
-                      {capMeta.desc}
-                    </p>
                   </div>
                 </GlowCard>
               </motion.div>
@@ -227,7 +194,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
         </div>
       </motion.div>
 
-      {/* Stats Bar */}
+      {/* ── Stats Bar ── */}
       <motion.div variants={fadeUp}>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {stats.map((stat, i) => (
@@ -236,7 +203,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 + i * 0.1, ease }}
-              className="rounded-xl p-6 text-center"
+              className="rounded-xl p-6 text-center group hover:border-accent/20 transition-colors duration-300"
               style={{
                 background: "var(--color-surface)",
                 border: "1px solid var(--color-border)",
@@ -251,40 +218,79 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
         </div>
       </motion.div>
 
-      {/* CTA Section */}
+      {/* ── CTA Section ── */}
       <motion.div variants={fadeUp}>
-        <div
-          className="rounded-2xl p-8 lg:p-12 text-center"
-          style={{
-            background: "var(--color-surface)",
-            border: "1px solid var(--color-border)",
-          }}
-        >
-          <h3 className="text-2xl lg:text-3xl font-heading font-bold text-text-primary mb-3">
-            {t("cta_title")}
-          </h3>
-          <p className="text-text-secondary text-sm lg:text-base mb-8 max-w-lg mx-auto">
-            {t("cta_subtitle")}
-          </p>
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-accent text-white font-semibold text-sm hover:brightness-110 transition-all duration-300"
-              style={{ boxShadow: "0 0 20px rgba(56,189,248,0.25)" }}
-            >
-              {t("cta_primary")}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-            <Link
-              href="/projects"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm text-text-secondary hover:text-text-primary transition-colors duration-300"
-              style={{
-                background: "var(--color-surface-2)",
-                border: "1px solid var(--color-border)",
-              }}
-            >
-              {t("cta_secondary")}
-            </Link>
+        <div className="relative rounded-2xl overflow-hidden">
+          {/* Background glow */}
+          <div
+            className="absolute inset-0 pointer-events-none"
+            style={{
+              background:
+                "radial-gradient(ellipse 60% 60% at 50% 50%, rgba(56,189,248,0.06) 0%, transparent 70%)",
+            }}
+          />
+          <div
+            className="relative p-8 lg:p-12 text-center"
+            style={{
+              background: "var(--color-surface)",
+              border: "1px solid var(--color-border)",
+              borderRadius: "1rem",
+            }}
+          >
+            <h3 className="text-2xl lg:text-3xl font-heading font-bold text-text-primary mb-3">
+              {t("cta_title")}
+            </h3>
+            <p className="text-text-secondary text-sm lg:text-base mb-8 max-w-lg mx-auto">
+              {t("cta_subtitle")}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="/contact" className="block">
+                <motion.span
+                  className="inline-flex items-center gap-2.5 px-8 py-4 rounded-lg font-semibold text-sm cursor-pointer"
+                  style={{
+                    backgroundColor: "rgba(56,189,248,0.1)",
+                    color: "#F4F4F5",
+                    border: "1px solid rgba(56,189,248,0.35)",
+                    boxShadow: "0 0 20px rgba(56,189,248,0.1)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  whileHover={{
+                    scale: 1.03,
+                    y: -2,
+                    backgroundColor: "rgba(56,189,248,0.15)",
+                    borderColor: "rgba(56,189,248,0.55)",
+                    boxShadow:
+                      "0 0 36px rgba(56,189,248,0.2), 0 8px 24px rgba(0,0,0,0.35)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.2, ease }}
+                >
+                  {t("cta_primary")}
+                  <ArrowRight className="w-4 h-4" />
+                </motion.span>
+              </Link>
+              <Link href="/projects" className="block">
+                <motion.span
+                  className="inline-flex items-center gap-2 px-8 py-4 rounded-lg font-medium text-sm cursor-pointer"
+                  style={{
+                    color: "var(--color-text-secondary)",
+                    border: "1px solid var(--color-border)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  whileHover={{
+                    scale: 1.03,
+                    y: -2,
+                    color: "#F4F4F5",
+                    borderColor: "rgba(255,255,255,0.2)",
+                    backgroundColor: "rgba(255,255,255,0.03)",
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.2, ease }}
+                >
+                  {t("cta_secondary")}
+                </motion.span>
+              </Link>
+            </div>
           </div>
         </div>
       </motion.div>

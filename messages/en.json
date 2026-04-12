@@ -83,6 +83,19 @@
           "Structured Cabling & Termination (Cat6/Cat6A/Fiber)",
           "Network Monitoring & Optimization",
           "Data Center Design & Build"
+        ],
+        "cap_descs": [
+          "Enterprise LAN/WAN architecture with redundancy and automatic failover",
+          "Full-coverage wireless networks using UniFi and Cisco platforms",
+          "Cat6, Cat6A, and fiber optic termination, testing, and certification",
+          "Real-time network monitoring with alerts and performance optimization",
+          "Complete rack setup, power distribution, cooling, and cable management"
+        ],
+        "stats": [
+          { "value": "500+", "label": "Sites Built" },
+          { "value": "12+", "label": "Years Experience" },
+          { "value": "99.9%", "label": "Uptime" },
+          { "value": "1hr", "label": "Response Time" }
         ]
       },
       "security": {
@@ -96,6 +109,20 @@
           "Intrusion Detection Systems",
           "Network Firewall & Security",
           "24/7 Remote Monitoring Setup"
+        ],
+        "cap_descs": [
+          "HD IP and analog cameras with NVR/DVR recording and playback",
+          "Fingerprint readers, card access systems, and turnstile control",
+          "Smoke detectors, heat sensors, and alarm panel integration",
+          "Motion sensors and perimeter protection systems",
+          "Next-generation firewalls and endpoint security solutions",
+          "Centralized monitoring dashboards accessible from anywhere"
+        ],
+        "stats": [
+          { "value": "1000+", "label": "Cameras Installed" },
+          { "value": "200+", "label": "Access Points" },
+          { "value": "24/7", "label": "Monitoring" },
+          { "value": "100%", "label": "Coverage" }
         ]
       },
       "software": {
@@ -109,6 +136,20 @@
           "Landing Pages & Marketing Sites",
           "Business Management Platforms",
           "API Development & Integration"
+        ],
+        "cap_descs": [
+          "Modern, SEO-optimized corporate websites with bilingual support",
+          "Full-stack online stores with payment gateway integration",
+          "Custom SaaS platforms, dashboards, and cloud applications",
+          "High-converting landing pages for campaigns and launches",
+          "ERP, CRM, and workflow automation platforms",
+          "RESTful APIs and third-party service integrations"
+        ],
+        "stats": [
+          { "value": "50+", "label": "Projects Delivered" },
+          { "value": "5", "label": "Frameworks" },
+          { "value": "99", "label": "Lighthouse Score" },
+          { "value": "< 2s", "label": "Load Time" }
         ]
       }
     },
