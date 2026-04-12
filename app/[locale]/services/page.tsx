@@ -125,7 +125,7 @@ function BentoCard({
     return (
       <motion.div
         variants={fadeUp}
-        className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group min-h-[320px] lg:min-h-[380px]"
+        className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group min-h-[340px] lg:min-h-[420px]"
       >
         {/* Background image */}
         {image && (
@@ -294,19 +294,19 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
       variants={stagger}
       className="space-y-24"
     >
-      {/* ═══ HERO IMAGE ═══ */}
+      {/* ═══ HERO IMAGE — full width, breaks out of container ═══ */}
       <motion.div
         variants={fadeUp}
-        className="relative w-full h-[340px] sm:h-[400px] lg:h-[480px] rounded-3xl overflow-hidden group"
+        className="relative w-[100vw] -ms-[calc((100vw-100%)/2)] h-[380px] sm:h-[450px] lg:h-[550px] overflow-hidden group"
         style={{
-          boxShadow: `0 0 80px rgba(${accent.rgb},0.06), 0 30px 60px rgba(0,0,0,0.5)`,
+          boxShadow: `0 40px 80px rgba(0,0,0,0.5)`,
         }}
       >
         <Image
           src={heroImages[tabKey]}
           alt=""
           fill
-          sizes="(max-width: 768px) 100vw, 1200px"
+          sizes="100vw"
           className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
           priority
         />
@@ -328,7 +328,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
           style={{ background: accent.gradient }}
         />
 
-        <div className={`absolute inset-0 flex flex-col justify-end p-8 lg:p-14 ${isRTL ? "items-end text-end" : ""}`}>
+        <div className={`absolute inset-0 flex flex-col justify-end px-[5%] lg:px-[6%] pb-10 lg:pb-14 ${isRTL ? "items-end text-end" : ""}`}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -435,9 +435,9 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
         </div>
       </motion.div>
 
-      {/* ═══ CTA ═══ */}
-      <motion.div variants={fadeUp}>
-        <div className="relative rounded-3xl overflow-hidden">
+      {/* ═══ CTA — full width ═══ */}
+      <motion.div variants={fadeUp} className="w-[100vw] -ms-[calc((100vw-100%)/2)]">
+        <div className="relative overflow-hidden">
           {/* Multi-layer bg */}
           <div
             className="absolute inset-0"
@@ -449,10 +449,10 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
               `,
             }}
           />
-          {/* Border */}
+          {/* Top border line */}
           <div
-            className="absolute inset-0 rounded-3xl pointer-events-none"
-            style={{ border: `1px solid rgba(${accent.rgb},0.15)` }}
+            className="absolute top-0 inset-x-0 h-px"
+            style={{ background: `linear-gradient(to right, transparent, rgba(${accent.rgb},0.3), transparent)` }}
           />
           {/* Dot pattern */}
           <div
@@ -536,7 +536,7 @@ export default function ServicesPage() {
         <div className="absolute -top-[100px] end-[-200px] w-[700px] h-[700px] bg-accent/[0.04] rounded-full blur-[180px] pointer-events-none" />
         <div className="absolute top-[200px] start-[-300px] w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[180px] pointer-events-none" />
 
-        <div className="max-w-[1200px] mx-auto px-[5%] lg:px-[6%] relative z-10">
+        <div className="max-w-[1400px] mx-auto px-[5%] lg:px-[6%] relative z-10">
           <div className="flex flex-col items-center text-center max-w-[800px] mx-auto mb-14">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -613,7 +613,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Tab Content */}
-      <section className="max-w-[1200px] mx-auto px-[5%] lg:px-[6%] pb-32">
+      <section className="max-w-[1400px] mx-auto px-[5%] lg:px-[6%] pb-32">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
