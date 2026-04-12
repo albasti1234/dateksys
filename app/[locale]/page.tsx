@@ -2,6 +2,7 @@ import Hero from "@/components/home/Hero";
 import StatsBar from "@/components/home/StatsBar";
 import ServicesOverview from "@/components/home/ServicesOverview";
 import ProcessSection from "@/components/home/ProcessSection";
+import ShowcaseSpotlight from "@/components/home/ShowcaseSpotlight";
 import WhyDatekSys from "@/components/home/WhyDatekSys";
 import Testimonials from "@/components/home/Testimonials";
 import CapabilitiesBento from "@/components/home/CapabilitiesBento";
@@ -17,6 +18,8 @@ export default function HomePage() {
       <ServicesOverview />
       <SectionDivider />
       <ProcessSection />
+      <SectionDivider />
+      <ShowcaseSpotlight />
       <SectionDivider />
       <WhyDatekSys />
       <SectionDivider />

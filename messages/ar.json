@@ -22,6 +22,7 @@
   "nav": {
     "home": "الرئيسية",
     "services": "خدماتنا",
+    "showcase": "معرض الأعمال",
     "projects": "أعمالنا",
     "about": "من نحن",
     "contact": "تواصل معنا",
@@ -40,6 +41,7 @@
     "description_highlight2": "بخبرة ميدانية تتجاوز 12 عاماً",
     "cta_primary": "احصل على استشارة مجانية",
     "cta_secondary": "تعرّف على خدماتنا",
+    "cta_showcase": "شاهد عرض المدرسة",
     "trusted_by": "التقنيات التي نعمل بها",
     "network_label": "محاكاة شبكة حيّة",
     "scroll_hint": "مرّر"
@@ -189,8 +191,8 @@
     ]
   },
   "testimonials": {
-    "label": "ما نؤمن به",
-    "title": "بكلماتنا"
+    "label": "فلسفتنا",
+    "title": "ما يحرّكنا"
   },
   "cta_banner": {
     "label": "جاهز للبدء؟",
@@ -486,7 +488,9 @@
     "title": "آخر المقالات",
     "subtitle": "أدلة تقنية، رؤى صناعية، ونصائح عملية من فريقنا.",
     "read_more": "اقرأ المقال",
-    "view_all": "عرض جميع المقالات"
+    "view_all": "عرض جميع المقالات",
+    "coming_soon": "نعمل على إعداد مقالات متخصصة في البنية التحتية والشبكات وتطوير المواقع. ترقّبوا قريباً.",
+    "notify_cta": "أعلموني عند النشر"
   },
   "careers": {
     "label": "وظائف",
@@ -644,6 +648,7 @@
     "company": {
       "about": "من نحن",
       "projects": "أعمالنا",
+      "showcase": "معرض الأعمال",
       "careers": "وظائف",
       "contact": "تواصل معنا"
     },
@@ -734,6 +739,75 @@
         "image": "/images/projects/webdev.webp"
       }
     ]
+  },
+  "showcase": {
+    "badge": "معرض المواقع وتطبيقات الويب",
+    "hero_line1": "مصنوعة بعناية.",
+    "hero_line2": "ليست مُجمَّعة.",
+    "hero_subtitle": "نبني منتجات رقمية تحتاجها الشركات فعلاً — مواقع متكاملة، تطبيقات ويب، ومنصات SaaS مبنية بأحدث التقنيات للسرعة والتوسع والتأثير.",
+    "cta_featured": "شاهد المشروع المميز",
+    "cta_start": "ابدأ مشروعك",
+    "pill_modern": "تقنيات حديثة",
+    "pill_modern_sub": "Next.js · React · TypeScript",
+    "pill_responsive": "متجاوب",
+    "pill_responsive_sub": "تصميم موبايل أولاً",
+    "pill_fast": "سريع",
+    "pill_fast_sub": "محسّن للسرعة",
+    "pill_seo": "جاهز لـ SEO",
+    "pill_seo_sub": "مبني للظهور",
+    "featured_label": "دراسة حالة مميزة",
+    "featured_title": "أحدث مشروع",
+    "live_demo": "عرض مباشر",
+    "featured_category": "تعليم · مرحلة K-12",
+    "project_name": "أكاديمية النخلة الدولية",
+    "project_tagline": "منصة إدارة مدرسية متكاملة",
+    "project_desc": "منصة تعليمية متكاملة تشمل الموقع العام، بوابة أولياء الأمور، لوحة المعلمين، بوابة الطلاب، لوحة الإدارة، مساعد واجبات بالذكاء الاصطناعي، وتتبع حافلات مباشر.",
+    "production_ready": "جاهز للإنتاج",
+    "visit_demo": "زيارة العرض المباشر",
+    "stat_pages": "صفحة مبنية",
+    "stat_roles": "أدوار مستخدمين",
+    "stat_ai": "ميزات ذكاء اصطناعي",
+    "more_label": "مشاريع أخرى",
+    "more_title": "قريباً",
+    "more_subtitle": " — دراسات حالة إضافية قيد التطوير",
+    "filter_all": "الكل",
+    "filter_websites": "مواقع",
+    "filter_webapps": "تطبيقات ويب",
+    "filter_saas": "SaaS",
+    "filter_ecommerce": "تجارة إلكترونية",
+    "upcoming_mediflow_name": "عيادة ميدي فلو",
+    "upcoming_mediflow_tag": "لوحة تحكم SaaS",
+    "upcoming_mediflow_desc": "نظام إدارة عيادات مع بوابة مرضى وجدولة أطباء.",
+    "upcoming_mediflow_status": "قيد التطوير",
+    "upcoming_terra_name": "تيرا العقارية",
+    "upcoming_terra_tag": "موقع مؤسسي",
+    "upcoming_terra_desc": "منصة عقارية فاخرة مع بحث عقارات وربط CRM.",
+    "upcoming_terra_status": "قريباً",
+    "upcoming_nawras_name": "متجر نورس",
+    "upcoming_nawras_tag": "تجارة إلكترونية",
+    "upcoming_nawras_desc": "منصة تجارة إلكترونية متكاملة مع بوابة دفع ولوحة إدارة.",
+    "upcoming_nawras_status": "قريباً",
+    "upcoming_olive_name": "زيتون وحجر",
+    "upcoming_olive_tag": "نظام مطاعم",
+    "upcoming_olive_desc": "طلب أونلاين، حجز طاولات، وبرنامج ولاء للمطاعم.",
+    "upcoming_olive_status": "قريباً",
+    "final_label": "لنبنِ معاً",
+    "final_title1": "جاهز لبناء ",
+    "final_title2": "شيء مميز؟",
+    "final_subtitle": "أخبرنا عن مشروعك. استشارة مجانية، أسعار شفافة، وفريق يستمع فعلاً.",
+    "final_cta_primary": "احصل على استشارة مجانية",
+    "final_cta_secondary": "استعرض الخدمات"
+  },
+  "showcase_spotlight": {
+    "label": "مشروع مميز",
+    "title": "أكاديمية النخلة الدولية",
+    "tagline": "منصة إدارة مدرسية متكاملة",
+    "desc": "منصة تعليمية متكاملة تشمل بوابة أولياء الأمور، لوحة المعلمين، بوابة الطلاب، لوحة الإدارة، مساعد واجبات بالذكاء الاصطناعي، وتتبع حافلات مباشر.",
+    "stat_pages": "صفحة",
+    "stat_roles": "أدوار مستخدمين",
+    "stat_ai": "ميزات ذكاء اصطناعي",
+    "cta_demo": "شاهد العرض المباشر",
+    "cta_details": "اطّلع على التفاصيل"
   },
   "servicesOverview": {
     "label": "ماذا نقدّم",

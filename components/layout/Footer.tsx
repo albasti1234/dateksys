@@ -32,6 +32,7 @@ const footerLinks = {
   company: [
     { labelKey: "about", href: "/about" },
     { labelKey: "projects", href: "/projects" },
+    { labelKey: "showcase", href: "/showcase/websites" },
     { labelKey: "careers", href: "/careers" },
     { labelKey: "contact", href: "/contact" },
   ],

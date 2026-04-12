@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "@/i18n/routing";
+import { useTranslations, useLocale } from "next-intl";
 import {
   ArrowRight,
   ExternalLink,
@@ -25,64 +26,63 @@ import {
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const featuredProject = {
-  name: "Al-Nakhla International Academy",
-  tagline: "Complete School Management Platform",
-  description:
-    "A full-stack educational platform with public website, parent portal, teacher dashboard, student portal, admin panel, AI homework helper, and live bus tracking.",
   href: "/demos/school",
   preview: "/demos/school",
   stats: [
-    { label: "Pages Built", value: "23+" },
-    { label: "User Roles", value: "5" },
-    { label: "AI Features", value: "3" },
+    { labelKey: "stat_pages", value: "23+" },
+    { labelKey: "stat_roles", value: "5" },
+    { labelKey: "stat_ai", value: "3" },
   ],
   tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Framer Motion"],
 };
 
 const filters = [
-  { label: "All", value: "all" },
-  { label: "Websites", value: "website" },
-  { label: "Web Apps", value: "webapp" },
-  { label: "SaaS", value: "saas" },
-  { label: "E-commerce", value: "ecommerce" },
+  { labelKey: "filter_all", value: "all" },
+  { labelKey: "filter_websites", value: "website" },
+  { labelKey: "filter_webapps", value: "webapp" },
+  { labelKey: "filter_saas", value: "saas" },
+  { labelKey: "filter_ecommerce", value: "ecommerce" },
 ];
 
 const upcomingProjects = [
   {
-    name: "MediFlow Clinic",
+    nameKey: "upcoming_mediflow_name",
     type: "saas",
-    tag: "SaaS Dashboard",
-    desc: "Clinic management system with patient portal and doctor scheduling.",
+    tagKey: "upcoming_mediflow_tag",
+    descKey: "upcoming_mediflow_desc",
     color: "#2D8659",
-    status: "In Development",
+    statusKey: "upcoming_mediflow_status",
   },
   {
-    name: "Terra Real Estate",
+    nameKey: "upcoming_terra_name",
     type: "website",
-    tag: "Corporate Website",
-    desc: "Premium real estate platform with property search and CRM integration.",
+    tagKey: "upcoming_terra_tag",
+    descKey: "upcoming_terra_desc",
     color: "#C19A4B",
-    status: "Coming Soon",
+    statusKey: "upcoming_terra_status",
   },
   {
-    name: "Nawras Store",
+    nameKey: "upcoming_nawras_name",
     type: "ecommerce",
-    tag: "E-commerce",
-    desc: "Full-stack e-commerce platform with payment integration and admin panel.",
+    tagKey: "upcoming_nawras_tag",
+    descKey: "upcoming_nawras_desc",
     color: "#0EA5E9",
-    status: "Coming Soon",
+    statusKey: "upcoming_nawras_status",
   },
   {
-    name: "Olive & Stone",
+    nameKey: "upcoming_olive_name",
     type: "webapp",
-    tag: "Restaurant System",
-    desc: "Online ordering, table reservations, and loyalty program for restaurants.",
+    tagKey: "upcoming_olive_tag",
+    descKey: "upcoming_olive_desc",
     color: "#DC2626",
-    status: "Coming Soon",
+    statusKey: "upcoming_olive_status",
   },
 ];
 
 export default function WebsitesShowcasePage() {
+  const t = useTranslations("showcase");
+  const locale = useLocale();
+
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -150,7 +150,7 @@ export default function WebsitesShowcasePage() {
               className="text-xs font-body tracking-widest uppercase"
               style={{ color: "rgba(56,189,248,0.85)" }}
             >
-              Websites & Web Apps Showcase
+              {t("badge")}
             </span>
           </motion.div>
 
@@ -162,9 +162,9 @@ export default function WebsitesShowcasePage() {
             className="font-heading font-extrabold text-white leading-[0.95] tracking-tight"
             style={{ fontSize: "clamp(3rem, 8vw, 8rem)" }}
           >
-            Crafted.
+            {t("hero_line1")}
             <br />
-            <span className="gradient-text">Not Assembled.</span>
+            <span className="gradient-text">{t("hero_line2")}</span>
           </motion.h1>
 
           {/* Subtitle */}
@@ -174,9 +174,7 @@ export default function WebsitesShowcasePage() {
             transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
             className="mt-10 text-lg lg:text-xl text-text-secondary max-w-2xl leading-relaxed font-body font-light"
           >
-            We build digital products that businesses actually need — full-stack
-            websites, web applications, and SaaS platforms engineered with
-            modern frameworks for speed, scale, and impact.
+            {t("hero_subtitle")}
           </motion.p>
 
           {/* CTAs */}
@@ -196,7 +194,7 @@ export default function WebsitesShowcasePage() {
                 backdropFilter: "blur(8px)",
               }}
             >
-              View Featured Project
+              {t("cta_featured")}
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </a>
             <Link
@@ -207,7 +205,7 @@ export default function WebsitesShowcasePage() {
                 border: "1px solid var(--color-border)",
               }}
             >
-              Start Your Project
+              {t("cta_start")}
             </Link>
           </motion.div>
 
@@ -219,10 +217,10 @@ export default function WebsitesShowcasePage() {
             className="mt-20 grid grid-cols-2 lg:grid-cols-4 gap-5 max-w-4xl"
           >
             {[
-              { icon: Code2, label: "Modern Stack", sub: "Next.js · React · TypeScript" },
-              { icon: Smartphone, label: "Responsive", sub: "Mobile-first design" },
-              { icon: Zap, label: "Fast", sub: "Optimized for speed" },
-              { icon: TrendingUp, label: "SEO Ready", sub: "Built for visibility" },
+              { icon: Code2, label: t("pill_modern"), sub: t("pill_modern_sub") },
+              { icon: Smartphone, label: t("pill_responsive"), sub: t("pill_responsive_sub") },
+              { icon: Zap, label: t("pill_fast"), sub: t("pill_fast_sub") },
+              { icon: TrendingUp, label: t("pill_seo"), sub: t("pill_seo_sub") },
             ].map((f) => {
               const Icon = f.icon;
               return (
@@ -267,9 +265,9 @@ export default function WebsitesShowcasePage() {
             className="mb-12 flex items-end justify-between flex-wrap gap-4"
           >
             <div>
-              <p className="section-label mb-3">Featured Case Study</p>
+              <p className="section-label mb-3">{t("featured_label")}</p>
               <h2 className="text-3xl md:text-5xl lg:text-6xl font-heading font-bold tracking-tight">
-                <span className="gradient-text">Latest Project</span>
+                <span className="gradient-text">{t("featured_title")}</span>
               </h2>
             </div>
             <div className="text-text-secondary text-sm">
@@ -302,32 +300,32 @@ export default function WebsitesShowcasePage() {
                     }}
                   >
                     <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
-                    Live Demo
+                    {t("live_demo")}
                   </span>
                   <span className="text-xs text-text-muted uppercase tracking-wider">
-                    Education · K-12
+                    {t("featured_category")}
                   </span>
                 </div>
 
                 <h3 className="font-heading text-3xl lg:text-4xl font-bold text-text-primary mb-3 leading-tight">
-                  {featuredProject.name}
+                  {t("project_name")}
                 </h3>
                 <p className="text-base text-accent font-medium mb-6">
-                  {featuredProject.tagline}
+                  {t("project_tagline")}
                 </p>
                 <p className="text-text-secondary leading-relaxed mb-8">
-                  {featuredProject.description}
+                  {t("project_desc")}
                 </p>
 
                 {/* Stats */}
                 <div className="grid grid-cols-3 gap-4 mb-8 pb-8 border-b border-[var(--color-border)]">
                   {featuredProject.stats.map((s) => (
-                    <div key={s.label}>
-                      <div className="font-heading text-3xl font-bold gradient-text">
+                    <div key={s.labelKey}>
+                      <div className="font-heading text-2xl sm:text-3xl font-bold gradient-text">
                         {s.value}
                       </div>
                       <div className="text-[10px] uppercase tracking-wider text-text-muted mt-1">
-                        {s.label}
+                        {t(s.labelKey)}
                       </div>
                     </div>
                   ))}
@@ -335,9 +333,9 @@ export default function WebsitesShowcasePage() {
 
                 {/* Tech */}
                 <div className="flex flex-wrap gap-2 mb-8">
-                  {featuredProject.tech.map((t) => (
+                  {featuredProject.tech.map((techItem) => (
                     <span
-                      key={t}
+                      key={techItem}
                       className="px-3 py-1.5 text-[10px] font-medium rounded-md"
                       style={{
                         background: "rgba(255,255,255,0.03)",
@@ -345,7 +343,7 @@ export default function WebsitesShowcasePage() {
                         color: "var(--color-text-secondary)",
                       }}
                     >
-                      {t}
+                      {techItem}
                     </span>
                   ))}
                 </div>
@@ -364,14 +362,14 @@ export default function WebsitesShowcasePage() {
                     }}
                   >
                     <ExternalLink className="w-4 h-4" />
-                    Visit Live Demo
+                    {t("visit_demo")}
                     <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
                   </a>
                 </div>
               </div>
 
               {/* Right — laptop mockup */}
-              <div className="lg:col-span-7 relative order-1 lg:order-2 min-h-[400px] lg:min-h-[600px] flex items-center justify-center p-6 lg:p-12 overflow-hidden">
+              <div className="lg:col-span-7 relative order-1 lg:order-2 min-h-[280px] lg:min-h-[600px] flex items-center justify-center p-6 lg:p-12 overflow-hidden">
                 {/* Background gradient */}
                 <div
                   className="absolute inset-0 opacity-50"
@@ -439,7 +437,7 @@ export default function WebsitesShowcasePage() {
                   }}
                 >
                   <CheckCircle2 className="w-4 h-4 text-accent" />
-                  <span className="text-xs font-semibold text-accent">Production Ready</span>
+                  <span className="text-xs font-semibold text-accent">{t("production_ready")}</span>
                 </motion.div>
               </div>
             </div>
@@ -460,10 +458,10 @@ export default function WebsitesShowcasePage() {
             transition={{ duration: 0.7 }}
             className="mb-12"
           >
-            <p className="section-label mb-3">More Projects</p>
+            <p className="section-label mb-3">{t("more_label")}</p>
             <h2 className="text-3xl md:text-5xl font-heading font-bold tracking-tight max-w-3xl">
-              <span className="gradient-text">Coming soon</span>
-              <span className="text-text-primary"> — additional case studies in production</span>
+              <span className="gradient-text">{t("more_title")}</span>
+              <span className="text-text-primary">{t("more_subtitle")}</span>
             </h2>
           </motion.div>
 
@@ -479,7 +477,7 @@ export default function WebsitesShowcasePage() {
                     : "bg-transparent border border-[var(--color-border)] text-text-secondary hover:border-accent hover:text-accent"
                 }`}
               >
-                {f.label}
+                {t(f.labelKey)}
               </button>
             ))}
           </div>
@@ -488,7 +486,7 @@ export default function WebsitesShowcasePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {filtered.map((p, i) => (
               <motion.div
-                key={p.name}
+                key={p.nameKey}
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-50px" }}
@@ -517,18 +515,18 @@ export default function WebsitesShowcasePage() {
                         border: `1px solid ${p.color}40`,
                       }}
                     >
-                      {p.tag}
+                      {t(p.tagKey)}
                     </span>
                     <span className="text-[10px] uppercase tracking-wider text-text-muted">
-                      {p.status}
+                      {t(p.statusKey)}
                     </span>
                   </div>
 
                   <h3 className="font-heading text-2xl font-bold text-text-primary mb-3 group-hover:text-accent transition-colors">
-                    {p.name}
+                    {t(p.nameKey)}
                   </h3>
                   <p className="text-sm text-text-secondary leading-relaxed mb-6 flex-1">
-                    {p.desc}
+                    {t(p.descKey)}
                   </p>
 
                   <div
@@ -564,15 +562,14 @@ export default function WebsitesShowcasePage() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <p className="section-label mb-6 justify-center">Let&apos;s Build</p>
+            <p className="section-label mb-6 justify-center">{t("final_label")}</p>
             <h2 className="text-4xl md:text-6xl font-heading font-bold tracking-tight mb-6">
-              <span className="text-text-primary">Ready to build </span>
+              <span className="text-text-primary">{t("final_title1")}</span>
               <br />
-              <span className="gradient-text">something great?</span>
+              <span className="gradient-text">{t("final_title2")}</span>
             </h2>
             <p className="text-lg text-text-secondary mb-10 max-w-xl mx-auto leading-relaxed">
-              Tell us about your project. Free consultation, transparent pricing,
-              and a team that actually listens.
+              {t("final_subtitle")}
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link
@@ -584,7 +581,7 @@ export default function WebsitesShowcasePage() {
                   border: "1px solid rgba(56,189,248,0.35)",
                 }}
               >
-                Get Free Consultation
+                {t("final_cta_primary")}
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
               </Link>
               <Link
@@ -595,7 +592,7 @@ export default function WebsitesShowcasePage() {
                   border: "1px solid var(--color-border)",
                 }}
               >
-                View Services
+                {t("final_cta_secondary")}
               </Link>
             </div>
           </motion.div>

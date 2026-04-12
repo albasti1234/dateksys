@@ -22,6 +22,7 @@
   "nav": {
     "home": "Home",
     "services": "Services",
+    "showcase": "Showcase",
     "projects": "Our Work",
     "about": "About",
     "contact": "Contact",
@@ -40,6 +41,7 @@
     "description_highlight2": "12+ years of hands-on field experience",
     "cta_primary": "Get a Free Consultation",
     "cta_secondary": "See What We Do",
+    "cta_showcase": "View School Demo",
     "trusted_by": "Technologies We Work With",
     "network_label": "Live Network Simulation",
     "scroll_hint": "Scroll"
@@ -189,8 +191,8 @@
     ]
   },
   "testimonials": {
-    "label": "What We Believe",
-    "title": "In Our Words"
+    "label": "Our Philosophy",
+    "title": "What Drives Us"
   },
   "cta_banner": {
     "label": "Ready to Start?",
@@ -361,7 +363,9 @@
     "title": "Latest from Our Blog",
     "subtitle": "Technical guides, industry insights, and practical advice from our team.",
     "read_more": "Read article",
-    "view_all": "View All Articles"
+    "view_all": "View All Articles",
+    "coming_soon": "We're preparing expert articles on IT infrastructure, networking, and web development. Stay tuned.",
+    "notify_cta": "Get Notified"
   },
   "careers": {
     "label": "Careers",
@@ -519,6 +523,7 @@
     "company": {
       "about": "About Us",
       "projects": "Our Work",
+      "showcase": "Showcase",
       "careers": "Careers",
       "contact": "Contact"
     },
@@ -609,6 +614,75 @@
         "image": "/images/projects/webdev.webp"
       }
     ]
+  },
+  "showcase": {
+    "badge": "Websites & Web Apps Showcase",
+    "hero_line1": "Crafted.",
+    "hero_line2": "Not Assembled.",
+    "hero_subtitle": "We build digital products that businesses actually need — full-stack websites, web applications, and SaaS platforms engineered with modern frameworks for speed, scale, and impact.",
+    "cta_featured": "View Featured Project",
+    "cta_start": "Start Your Project",
+    "pill_modern": "Modern Stack",
+    "pill_modern_sub": "Next.js · React · TypeScript",
+    "pill_responsive": "Responsive",
+    "pill_responsive_sub": "Mobile-first design",
+    "pill_fast": "Fast",
+    "pill_fast_sub": "Optimized for speed",
+    "pill_seo": "SEO Ready",
+    "pill_seo_sub": "Built for visibility",
+    "featured_label": "Featured Case Study",
+    "featured_title": "Latest Project",
+    "live_demo": "Live Demo",
+    "featured_category": "Education · K-12",
+    "project_name": "Al-Nakhla International Academy",
+    "project_tagline": "Complete School Management Platform",
+    "project_desc": "A full-stack educational platform with public website, parent portal, teacher dashboard, student portal, admin panel, AI homework helper, and live bus tracking.",
+    "production_ready": "Production Ready",
+    "visit_demo": "Visit Live Demo",
+    "stat_pages": "Pages Built",
+    "stat_roles": "User Roles",
+    "stat_ai": "AI Features",
+    "more_label": "More Projects",
+    "more_title": "Coming soon",
+    "more_subtitle": " — additional case studies in production",
+    "filter_all": "All",
+    "filter_websites": "Websites",
+    "filter_webapps": "Web Apps",
+    "filter_saas": "SaaS",
+    "filter_ecommerce": "E-commerce",
+    "upcoming_mediflow_name": "MediFlow Clinic",
+    "upcoming_mediflow_tag": "SaaS Dashboard",
+    "upcoming_mediflow_desc": "Clinic management system with patient portal and doctor scheduling.",
+    "upcoming_mediflow_status": "In Development",
+    "upcoming_terra_name": "Terra Real Estate",
+    "upcoming_terra_tag": "Corporate Website",
+    "upcoming_terra_desc": "Premium real estate platform with property search and CRM integration.",
+    "upcoming_terra_status": "Coming Soon",
+    "upcoming_nawras_name": "Nawras Store",
+    "upcoming_nawras_tag": "E-commerce",
+    "upcoming_nawras_desc": "Full-stack e-commerce platform with payment integration and admin panel.",
+    "upcoming_nawras_status": "Coming Soon",
+    "upcoming_olive_name": "Olive & Stone",
+    "upcoming_olive_tag": "Restaurant System",
+    "upcoming_olive_desc": "Online ordering, table reservations, and loyalty program for restaurants.",
+    "upcoming_olive_status": "Coming Soon",
+    "final_label": "Let's Build",
+    "final_title1": "Ready to build ",
+    "final_title2": "something great?",
+    "final_subtitle": "Tell us about your project. Free consultation, transparent pricing, and a team that actually listens.",
+    "final_cta_primary": "Get Free Consultation",
+    "final_cta_secondary": "View Services"
+  },
+  "showcase_spotlight": {
+    "label": "Featured Project",
+    "title": "Al-Nakhla International Academy",
+    "tagline": "Complete School Management Platform",
+    "desc": "A full-stack educational platform with parent portal, teacher dashboard, student portal, admin panel, AI homework helper, and live bus tracking.",
+    "stat_pages": "Pages",
+    "stat_roles": "User Roles",
+    "stat_ai": "AI Features",
+    "cta_demo": "View Live Demo",
+    "cta_details": "See Full Case Study"
   },
   "servicesOverview": {
     "label": "What We Do",
