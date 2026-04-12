@@ -291,11 +291,12 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
             {t(`categories.${tabKey}.title`)}
           </h2>
           <p
-            className={`max-w-xl font-bold ${isRTL ? "font-arabic text-base" : "font-body text-base"}`}
+            className={`max-w-xl font-semibold ${isRTL ? "font-arabic text-base" : "font-body text-base"}`}
             style={{
-              color: "#FFFFFF",
+              color: accent.main,
               lineHeight: isRTL ? 2 : 1.75,
-              textShadow: "0 0 10px rgba(0,0,0,1), 0 0 20px rgba(0,0,0,0.8), 0 2px 4px rgba(0,0,0,0.9)",
+              textShadow: `0 0 20px rgba(${accent.rgb},0.3), 0 2px 4px rgba(0,0,0,0.8)`,
+              opacity: 0.9,
             }}
           >
             {t(`categories.${tabKey}.description`)}
