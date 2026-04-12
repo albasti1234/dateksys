@@ -70,16 +70,16 @@ const tabIcons: Record<TabKey, React.JSX.Element> = {
 };
 
 const heroImages: Record<TabKey, string> = {
-  infrastructure: "/images/projects/fiber.webp",
-  security: "/images/services/security.webp",
-  software: "/images/services/software.webp",
+  infrastructure: "/images/projects/fiber1.webp",
+  security: "/images/services/security1.webp",
+  software: "/images/services/software1.webp",
 };
 
 // Secondary images for the "hero card" in bento grid
 const secondaryImages: Record<TabKey, string> = {
-  infrastructure: "/images/services/network.webp",
-  security: "/images/projects/security.webp",
-  software: "/images/projects/webdev.webp",
+  infrastructure: "/images/services/network1.webp",
+  security: "/images/projects/security1.webp",
+  software: "/images/projects/webdev1.webp",
 };
 
 const capIcons: Record<TabKey, LucideIcon[]> = {
