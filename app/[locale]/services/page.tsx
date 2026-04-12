@@ -298,7 +298,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
       {/* ═══ HERO IMAGE — full width but controlled height ═══ */}
       <motion.div
         variants={fadeUp}
-        className="relative w-[100vw] -ms-[calc((100vw-100%)/2)] h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden group"
+        className="relative w-[100vw] -ms-[calc((100vw-100%)/2)] h-[380px] sm:h-[500px] lg:h-[620px] overflow-hidden group"
       >
         <Image
           src={heroImages[tabKey]}
