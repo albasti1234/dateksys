@@ -133,6 +133,7 @@ function BentoCard({
             src={image}
             alt=""
             fill
+            priority
             sizes="(max-width: 768px) 100vw, 800px"
             className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
           />
