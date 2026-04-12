@@ -27,17 +27,26 @@ import {
   type LucideIcon,
 } from "lucide-react";
 
-// ── Types ──
 type TabKey = "infrastructure" | "security" | "software";
 
-// ── Tab accent colors — each tab gets its own color personality ──
-const tabAccent: Record<TabKey, { main: string; rgb: string }> = {
-  infrastructure: { main: "#38BDF8", rgb: "56,189,248" },
-  security: { main: "#A78BFA", rgb: "167,139,250" },
-  software: { main: "#34D399", rgb: "52,211,153" },
+const tabAccent: Record<TabKey, { main: string; rgb: string; gradient: string }> = {
+  infrastructure: {
+    main: "#38BDF8",
+    rgb: "56,189,248",
+    gradient: "linear-gradient(135deg, #38BDF8, #0EA5E9)",
+  },
+  security: {
+    main: "#A78BFA",
+    rgb: "167,139,250",
+    gradient: "linear-gradient(135deg, #A78BFA, #8B5CF6)",
+  },
+  software: {
+    main: "#34D399",
+    rgb: "52,211,153",
+    gradient: "linear-gradient(135deg, #34D399, #10B981)",
+  },
 };
 
-// ── Tab Icons (SVG) ──
 const tabIcons: Record<TabKey, React.JSX.Element> = {
   infrastructure: (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.5} className="w-5 h-5">
@@ -60,14 +69,19 @@ const tabIcons: Record<TabKey, React.JSX.Element> = {
   ),
 };
 
-// ── Hero images per tab ──
 const heroImages: Record<TabKey, string> = {
   infrastructure: "/images/projects/fiber.webp",
   security: "/images/services/security.webp",
   software: "/images/services/software.webp",
 };
 
-// ── Capability icons per tab ──
+// Secondary images for the "hero card" in bento grid
+const secondaryImages: Record<TabKey, string> = {
+  infrastructure: "/images/services/network.webp",
+  security: "/images/projects/security.webp",
+  software: "/images/projects/webdev.webp",
+};
+
 const capIcons: Record<TabKey, LucideIcon[]> = {
   infrastructure: [Network, Wifi, Cable, Activity, Server],
   security: [Camera, Fingerprint, Flame, ShieldAlert, ShieldCheck, MonitorSmartphone],
@@ -75,25 +89,190 @@ const capIcons: Record<TabKey, LucideIcon[]> = {
 };
 
 const tabs: TabKey[] = ["infrastructure", "security", "software"];
-
-// ── Animation ──
 const ease = [0.16, 1, 0.3, 1] as const;
 
 const stagger = {
   hidden: {},
-  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.1 } },
+  visible: { transition: { staggerChildren: 0.08, delayChildren: 0.1 } },
 };
-
 const fadeUp = {
-  hidden: { opacity: 0, y: 28 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease },
-  },
+  hidden: { opacity: 0, y: 30 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease } },
 };
 
-// ── Tab Content ──
+// ══════════════════════════════════════════════
+// BENTO CARD — the core visual building block
+// ══════════════════════════════════════════════
+function BentoCard({
+  icon: Icon,
+  title,
+  desc,
+  accent,
+  variant,
+  image,
+  isRTL,
+}: {
+  icon: LucideIcon;
+  title: string;
+  desc?: string;
+  accent: { main: string; rgb: string; gradient: string };
+  variant: "hero" | "featured" | "standard";
+  image?: string;
+  isRTL: boolean;
+}) {
+  if (variant === "hero") {
+    // ── HERO CARD — large, with background image, spans 2 cols + 2 rows ──
+    return (
+      <motion.div
+        variants={fadeUp}
+        className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group min-h-[320px] lg:min-h-[380px]"
+      >
+        {/* Background image */}
+        {image && (
+          <Image
+            src={image}
+            alt=""
+            fill
+            sizes="(max-width: 768px) 100vw, 800px"
+            className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-110"
+          />
+        )}
+        {/* Overlay */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `
+              linear-gradient(${isRTL ? "to left" : "to right"}, rgba(9,9,11,0.92) 0%, rgba(9,9,11,0.6) 50%, rgba(9,9,11,0.3) 100%),
+              linear-gradient(to top, rgba(9,9,11,0.7) 0%, transparent 50%)
+            `,
+          }}
+        />
+        {/* Accent glow */}
+        <div
+          className="absolute inset-0 opacity-30 pointer-events-none"
+          style={{
+            background: `radial-gradient(ellipse 50% 70% at ${isRTL ? "85%" : "15%"} 80%, rgba(${accent.rgb},0.3), transparent 70%)`,
+          }}
+        />
+        {/* Content */}
+        <div className={`absolute inset-0 flex flex-col justify-end p-8 lg:p-10 ${isRTL ? "items-end text-end" : ""}`}>
+          <div
+            className="w-16 h-16 rounded-2xl flex items-center justify-center mb-5"
+            style={{
+              background: accent.gradient,
+              boxShadow: `0 0 40px rgba(${accent.rgb},0.3)`,
+            }}
+          >
+            <Icon className="w-7 h-7 text-white" />
+          </div>
+          <h3 className="font-heading font-bold text-white text-xl lg:text-2xl mb-2">
+            {title}
+          </h3>
+          {desc && (
+            <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-md">
+              {desc}
+            </p>
+          )}
+        </div>
+      </motion.div>
+    );
+  }
+
+  if (variant === "featured") {
+    // ── FEATURED CARD — accent gradient bg, prominent icon ──
+    return (
+      <motion.div variants={fadeUp} className="group">
+        <div
+          className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1.5"
+          style={{
+            background: `linear-gradient(160deg, rgba(${accent.rgb},0.12) 0%, rgba(${accent.rgb},0.03) 40%, var(--color-surface) 100%)`,
+            border: `1px solid rgba(${accent.rgb},0.25)`,
+          }}
+        >
+          {/* Corner accent glow */}
+          <div
+            className="absolute -top-20 -end-20 w-40 h-40 rounded-full blur-3xl opacity-40 group-hover:opacity-60 transition-opacity duration-700 pointer-events-none"
+            style={{ background: accent.main }}
+          />
+          {/* Hover border glow */}
+          <div
+            className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+            style={{ boxShadow: `inset 0 0 30px rgba(${accent.rgb},0.05), 0 0 20px rgba(${accent.rgb},0.08)` }}
+          />
+
+          <div className="relative z-10 p-7 lg:p-8">
+            <div
+              className="w-12 h-12 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform duration-300"
+              style={{
+                background: `rgba(${accent.rgb},0.15)`,
+                border: `1px solid rgba(${accent.rgb},0.3)`,
+                color: accent.main,
+              }}
+            >
+              <Icon className="w-6 h-6" />
+            </div>
+            <h4 className="font-heading font-bold text-white text-lg mb-2 group-hover:text-white transition-colors duration-300">
+              {title}
+            </h4>
+            {desc && (
+              <p className="text-text-muted text-sm leading-relaxed">
+                {desc}
+              </p>
+            )}
+          </div>
+        </div>
+      </motion.div>
+    );
+  }
+
+  // ── STANDARD CARD — clean, lighter surface ──
+  return (
+    <motion.div variants={fadeUp} className="group">
+      <div
+        className="relative h-full rounded-2xl overflow-hidden transition-all duration-500 hover:-translate-y-1"
+        style={{
+          background: "rgba(17,17,19,0.8)",
+          border: "1px solid rgba(255,255,255,0.06)",
+        }}
+      >
+        {/* Hover accent line on top */}
+        <div
+          className="absolute top-0 inset-x-0 h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+          style={{ background: accent.gradient }}
+        />
+
+        <div className="relative z-10 p-6">
+          <div className="flex items-start gap-4">
+            <div
+              className="w-10 h-10 rounded-lg flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300"
+              style={{
+                background: `rgba(${accent.rgb},0.08)`,
+                border: `1px solid rgba(${accent.rgb},0.15)`,
+                color: accent.main,
+              }}
+            >
+              <Icon className="w-5 h-5" />
+            </div>
+            <div className="flex-1 min-w-0">
+              <h4 className="font-heading font-semibold text-text-primary text-[15px] group-hover:text-white transition-colors duration-300 mb-1">
+                {title}
+              </h4>
+              {desc && (
+                <p className="text-text-muted text-[13px] leading-relaxed">
+                  {desc}
+                </p>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+// ══════════════════════════════════════════════
+// TAB CONTENT
+// ══════════════════════════════════════════════
 function TabContent({ tabKey }: { tabKey: TabKey }) {
   const t = useTranslations("services");
   const locale = useLocale();
@@ -105,159 +284,109 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
   const accent = tabAccent[tabKey];
 
   const heroGradient = isRTL
-    ? `linear-gradient(to left, rgba(9,9,11,0.82) 0%, rgba(9,9,11,0.45) 55%, rgba(9,9,11,0.15) 100%)`
-    : `linear-gradient(to right, rgba(9,9,11,0.82) 0%, rgba(9,9,11,0.45) 55%, rgba(9,9,11,0.15) 100%)`;
+    ? "linear-gradient(to left, rgba(9,9,11,0.75) 0%, rgba(9,9,11,0.35) 55%, rgba(9,9,11,0.1) 100%)"
+    : "linear-gradient(to right, rgba(9,9,11,0.75) 0%, rgba(9,9,11,0.35) 55%, rgba(9,9,11,0.1) 100%)";
 
   return (
     <motion.div
       initial="hidden"
       animate="visible"
       variants={stagger}
-      className="space-y-20"
+      className="space-y-24"
     >
-      {/* ═══════════════════════════════════════ */}
-      {/* HERO IMAGE — lighter gradient, accent glow */}
-      {/* ═══════════════════════════════════════ */}
+      {/* ═══ HERO IMAGE ═══ */}
       <motion.div
         variants={fadeUp}
-        className="relative w-full h-[320px] sm:h-[380px] lg:h-[440px] rounded-2xl overflow-hidden group"
+        className="relative w-full h-[340px] sm:h-[400px] lg:h-[480px] rounded-3xl overflow-hidden group"
+        style={{
+          boxShadow: `0 0 80px rgba(${accent.rgb},0.06), 0 30px 60px rgba(0,0,0,0.5)`,
+        }}
       >
         <Image
           src={heroImages[tabKey]}
           alt=""
           fill
           sizes="(max-width: 768px) 100vw, 1200px"
-          className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105"
+          className="object-cover transition-transform duration-[2s] ease-out group-hover:scale-105"
           priority
         />
-        {/* Lighter side gradient — image stays visible */}
         <div className="absolute inset-0" style={{ background: heroGradient }} />
-        {/* Subtle bottom vignette only */}
         <div
           className="absolute inset-0"
+          style={{ background: "linear-gradient(to top, rgba(9,9,11,0.5) 0%, transparent 30%)" }}
+        />
+        {/* Accent glow */}
+        <div
+          className="absolute inset-0 opacity-25 pointer-events-none"
           style={{
-            background: "linear-gradient(to top, rgba(9,9,11,0.5) 0%, transparent 35%)",
+            background: `radial-gradient(ellipse 40% 60% at ${isRTL ? "90%" : "10%"} 70%, rgba(${accent.rgb},0.35), transparent 70%)`,
           }}
         />
-        {/* Accent color tint on the edge */}
+        {/* Accent line at bottom */}
         <div
-          className="absolute inset-0 opacity-20 pointer-events-none"
-          style={{
-            background: `radial-gradient(ellipse 40% 80% at ${isRTL ? "90%" : "10%"} 50%, rgba(${accent.rgb},0.3), transparent 70%)`,
-          }}
+          className="absolute bottom-0 inset-x-0 h-[3px]"
+          style={{ background: accent.gradient }}
         />
 
-        {/* Content overlay */}
-        <div className={`absolute inset-0 flex flex-col justify-end p-8 lg:p-12 ${isRTL ? "items-end text-end" : "items-start text-start"}`}>
-          {/* Badge */}
+        <div className={`absolute inset-0 flex flex-col justify-end p-8 lg:p-14 ${isRTL ? "items-end text-end" : ""}`}>
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2, duration: 0.5, ease }}
-            className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full mb-5 backdrop-blur-md"
+            transition={{ delay: 0.15, duration: 0.5, ease }}
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-6 backdrop-blur-xl"
             style={{
-              background: `rgba(${accent.rgb},0.1)`,
-              border: `1px solid rgba(${accent.rgb},0.3)`,
+              background: `rgba(${accent.rgb},0.12)`,
+              border: `1px solid rgba(${accent.rgb},0.35)`,
+              boxShadow: `0 0 20px rgba(${accent.rgb},0.1)`,
             }}
           >
             <span style={{ color: accent.main }}>{tabIcons[tabKey]}</span>
-            <span
-              className="text-xs font-heading font-bold tracking-widest uppercase"
-              style={{ color: accent.main }}
-            >
+            <span className="text-xs font-heading font-bold tracking-[0.2em] uppercase" style={{ color: accent.main }}>
               {t(`categories.${tabKey}.label`)}
             </span>
           </motion.div>
 
           <h2
-            className="font-heading font-bold text-white mb-4 max-w-xl"
-            style={{ fontSize: "clamp(1.5rem, 4vw, 2.5rem)", lineHeight: 1.15 }}
+            className="font-heading font-extrabold text-white mb-4 max-w-xl"
+            style={{ fontSize: "clamp(1.8rem, 5vw, 3rem)", lineHeight: 1.1 }}
           >
             {t(`categories.${tabKey}.title`)}
           </h2>
-          <p className="text-white/70 text-sm lg:text-base leading-relaxed max-w-lg">
+          <p className="text-white/65 text-sm lg:text-base leading-relaxed max-w-lg font-body">
             {t(`categories.${tabKey}.description`)}
           </p>
         </div>
       </motion.div>
 
-      {/* ═══════════════════════════════════════ */}
-      {/* CAPABILITIES — visual hierarchy with featured cards */}
-      {/* ═══════════════════════════════════════ */}
+      {/* ═══ BENTO CAPABILITIES GRID ═══ */}
       <motion.div variants={fadeUp}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-auto">
           {capabilities.map((cap, i) => {
             const Icon = icons[i];
-            const desc = capDescs?.[i];
             if (!Icon) return null;
 
-            // First 2 cards are "featured" — larger, accent border
-            const isFeatured = i < 2;
+            // First card = hero (2×2), next 2 = featured, rest = standard
+            let variant: "hero" | "featured" | "standard" = "standard";
+            if (i === 0) variant = "hero";
+            else if (i <= 2) variant = "featured";
 
             return (
-              <motion.div
+              <BentoCard
                 key={i}
-                variants={fadeUp}
-                className={isFeatured ? "md:col-span-1 lg:col-span-1" : ""}
-              >
-                <div
-                  className="relative h-full rounded-[20px] overflow-hidden group transition-all duration-500 hover:-translate-y-1"
-                  style={{
-                    background: isFeatured
-                      ? `linear-gradient(135deg, rgba(${accent.rgb},0.06) 0%, var(--color-surface) 60%)`
-                      : "var(--color-surface)",
-                    border: isFeatured
-                      ? `1px solid rgba(${accent.rgb},0.2)`
-                      : "1px solid var(--color-border)",
-                  }}
-                >
-                  {/* Hover glow on featured */}
-                  {isFeatured && (
-                    <div
-                      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
-                      style={{
-                        background: `radial-gradient(ellipse at ${isRTL ? "100% 0%" : "0% 0%"}, rgba(${accent.rgb},0.08), transparent 60%)`,
-                      }}
-                    />
-                  )}
-
-                  <div className={`relative z-10 ${isFeatured ? "p-7 lg:p-8" : "p-6"}`}>
-                    <div className="flex items-start gap-4">
-                      {/* Icon box */}
-                      <div
-                        className={`${isFeatured ? "w-14 h-14" : "w-11 h-11"} rounded-xl flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform duration-300`}
-                        style={{
-                          background: `rgba(${accent.rgb},0.1)`,
-                          border: `1px solid rgba(${accent.rgb},0.2)`,
-                          color: accent.main,
-                        }}
-                      >
-                        <Icon className={isFeatured ? "w-6 h-6" : "w-5 h-5"} />
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4
-                          className={`font-heading font-semibold text-text-primary group-hover:text-white transition-colors duration-300 mb-1 ${isFeatured ? "text-lg" : "text-base"}`}
-                        >
-                          {cap}
-                        </h4>
-                        {desc && (
-                          <p className="text-text-muted text-sm leading-relaxed">
-                            {desc}
-                          </p>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
+                icon={Icon}
+                title={cap}
+                desc={capDescs?.[i]}
+                accent={accent}
+                variant={variant}
+                image={i === 0 ? secondaryImages[tabKey] : undefined}
+                isRTL={isRTL}
+              />
             );
           })}
         </div>
       </motion.div>
 
-      {/* ═══════════════════════════════════════ */}
-      {/* STATS — prominent numbers with glow */}
-      {/* ═══════════════════════════════════════ */}
+      {/* ═══ STATS ═══ */}
       <motion.div variants={fadeUp}>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
           {stats.map((stat, i) => (
@@ -265,29 +394,34 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
               key={i}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.15 + i * 0.08, ease }}
-              className="relative rounded-2xl p-7 text-center overflow-hidden group"
+              transition={{ duration: 0.6, delay: 0.1 + i * 0.08, ease }}
+              className="relative rounded-2xl overflow-hidden group"
               style={{
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
+                background: "rgba(17,17,19,0.8)",
+                border: "1px solid rgba(255,255,255,0.06)",
               }}
             >
-              {/* Subtle glow behind the number */}
+              {/* Top accent line */}
+              <div
+                className="absolute top-0 inset-x-0 h-[2px] opacity-50 group-hover:opacity-100 transition-opacity duration-500"
+                style={{ background: accent.gradient }}
+              />
+              {/* Background glow on hover */}
               <div
                 className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"
                 style={{
-                  background: `radial-gradient(circle at 50% 30%, rgba(${accent.rgb},0.1), transparent 70%)`,
+                  background: `radial-gradient(circle at 50% 0%, rgba(${accent.rgb},0.08), transparent 70%)`,
                 }}
               />
-              <div className="relative z-10">
+              <div className="relative z-10 p-7 lg:p-8 text-center">
                 <span
                   className="block font-heading font-black mb-2"
                   style={{
-                    fontSize: "clamp(1.8rem, 4vw, 2.6rem)",
-                    background: `linear-gradient(135deg, ${accent.main}, #F4F4F5)`,
+                    fontSize: "clamp(2rem, 5vw, 3rem)",
+                    background: accent.gradient,
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",
-                    filter: `drop-shadow(0 0 20px rgba(${accent.rgb},0.2))`,
+                    filter: `drop-shadow(0 0 24px rgba(${accent.rgb},0.25))`,
                   }}
                 >
                   {stat.value}
@@ -301,101 +435,86 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
         </div>
       </motion.div>
 
-      {/* ═══════════════════════════════════════ */}
-      {/* CTA — gradient background, not flat */}
-      {/* ═══════════════════════════════════════ */}
+      {/* ═══ CTA ═══ */}
       <motion.div variants={fadeUp}>
-        <div className="relative rounded-2xl overflow-hidden">
-          {/* Multi-layer background */}
+        <div className="relative rounded-3xl overflow-hidden">
+          {/* Multi-layer bg */}
           <div
             className="absolute inset-0"
             style={{
               background: `
-                radial-gradient(ellipse 80% 80% at 50% 120%, rgba(${accent.rgb},0.12), transparent 60%),
-                radial-gradient(ellipse 50% 50% at 80% 20%, rgba(${accent.rgb},0.06), transparent 50%),
-                var(--color-surface)
+                radial-gradient(ellipse 70% 70% at 50% 110%, rgba(${accent.rgb},0.15), transparent 60%),
+                radial-gradient(ellipse 40% 40% at 80% 10%, rgba(${accent.rgb},0.08), transparent 50%),
+                rgba(17,17,19,0.9)
               `,
             }}
           />
-          {/* Accent border */}
+          {/* Border */}
           <div
-            className="absolute inset-0 rounded-2xl pointer-events-none"
-            style={{
-              border: `1px solid rgba(${accent.rgb},0.15)`,
-            }}
+            className="absolute inset-0 rounded-3xl pointer-events-none"
+            style={{ border: `1px solid rgba(${accent.rgb},0.15)` }}
           />
-          {/* Dot pattern overlay */}
+          {/* Dot pattern */}
           <div
-            className="absolute inset-0 opacity-[0.03] pointer-events-none"
+            className="absolute inset-0 opacity-[0.025] pointer-events-none"
             style={{
               backgroundImage: `radial-gradient(circle at 1px 1px, ${accent.main} 1px, transparent 0)`,
-              backgroundSize: "24px 24px",
+              backgroundSize: "28px 28px",
             }}
           />
 
-          <div className="relative z-10 p-10 lg:p-16 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 16 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, ease }}
+          <div className="relative z-10 p-12 lg:p-20 text-center">
+            <h3
+              className="font-heading font-bold text-white mb-4"
+              style={{ fontSize: "clamp(1.6rem, 4vw, 2.8rem)" }}
             >
-              <h3
-                className="font-heading font-bold text-white mb-4"
-                style={{ fontSize: "clamp(1.5rem, 3.5vw, 2.5rem)" }}
-              >
-                {t("cta_title")}
-              </h3>
-              <p className="text-text-secondary text-base lg:text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-                {t("cta_subtitle")}
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <Link href="/contact" className="block">
-                  <motion.span
-                    className="inline-flex items-center gap-2.5 px-9 py-4 rounded-xl font-semibold text-sm cursor-pointer"
-                    style={{
-                      background: `linear-gradient(135deg, rgba(${accent.rgb},0.2), rgba(${accent.rgb},0.08))`,
-                      color: "#F4F4F5",
-                      border: `1px solid rgba(${accent.rgb},0.4)`,
-                      boxShadow: `0 0 30px rgba(${accent.rgb},0.12)`,
-                      backdropFilter: "blur(12px)",
-                    }}
-                    whileHover={{
-                      scale: 1.04,
-                      y: -3,
-                      boxShadow: `0 0 50px rgba(${accent.rgb},0.25), 0 12px 30px rgba(0,0,0,0.4)`,
-                      borderColor: `rgba(${accent.rgb},0.6)`,
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ duration: 0.25, ease }}
-                  >
-                    {t("cta_primary")}
-                    <ArrowRight className="w-4 h-4" />
-                  </motion.span>
-                </Link>
-                <Link href="/projects" className="block">
-                  <motion.span
-                    className="inline-flex items-center gap-2 px-9 py-4 rounded-xl font-medium text-sm cursor-pointer"
-                    style={{
-                      color: "var(--color-text-secondary)",
-                      border: "1px solid rgba(255,255,255,0.08)",
-                      backdropFilter: "blur(8px)",
-                    }}
-                    whileHover={{
-                      scale: 1.04,
-                      y: -3,
-                      color: "#F4F4F5",
-                      borderColor: "rgba(255,255,255,0.2)",
-                      backgroundColor: "rgba(255,255,255,0.04)",
-                    }}
-                    whileTap={{ scale: 0.97 }}
-                    transition={{ duration: 0.25, ease }}
-                  >
-                    {t("cta_secondary")}
-                  </motion.span>
-                </Link>
-              </div>
-            </motion.div>
+              {t("cta_title")}
+            </h3>
+            <p className="text-text-secondary text-base lg:text-lg mb-12 max-w-xl mx-auto leading-relaxed">
+              {t("cta_subtitle")}
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="/contact" className="block">
+                <motion.span
+                  className="inline-flex items-center gap-2.5 px-10 py-4 rounded-xl font-semibold text-sm cursor-pointer text-white"
+                  style={{
+                    background: accent.gradient,
+                    boxShadow: `0 0 40px rgba(${accent.rgb},0.2), 0 4px 20px rgba(0,0,0,0.3)`,
+                  }}
+                  whileHover={{
+                    scale: 1.04,
+                    y: -3,
+                    boxShadow: `0 0 60px rgba(${accent.rgb},0.35), 0 12px 30px rgba(0,0,0,0.4)`,
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.25, ease }}
+                >
+                  {t("cta_primary")}
+                  <ArrowRight className="w-4 h-4" />
+                </motion.span>
+              </Link>
+              <Link href="/projects" className="block">
+                <motion.span
+                  className="inline-flex items-center gap-2 px-10 py-4 rounded-xl font-medium text-sm cursor-pointer"
+                  style={{
+                    color: "var(--color-text-secondary)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    backdropFilter: "blur(8px)",
+                  }}
+                  whileHover={{
+                    scale: 1.04,
+                    y: -3,
+                    color: "#F4F4F5",
+                    borderColor: `rgba(${accent.rgb},0.3)`,
+                    backgroundColor: `rgba(${accent.rgb},0.05)`,
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                  transition={{ duration: 0.25, ease }}
+                >
+                  {t("cta_secondary")}
+                </motion.span>
+              </Link>
+            </div>
           </div>
         </div>
       </motion.div>
@@ -403,7 +522,9 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
   );
 }
 
-// ── Main Page ──
+// ══════════════════════════════════════════════
+// MAIN PAGE
+// ══════════════════════════════════════════════
 export default function ServicesPage() {
   const [activeTab, setActiveTab] = useState<TabKey>("infrastructure");
   const t = useTranslations("services");
@@ -412,8 +533,7 @@ export default function ServicesPage() {
     <div className="bg-[var(--color-base)] min-h-screen">
       {/* Header */}
       <section className="relative pt-32 pb-16 overflow-hidden">
-        {/* Decorative glows */}
-        <div className="absolute -top-[100px] end-[-200px] w-[600px] h-[600px] bg-accent/[0.04] rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute -top-[100px] end-[-200px] w-[700px] h-[700px] bg-accent/[0.04] rounded-full blur-[180px] pointer-events-none" />
         <div className="absolute top-[200px] start-[-300px] w-[500px] h-[500px] bg-accent/[0.03] rounded-full blur-[180px] pointer-events-none" />
 
         <div className="max-w-[1200px] mx-auto px-[5%] lg:px-[6%] relative z-10">
@@ -432,7 +552,8 @@ export default function ServicesPage() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1, ease }}
-              className="text-[clamp(40px,6vw,72px)] font-heading font-black tracking-tight leading-[1.05] text-text-primary mb-6"
+              className="font-heading font-black tracking-tight leading-[1.05] text-text-primary mb-6"
+              style={{ fontSize: "clamp(2.5rem, 6vw, 4.5rem)" }}
             >
               <span className="gradient-text">{t("title")}</span>
             </motion.h1>
@@ -446,7 +567,7 @@ export default function ServicesPage() {
               {t("subtitle")}
             </motion.p>
 
-            {/* 3-Tab Switcher */}
+            {/* Tab Switcher */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -455,7 +576,7 @@ export default function ServicesPage() {
               style={{
                 background: "rgba(17,17,19,0.8)",
                 border: "1px solid var(--color-border)",
-                backdropFilter: "blur(12px)",
+                backdropFilter: "blur(16px)",
               }}
             >
               {tabs.map((tab) => {
@@ -466,9 +587,7 @@ export default function ServicesPage() {
                     key={tab}
                     onClick={() => setActiveTab(tab)}
                     className={`relative flex items-center gap-2.5 px-6 py-3 rounded-xl text-sm font-semibold transition-all duration-300 cursor-pointer ${
-                      isActive
-                        ? "text-white"
-                        : "text-text-secondary hover:text-text-primary"
+                      isActive ? "text-white" : "text-text-secondary hover:text-text-primary"
                     }`}
                   >
                     {isActive && (
@@ -476,21 +595,15 @@ export default function ServicesPage() {
                         layoutId="activeTab"
                         className="absolute inset-0 rounded-xl"
                         style={{
-                          background: `linear-gradient(135deg, rgba(${ac.rgb},0.25), rgba(${ac.rgb},0.1))`,
-                          border: `1px solid rgba(${ac.rgb},0.35)`,
-                          boxShadow: `0 0 24px rgba(${ac.rgb},0.15)`,
+                          background: `linear-gradient(135deg, rgba(${ac.rgb},0.25), rgba(${ac.rgb},0.08))`,
+                          border: `1px solid rgba(${ac.rgb},0.4)`,
+                          boxShadow: `0 0 28px rgba(${ac.rgb},0.18)`,
                         }}
-                        transition={{
-                          type: "spring",
-                          bounce: 0.2,
-                          duration: 0.6,
-                        }}
+                        transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                       />
                     )}
                     <span className="relative z-10">{tabIcons[tab]}</span>
-                    <span className="relative z-10">
-                      {t(`categories.${tab}.label`)}
-                    </span>
+                    <span className="relative z-10">{t(`categories.${tab}.label`)}</span>
                   </button>
                 );
               })}
@@ -499,8 +612,8 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Active Tab Content */}
-      <section className="max-w-[1200px] mx-auto px-[5%] lg:px-[6%] pb-28">
+      {/* Tab Content */}
+      <section className="max-w-[1200px] mx-auto px-[5%] lg:px-[6%] pb-32">
         <AnimatePresence mode="wait">
           <motion.div
             key={activeTab}
