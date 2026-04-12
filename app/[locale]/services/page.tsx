@@ -125,7 +125,7 @@ function BentoCard({
     return (
       <motion.div
         variants={fadeUp}
-        className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group min-h-[340px] lg:min-h-[420px]"
+        className="md:col-span-2 md:row-span-2 relative rounded-2xl overflow-hidden group min-h-[280px] lg:min-h-[340px]"
       >
         {/* Background image */}
         {image && (
@@ -292,15 +292,12 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
       initial="hidden"
       animate="visible"
       variants={stagger}
-      className="space-y-24"
+      className="space-y-16 lg:space-y-20"
     >
-      {/* ═══ HERO IMAGE — full width, breaks out of container ═══ */}
+      {/* ═══ HERO IMAGE — full width but controlled height ═══ */}
       <motion.div
         variants={fadeUp}
-        className="relative w-[100vw] -ms-[calc((100vw-100%)/2)] h-[380px] sm:h-[450px] lg:h-[550px] overflow-hidden group"
-        style={{
-          boxShadow: `0 40px 80px rgba(0,0,0,0.5)`,
-        }}
+        className="relative w-[100vw] -ms-[calc((100vw-100%)/2)] h-[260px] sm:h-[300px] lg:h-[340px] overflow-hidden group"
       >
         <Image
           src={heroImages[tabKey]}
@@ -328,31 +325,14 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
           style={{ background: accent.gradient }}
         />
 
-        <div className={`absolute inset-0 flex flex-col justify-end px-[5%] lg:px-[6%] pb-10 lg:pb-14 ${isRTL ? "items-end text-end" : ""}`}>
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15, duration: 0.5, ease }}
-            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-6 backdrop-blur-xl"
-            style={{
-              background: `rgba(${accent.rgb},0.12)`,
-              border: `1px solid rgba(${accent.rgb},0.35)`,
-              boxShadow: `0 0 20px rgba(${accent.rgb},0.1)`,
-            }}
-          >
-            <span style={{ color: accent.main }}>{tabIcons[tabKey]}</span>
-            <span className="text-xs font-heading font-bold tracking-[0.2em] uppercase" style={{ color: accent.main }}>
-              {t(`categories.${tabKey}.label`)}
-            </span>
-          </motion.div>
-
+        <div className={`absolute inset-0 flex flex-col justify-center px-[5%] lg:px-[8%] ${isRTL ? "items-end text-end" : ""}`}>
           <h2
-            className="font-heading font-extrabold text-white mb-4 max-w-xl"
-            style={{ fontSize: "clamp(1.8rem, 5vw, 3rem)", lineHeight: 1.1 }}
+            className="font-heading font-extrabold text-white mb-3"
+            style={{ fontSize: "clamp(2rem, 5vw, 3.5rem)", lineHeight: 1.1 }}
           >
             {t(`categories.${tabKey}.title`)}
           </h2>
-          <p className="text-white/65 text-sm lg:text-base leading-relaxed max-w-lg font-body">
+          <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-xl font-body">
             {t(`categories.${tabKey}.description`)}
           </p>
         </div>
@@ -360,7 +340,7 @@ function TabContent({ tabKey }: { tabKey: TabKey }) {
 
       {/* ═══ BENTO CAPABILITIES GRID ═══ */}
       <motion.div variants={fadeUp}>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 auto-rows-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-5 auto-rows-auto">
           {capabilities.map((cap, i) => {
             const Icon = icons[i];
             if (!Icon) return null;
