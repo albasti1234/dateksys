@@ -46,7 +46,7 @@ export default function Hero({
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center -mt-28 overflow-x-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden">
       {/* Parallax Background Image */}
       <motion.div style={{ y: parallaxY }} className="absolute inset-0 -top-20">
         <Image
@@ -80,7 +80,7 @@ export default function Hero({
       </motion.div>
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 pt-44 pb-32 lg:pt-52 lg:pb-40 w-full">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-10 py-32 lg:py-40 w-full">
         <div className="grid lg:grid-cols-5 gap-12 items-center">
           {/* Text Content — 3 cols */}
           <div className="lg:col-span-3">
