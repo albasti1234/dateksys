@@ -313,6 +313,40 @@ h3 {
 }
 
 /* ============================================
+   Pannellum Custom Gold Hotspot
+   ============================================ */
+
+.custom-hotspot-gold {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--color-gold);
+  border: 2px solid white;
+  box-shadow: 0 0 0 4px rgba(184, 149, 106, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: transform 0.3s;
+  animation: hotspot-glow 2s ease-in-out infinite;
+}
+
+.custom-hotspot-gold:hover {
+  transform: scale(1.3);
+}
+
+@keyframes hotspot-glow {
+  0%, 100% { box-shadow: 0 0 0 4px rgba(184, 149, 106, 0.3), 0 4px 12px rgba(0, 0, 0, 0.3); }
+  50% { box-shadow: 0 0 0 8px rgba(184, 149, 106, 0.15), 0 4px 12px rgba(0, 0, 0, 0.3); }
+}
+
+/* Hide pannellum default UI */
+.pnlm-panorama-info,
+.pnlm-load-button,
+.pnlm-about-msg,
+.pnlm-error-msg,
+.pnlm-compass {
+  display: none !important;
+}
+
+/* ============================================
    Hotspot Pulse
    ============================================ */
 
