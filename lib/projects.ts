@@ -53,12 +53,12 @@ export const categories: { value: ProjectCategory | "all"; label: Bilingual; col
 export const projects: Project[] = [
   {
     id: "1",
-    slug: "alnoor-school",
+    slug: "alnakhla-school",
     category: "education",
     categoryLabel: { ar: "التعليم", en: "Education" },
     categoryColor: "#4ADE80",
-    name: { ar: "مدرسة النور الدولية", en: "Al-Noor International School" },
-    client: { ar: "مجموعة النور التعليمية", en: "Al-Noor Academy" },
+    name: { ar: "أكاديمية النخلة الدولية", en: "Al-Nakhla International Academy" },
+    client: { ar: "أكاديمية النخلة الدولية", en: "Al-Nakhla International Academy" },
     year: 2026,
     status: "live",
     description: {
@@ -75,7 +75,7 @@ export const projects: Project[] = [
       { ar: "نظام الحضور والغياب", en: "Attendance system" },
       { ar: "٥ بوابات مستخدمين", en: "5 user portals" },
     ],
-    coverImage: "/showcase/school-demo.png",
+    coverImage: "/showcase/school-cover.png",
     portals: [
       {
         id: "school-website",
@@ -85,7 +85,7 @@ export const projects: Project[] = [
           ar: "موقع المدرسة العام مع القبول والأخبار والفعاليات.",
           en: "Public-facing school website with admissions, news, and events.",
         },
-        screenshots: ["/showcase/school-demo.png"],
+        screenshots: ["/showcase/school-cover.png"],
         url: "/demos/school",
       },
       {
