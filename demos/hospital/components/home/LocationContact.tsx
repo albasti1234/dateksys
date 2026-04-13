@@ -57,7 +57,7 @@ export default function LocationContact({ locale }: { locale: Locale }) {
               allowFullScreen
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
-              title={isRTL ? "موقع المركز الطبي الملكي" : "Royal Medical Center Location"}
+              title={isRTL ? "موقع مستشفى الحياة" : "Al-Hayat Hospital Location"}
             />
           </motion.div>
 

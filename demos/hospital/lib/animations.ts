@@ -1,5 +1,5 @@
 // ============================================
-// Royal Medical Center — Animation System
+// Al-Hayat Hospital — Animation System
 // ============================================
 // Cinematic, smooth animations. No bounce. No elastic.
 // Every easing curve is deliberate.

@@ -79,7 +79,6 @@ export default function ContactPage({
       <section className="py-24 bg-gray-50 min-h-[60vh] relative overflow-hidden">
         {/* Decorative elements */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-teal/5 rounded-bl-full pointer-events-none -z-0" />
-        <div className="absolute bottom-0 left-0 w-80 h-80 bg-navy/5 rounded-tr-full pointer-events-none -z-0" />
 
         <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
           <div className="grid lg:grid-cols-5 gap-16 lg:gap-12">

@@ -79,7 +79,10 @@ export default function DoctorProfileClient({
               />
             </div>
             {department && (
-              <span className="inline-block px-5 py-2 rounded-full bg-teal/10 text-teal font-bold tracking-wide text-sm shadow-sm">
+              <span
+                className="inline-block px-5 py-2 rounded-full font-bold tracking-wide text-sm shadow-sm"
+                style={{ background: "rgba(13,124,143,0.1)", color: "#0D7C8F", border: "1px solid rgba(13,124,143,0.2)" }}
+              >
                 {department.name[locale]}
               </span>
             )}

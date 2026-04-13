@@ -2,9 +2,9 @@ import type { Dictionary } from "./ar";
 
 const dict: Dictionary = {
   meta: {
-    title: "Royal Medical Center — Premium Healthcare in Amman",
-    description: "Royal Medical Center — Premium healthcare in Amman, Jordan",
-    keywords: ["Royal Medical Center", "hospital", "Amman", "Jordan", "healthcare"],
+    title: "Al-Hayat Hospital — Premium Healthcare in Amman",
+    description: "Al-Hayat Hospital — Premium healthcare in Amman, Jordan",
+    keywords: ["Al-Hayat Hospital", "hospital", "Amman", "Jordan", "healthcare"],
   },
   common: {
     breadcrumbHome: "Home",
@@ -53,10 +53,10 @@ const dict: Dictionary = {
     emergency: "Emergency 24/7",
     emergencyPhone: "+962 6 500 0000",
     workingHours: "Sat – Thu: 8 AM – 8 PM",
-    email: "info@royalmedical.jo",
+    email: "info@alhayat.jo",
   },
   footer: {
-    description: "Royal Medical Center — Over 30 years of exceptional healthcare in Amman",
+    description: "Al-Hayat Hospital — Over 30 years of exceptional healthcare in Amman",
     quickLinks: "Quick Links",
     departments: "Departments",
     contactInfo: "Contact Info",
@@ -87,7 +87,7 @@ const dict: Dictionary = {
       viewAll: "View All 45 Departments →",
     },
     whyUs: {
-      label: "Why Royal Medical Center",
+      label: "Why Al-Hayat Hospital",
       title: "Unmatched Healthcare Excellence",
       subtitle: "We combine world-class medical expertise with personalized care for every patient",
       features: {
@@ -128,11 +128,11 @@ const dict: Dictionary = {
   },
   about: {
     heroLabel: "About the Center",
-    heroTitle: "Royal Medical Center",
+    heroTitle: "Al-Hayat Hospital",
     heroSubtitle: "Over three decades of healthcare excellence",
     story: {
       title: "Our Story",
-      content: "Royal Medical Center was founded in 1995 in the heart of Amman to be a distinguished medical facility offering the highest standards of healthcare. We started with a limited number of departments, and today we proudly operate 45 specialized departments with over 250 doctors serving hundreds of thousands of patients annually.",
+      content: "Al-Hayat Hospital was founded in 1995 in the heart of Amman to be a distinguished medical facility offering the highest standards of healthcare. We started with a limited number of departments, and today we proudly operate 45 specialized departments with over 250 doctors serving hundreds of thousands of patients annually.",
     },
     vision: {
       title: "Our Vision",
@@ -161,7 +161,7 @@ const dict: Dictionary = {
     },
     leadership: {
       title: "Leadership",
-      content: "Royal Medical Center is led by an administrative and medical team with over 30 years of experience in hospital management and healthcare.",
+      content: "Al-Hayat Hospital is led by an administrative and medical team with over 30 years of experience in hospital management and healthcare.",
     },
   },
   departments: {
@@ -240,7 +240,7 @@ const dict: Dictionary = {
       address: "Al-Madinah Al-Munawwarah St, Amman, Jordan",
       phone: "+962 6 500 0000",
       whatsapp: "+962 78 500 0000",
-      email: "info@royalmedical.jo",
+      email: "info@alhayat.jo",
       workingHours: "Sat – Thu: 8:00 AM – 8:00 PM",
       emergencyHours: "Emergency: 24 Hours / 7 Days",
     },

@@ -56,7 +56,7 @@ export default function PortalShell({
     : `/${otherLocale}`;
   const homeHref = `/${locale}`;
 
-  const hospitalName = locale === "ar" ? "المركز الطبي الملكي" : "Royal Medical Center";
+  const hospitalName = locale === "ar" ? "مستشفى الحياة" : "Al-Hayat Hospital";
   const switchLabel = locale === "ar" ? "English" : "العربية";
 
   return (

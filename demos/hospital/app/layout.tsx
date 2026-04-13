@@ -1,19 +1,19 @@
 import "./globals.css";
 
 // ============================================
-// Root Layout — Royal Medical Center
+// Root Layout — Al-Hayat Hospital
 // ============================================
 // Next.js 16 requires the ROOT `app/layout.tsx` to own <html>/<body>.
 // We render with Arabic defaults (RTL, lang="ar") and then
 // synchronously swap via inline script before React hydrates.
 
 export const metadata = {
-  title: "المركز الطبي الملكي — Royal Medical Center",
+  title: "مستشفى الحياة — Al-Hayat Hospital",
   description:
-    "المركز الطبي الملكي — رعاية صحية متميزة في عمّان، الأردن | Royal Medical Center — Premium Healthcare in Amman, Jordan",
+    "مستشفى الحياة — رعاية صحية متميزة في عمّان، الأردن | Al-Hayat Hospital — Premium Healthcare in Amman, Jordan",
   keywords: [
-    "Royal Medical Center",
-    "المركز الطبي الملكي",
+    "Al-Hayat Hospital",
+    "مستشفى الحياة",
     "hospital Amman",
     "مستشفى عمان",
     "healthcare Jordan",

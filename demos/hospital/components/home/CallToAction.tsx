@@ -18,7 +18,7 @@ export default function CallToAction({
   const prefix = `/${locale}`;
 
   return (
-    <section className="relative py-28 lg:py-36 overflow-hidden">
+    <section className="relative min-h-[400px] py-28 lg:py-36 overflow-hidden flex items-center">
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
@@ -29,7 +29,7 @@ export default function CallToAction({
           sizes="100vw"
           aria-hidden="true"
         />
-        <div className="absolute inset-0 bg-navy/90" />
+        <div className="absolute inset-0 bg-navy/95" />
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-6 lg:px-10 text-center">
@@ -38,7 +38,7 @@ export default function CallToAction({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={viewport}
           transition={{ duration: 0.7, ease: CINEMATIC }}
-          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 ${
+          className={`text-4xl md:text-5xl font-bold text-white mb-6 ${
             isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
           }`}
         >
@@ -50,7 +50,7 @@ export default function CallToAction({
           whileInView={{ opacity: 1, y: 0 }}
           viewport={viewport}
           transition={{ duration: 0.7, delay: 0.1, ease: CINEMATIC }}
-          className="text-lg text-white/70 mb-10 max-w-xl mx-auto"
+          className="text-xl text-white/80 mb-12 max-w-xl mx-auto"
         >
           {dict.subtitle}
         </motion.p>
@@ -63,7 +63,7 @@ export default function CallToAction({
         >
           <Link
             href={`${prefix}/appointments`}
-            className="btn-primary text-lg px-10 py-5 shadow-xl hover:shadow-2xl transition-shadow"
+            className="btn-primary text-lg px-12 py-5 shadow-xl hover:shadow-2xl transition-shadow"
           >
             {dict.button}
           </Link>

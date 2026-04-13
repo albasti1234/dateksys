@@ -13,8 +13,8 @@ const testimonials = [
     name: { ar: "أحمد الشمايلة", en: "Ahmad Al-Shamayleh" },
     treatment: { ar: "جراحة القلب", en: "Heart Surgery" },
     quote: {
-      ar: "الفريق الطبي في المركز الطبي الملكي أنقذ حياتي. من لحظة دخولي كان الجميع محترفين ومتعاطفين. أنصح بشدة بهذا المركز.",
-      en: "The medical team at Royal Medical Center saved my life. From the moment I walked in, everyone was professional and compassionate. I highly recommend this center.",
+      ar: "الفريق الطبي في مستشفى الحياة أنقذ حياتي. من لحظة دخولي كان الجميع محترفين ومتعاطفين. أنصح بشدة بهذا المستشفى.",
+      en: "The medical team at Al-Hayat Hospital saved my life. From the moment I walked in, everyone was professional and compassionate. I highly recommend this hospital.",
     },
     rating: 5,
   },

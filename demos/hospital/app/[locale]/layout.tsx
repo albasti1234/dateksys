@@ -4,7 +4,7 @@ import { getDictionary } from "@/i18n/getDictionary";
 import LocaleHtmlAttrs from "./LocaleHtmlAttrs";
 
 // ============================================
-// Per-locale layout — Royal Medical Center
+// Per-locale layout — Al-Hayat Hospital
 // Updates <html lang> and <html dir> via client component.
 // ============================================
 
@@ -28,7 +28,7 @@ export async function generateMetadata({
       title: dict.meta.title,
       description: dict.meta.description,
       type: "website",
-      siteName: "Royal Medical Center",
+      siteName: "Al-Hayat Hospital",
       locale: locale === "ar" ? "ar_JO" : "en_US",
     },
   };

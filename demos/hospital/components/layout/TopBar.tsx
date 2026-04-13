@@ -1,18 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { X, Phone } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 
 const DISMISS_KEY = "rmc:announcement-dismissed";
 
 export default function TopBar({ locale }: { locale: Locale }) {
-  const [visible, setVisible] = useState(false);
-
-  useEffect(() => {
-    const dismissed = localStorage.getItem(DISMISS_KEY);
-    if (!dismissed) setVisible(true);
-  }, []);
+  const [visible, setVisible] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return !localStorage.getItem(DISMISS_KEY);
+  });
 
   const dismiss = () => {
     setVisible(false);

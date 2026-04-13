@@ -55,7 +55,7 @@ export default function AboutPage({
               className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl order-2 lg:order-1"
             >
               <Image
-                src="/demos/hospital/images/doctor_patient.png"
+                src="/demos/hospital/images/doctor-patient.png"
                 alt={about.story.title}
                 fill
                 className="object-cover"
@@ -184,7 +184,7 @@ export default function AboutPage({
                     className="flex items-start gap-4 p-5 rounded-2xl bg-gray-50 border border-gray-100 hover:border-teal/30 hover:bg-white transition-all duration-300"
                   >
                     <CheckCircle2 className="w-6 h-6 text-teal shrink-0 mt-0.5" />
-                    <span className="text-base font-medium text-ink">{item}</span>
+                    <span className="text-base font-medium text-navy">{item}</span>
                   </motion.div>
                 ))}
               </div>

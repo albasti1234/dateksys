@@ -72,7 +72,7 @@ export default function DepartmentsPreview({
                       <Icon className="w-6 h-6" style={{ color: "#0D9488" }} />
                     </div>
                     <h3
-                      className={`text-base font-semibold text-text-on-dark mb-2 ${
+                      className={`text-base font-semibold text-white mb-2 ${
                         isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
                       }`}
                     >

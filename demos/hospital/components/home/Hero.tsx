@@ -46,12 +46,12 @@ export default function Hero({
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center overflow-hidden -mt-20">
       {/* Parallax Background Image */}
       <motion.div style={{ y: parallaxY }} className="absolute inset-0 -top-20">
         <Image
           src="/demos/hospital/images/hero.png"
-          alt={isRTL ? "المركز الطبي الملكي" : "Royal Medical Center"}
+          alt={isRTL ? "مستشفى الحياة" : "Al-Hayat Hospital"}
           fill
           className="object-cover"
           priority

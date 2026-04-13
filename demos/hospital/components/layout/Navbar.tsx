@@ -114,7 +114,7 @@ export default function Navbar({
                 scrolled || !isHomePage ? "text-navy" : "text-white"
               } ${isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"}`}
             >
-              {isRTL ? "المركز الطبي الملكي" : "Royal Medical"}
+              {isRTL ? "مستشفى الحياة" : "Al-Hayat"}
             </span>
             <span
               className={`text-[10px] font-medium tracking-widest uppercase ${

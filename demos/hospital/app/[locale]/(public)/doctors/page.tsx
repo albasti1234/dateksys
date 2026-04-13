@@ -134,7 +134,10 @@ export default function DoctorsPage({
                       
                       {/* Department Badge Overlay */}
                       <div className="absolute bottom-4 start-4 end-4">
-                        <span className="inline-block text-[11px] uppercase tracking-wider px-3 py-1 rounded-full bg-accent text-navy font-bold shadow-sm">
+                        <span
+                          className="inline-block text-[11px] uppercase tracking-wider px-3 py-1 rounded-full font-bold shadow-sm"
+                          style={{ background: "rgba(13,124,143,0.1)", color: "#0D7C8F", border: "1px solid rgba(13,124,143,0.2)" }}
+                        >
                           {getDeptName(doc.departmentId)}
                         </span>
                       </div>

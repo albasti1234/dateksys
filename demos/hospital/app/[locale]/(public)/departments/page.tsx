@@ -68,7 +68,7 @@ export default function DepartmentsPage({
         ]}
       />
 
-      <section className="py-20 min-h-[60vh]" style={{ background: "var(--color-navy, #0C4A6E)" }}>
+      <section className="pt-8 pb-20 min-h-[60vh]" style={{ background: "var(--color-navy, #0C4A6E)" }}>
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           
           {/* Search Bar */}

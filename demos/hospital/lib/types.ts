@@ -1,5 +1,5 @@
 // ============================================
-// Royal Medical Center — Type Definitions
+// Al-Hayat Hospital — Type Definitions
 // ============================================
 // Strict types. No `any`. No implicit types.
 
