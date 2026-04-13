@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
-import { Phone, CalendarPlus } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
+import { fadeUp, viewport, CINEMATIC } from "@/lib/animations";
 
 export default function CallToAction({
   locale,
@@ -17,68 +18,56 @@ export default function CallToAction({
   const prefix = `/${locale}`;
 
   return (
-    <section className="relative py-20 lg:py-28 bg-gradient-to-br from-teal to-teal-dark overflow-hidden">
-      {/* Decorative */}
+    <section className="relative py-28 lg:py-36 overflow-hidden">
+      {/* Background image */}
       <div className="absolute inset-0">
-        <div className="absolute -top-20 -right-20 w-80 h-80 rounded-full bg-white/5" />
-        <div className="absolute -bottom-16 -left-16 w-60 h-60 rounded-full bg-white/5" />
+        <Image
+          src="/demos/hospital/images/about.png"
+          alt=""
+          fill
+          className="object-cover"
+          sizes="100vw"
+          aria-hidden="true"
+        />
+        <div className="absolute inset-0 bg-navy/90" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 text-center">
+      <div className="relative z-10 max-w-3xl mx-auto px-6 lg:px-10 text-center">
         <motion.h2
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className={`text-3xl lg:text-4xl font-bold text-white mb-4 ${
-            isRTL ? "font-arabic-display" : "font-heading"
+          viewport={viewport}
+          transition={{ duration: 0.7, ease: CINEMATIC }}
+          className={`text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6 ${
+            isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
           }`}
         >
           {dict.title}
         </motion.h2>
 
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.1 }}
-          className="text-lg text-white/80 mb-8 max-w-xl mx-auto"
+          viewport={viewport}
+          transition={{ duration: 0.7, delay: 0.1, ease: CINEMATIC }}
+          className="text-lg text-white/70 mb-10 max-w-xl mx-auto"
         >
           {dict.subtitle}
         </motion.p>
 
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.2 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          viewport={viewport}
+          transition={{ duration: 0.7, delay: 0.2, ease: CINEMATIC }}
         >
           <Link
             href={`${prefix}/appointments`}
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-teal font-semibold rounded-xl hover:bg-white/90 transition-colors"
+            className="btn-primary text-lg px-10 py-5 shadow-xl hover:shadow-2xl transition-shadow"
           >
-            <CalendarPlus className="w-5 h-5" />
             {dict.button}
           </Link>
-          <a
-            href="tel:065249036"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/40 hover:bg-white hover:text-teal transition-colors"
-          >
-            <Phone className="w-5 h-5" />
-            {isRTL ? "اتصل الآن" : "Call Now"}
-          </a>
         </motion.div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.3 }}
-          className="mt-6 text-white/70 flex items-center justify-center gap-2 text-sm"
-        >
-          <Phone className="w-4 h-4" />
-          <a href="tel:065249036" className="hover:text-white transition-colors">{dict.phone}</a>
-        </motion.p>
       </div>
     </section>
   );

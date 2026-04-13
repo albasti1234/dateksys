@@ -8,10 +8,10 @@ import { getDictionary } from "@/i18n/getDictionary";
 import { departments } from "@/lib/data";
 
 const defaultHospitalInfo = {
-  name: { ar: "مستشفى الحياة", en: "Al-Hayat Hospital" },
+  name: { ar: "المركز الطبي الملكي", en: "Royal Medical Center" },
   address: { ar: "شارع المدينة المنورة، عمّان، الأردن", en: "Al-Madinah Al-Munawwarah St, Amman, Jordan" },
-  phone: "06-524-9036",
-  email: "info@alhayat-hospital.jo",
+  phone: "+962 6 500 0000",
+  email: "info@royalmedical.jo",
 };
 
 const dayKeys = ["sat", "sun", "mon", "tue", "wed", "thu", "fri"] as const;

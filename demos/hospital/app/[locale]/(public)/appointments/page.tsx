@@ -233,9 +233,9 @@ export default function AppointmentsPage({
                         >
                           <div
                             className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110 shadow-sm"
-                            style={{ backgroundColor: `${dept.color}15` }}
+                            style={{ background: "rgba(13,124,143,0.1)", border: "1px solid rgba(13,124,143,0.2)" }}
                           >
-                            {Icon && <Icon className="w-8 h-8" style={{ color: dept.color }} />}
+                            {Icon && <Icon className="w-8 h-8" style={{ color: "#0D9488" }} />}
                           </div>
                           <p className={`text-base font-bold text-navy text-center ${fontHeading}`}>
                             {dept.name[locale]}

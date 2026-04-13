@@ -1,7 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Star,
   Briefcase,
@@ -15,6 +16,7 @@ import {
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
 import type { Doctor, Department } from "@/lib/types";
+import { fadeUp, stagger } from "@/lib/animations";
 
 const dayKeys = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"] as const;
 
@@ -32,197 +34,200 @@ export default function DoctorProfileClient({
   const isRTL = locale === "ar";
   const prefix = `/${locale}`;
   const BackArrow = isRTL ? ArrowRight : ArrowLeft;
-
-  const getInitials = (name: string) => {
-    const words = name.split(" ").filter((w) => w.length > 1);
-    if (words.length >= 2) {
-      return words[1][0] + words[words.length - 1][0];
-    }
-    return words[0]?.[0] || "";
-  };
-
+  const fontHeading = isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]";
+  
   const daysDict = dict.portals.common.days;
+  const imageSrc = "/demos/hospital/images/doctor_male.png";
 
   return (
-    <div className="py-12 bg-white">
-      <div className="max-w-5xl mx-auto px-6 lg:px-10">
+    <div className="py-24 bg-gray-50 min-h-screen relative overflow-hidden">
+      {/* Background Accent */}
+      <div className="absolute top-0 right-0 w-full h-[400px] bg-gradient-to-b from-teal/5 to-transparent pointer-events-none" />
+
+      <div className="max-w-6xl mx-auto px-6 lg:px-10 relative z-10">
+        
         {/* Back button */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="mb-8"
-        >
+        <motion.div initial={{ opacity: 0, x: isRTL ? 20 : -20 }} animate={{ opacity: 1, x: 0 }} className="mb-10">
           <Link
             href={`${prefix}/doctors`}
-            className="inline-flex items-center gap-2 text-sm text-ink-soft hover:text-teal transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-ink-soft hover:text-teal transition-colors"
           >
             <BackArrow className="w-4 h-4" />
             {dict.common.back}
           </Link>
         </motion.div>
 
-        {/* Profile header */}
+        {/* Profile Card */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-12"
+          variants={stagger}
+          initial="hidden"
+          animate="visible"
+          className="bg-white rounded-3xl p-8 lg:p-12 shadow-xl shadow-navy/5 border border-gray-100 flex flex-col md:flex-row gap-12 lg:gap-16 mb-12 relative overflow-hidden"
         >
-          {/* Avatar */}
-          <div className="w-32 h-32 rounded-full bg-teal flex items-center justify-center text-white text-4xl font-bold shrink-0">
-            {getInitials(doctor.name[locale])}
-          </div>
+          {/* Decorative Corner */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-teal/5 rounded-bl-full pointer-events-none" />
 
-          <div className="text-center md:text-start flex-1">
-            <h1
-              className={`text-3xl font-bold text-ink mb-2 ${
-                isRTL ? "font-arabic-display" : "font-heading"
-              }`}
-            >
-              {doctor.name[locale]}
-            </h1>
-            <p className="text-lg text-ink-soft mb-3">
-              {doctor.title[locale]}
-            </p>
-
+          {/* Avatar Section */}
+          <motion.div variants={fadeUp} className="shrink-0 flex flex-col items-center">
+            <div className="w-48 h-48 lg:w-56 lg:h-56 rounded-full overflow-hidden border-8 border-gray-50 bg-gray-100 shadow-md mb-6 relative">
+              <Image
+                src={imageSrc}
+                alt={doctor.name[locale]}
+                fill
+                className="object-cover object-top"
+                sizes="(max-width: 768px) 192px, 224px"
+              />
+            </div>
             {department && (
-              <span className="inline-block text-sm px-4 py-1.5 rounded-full bg-teal/10 text-teal font-medium mb-4">
+              <span className="inline-block px-5 py-2 rounded-full bg-teal/10 text-teal font-bold tracking-wide text-sm shadow-sm">
                 {department.name[locale]}
               </span>
             )}
+          </motion.div>
 
-            {/* Rating + Experience */}
-            <div className="flex items-center justify-center md:justify-start gap-6 mb-6">
-              <div className="flex items-center gap-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-4 h-4 ${
-                      i < Math.floor(doctor.rating)
-                        ? "text-amber-400 fill-amber-400"
-                        : "text-gray-200"
-                    }`}
-                  />
-                ))}
-                <span className="text-sm text-ink-soft ms-1">
+          {/* Details Section */}
+          <div className="flex-1 flex flex-col justify-center">
+            <motion.h1
+              variants={fadeUp}
+              className={`text-4xl md:text-5xl font-bold text-navy mb-4 ${fontHeading}`}
+            >
+              {doctor.name[locale]}
+            </motion.h1>
+            
+            <motion.p variants={fadeUp} className="text-xl text-ink-soft font-medium mb-8">
+              {doctor.title[locale]}
+            </motion.p>
+
+            <motion.div variants={fadeUp} className="flex flex-wrap items-center gap-8 mb-10">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-0.5 mt-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${
+                        i < Math.floor(doctor.rating)
+                          ? "text-amber-500 fill-amber-500"
+                          : "text-gray-200"
+                      }`}
+                    />
+                  ))}
+                </div>
+                <span className="text-xl font-bold text-navy mt-1">
                   {doctor.rating}
                 </span>
               </div>
-              <div className="flex items-center gap-1.5 text-sm text-ink-soft">
-                <Briefcase className="w-4 h-4" />
+              <div className="h-8 w-px bg-gray-200" />
+              <div className="flex items-center gap-3 text-lg font-medium text-ink-soft">
+                <Briefcase className="w-6 h-6 text-teal" />
                 {doctor.yearsExperience} {dict.doctors.experience}
               </div>
-            </div>
+            </motion.div>
 
-            <Link
-              href={`${prefix}/appointments`}
-              className="btn-primary"
-            >
-              <CalendarPlus className="w-4 h-4" />
-              {dict.doctors.bookWith} {doctor.name[locale]}
-            </Link>
+            <motion.div variants={fadeUp}>
+              <Link
+                href={`${prefix}/appointments`}
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-navy text-white font-bold tracking-wide shadow-xl shadow-navy/20 hover:bg-accent hover:text-navy transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <CalendarPlus className="w-5 h-5" />
+                {dict.doctors.bookWith} {doctor.name[locale]}
+              </Link>
+            </motion.div>
           </div>
         </motion.div>
 
-        {/* Bio */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="card p-6 mb-6"
-        >
-          <p className="text-ink-soft leading-relaxed">{doctor.bio[locale]}</p>
-        </motion.div>
-
-        {/* Details grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Qualifications */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.15 }}
-            className="card p-6"
-          >
-            <h3
-              className={`flex items-center gap-2 text-lg font-semibold text-ink mb-4 ${
-                isRTL ? "font-arabic-display" : "font-heading"
-              }`}
+        {/* Extras Grid */}
+        <div className="grid lg:grid-cols-3 gap-8">
+          
+          <div className="lg:col-span-2 space-y-8">
+            {/* Bio */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-8 lg:p-10 border border-gray-100 shadow-sm"
             >
-              <GraduationCap className="w-5 h-5 text-teal" />
-              {dict.doctors.qualifications}
-            </h3>
-            <ul className="space-y-2">
-              {doctor.qualifications.map((q, i) => (
-                <li
-                  key={i}
-                  className="flex items-center gap-2 text-sm text-ink-soft"
-                >
-                  <span className="w-1.5 h-1.5 rounded-full bg-teal shrink-0" />
-                  {q}
-                </li>
-              ))}
-            </ul>
-          </motion.div>
+              <h3 className={`text-2xl font-bold text-navy mb-6 ${fontHeading}`}>
+                {isRTL ? "نبذة عن الطبيب" : "About Doctor"}
+              </h3>
+              <p className="text-lg text-ink-soft leading-relaxed font-light">{doctor.bio[locale]}</p>
+            </motion.div>
 
-          {/* Languages */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="card p-6"
-          >
-            <h3
-              className={`flex items-center gap-2 text-lg font-semibold text-ink mb-4 ${
-                isRTL ? "font-arabic-display" : "font-heading"
-              }`}
+            {/* Qualifications */}
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-8 lg:p-10 border border-gray-100 shadow-sm"
             >
-              <Languages className="w-5 h-5 text-teal" />
-              {dict.doctors.languages}
-            </h3>
-            <div className="flex flex-wrap gap-2">
-              {doctor.languages.map((lang, i) => (
-                <span
-                  key={i}
-                  className="px-3 py-1.5 text-sm bg-gray-100 text-ink-soft rounded-lg"
-                >
-                  {lang}
-                </span>
-              ))}
-            </div>
-          </motion.div>
+              <h3 className={`flex items-center gap-3 text-2xl font-bold text-navy mb-8 ${fontHeading}`}>
+                <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
+                  <GraduationCap className="w-5 h-5 text-teal" />
+                </div>
+                {dict.doctors.qualifications}
+              </h3>
+              <ul className="space-y-4">
+                {doctor.qualifications.map((q, i) => (
+                  <li key={i} className="flex items-start gap-4 text-ink-soft lg:text-lg">
+                    <div className="w-2 h-2 rounded-full bg-teal shrink-0 mt-2.5" />
+                    <span>{q}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          </div>
 
-          {/* Available days */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.25 }}
-            className="card p-6 md:col-span-2"
-          >
-            <h3
-              className={`flex items-center gap-2 text-lg font-semibold text-ink mb-4 ${
-                isRTL ? "font-arabic-display" : "font-heading"
-              }`}
+          <div className="space-y-8">
+            {/* Languages */}
+            <motion.div
+              initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-navy text-white rounded-3xl p-8 border border-navy shadow-xl relative overflow-hidden"
             >
-              <CalendarDays className="w-5 h-5 text-teal" />
-              {dict.doctors.availableDays}
-            </h3>
-            <div className="grid grid-cols-7 gap-2">
-              {dayKeys.map((day) => {
-                const isAvailable = doctor.availableDays.includes(day);
-                return (
-                  <div
-                    key={day}
-                    className={`text-center py-3 rounded-xl text-sm font-medium ${
-                      isAvailable
-                        ? "bg-teal/10 text-teal"
-                        : "bg-gray-50 text-ink-muted"
-                    }`}
-                  >
-                    {daysDict[day]}
-                  </div>
-                );
-              })}
-            </div>
-          </motion.div>
+              <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-bl-full pointer-events-none" />
+              <h3 className={`flex items-center gap-3 text-xl font-bold mb-6 ${fontHeading}`}>
+                <Languages className="w-5 h-5 text-accent" />
+                {dict.doctors.languages}
+              </h3>
+              <div className="flex flex-wrap gap-3">
+                {doctor.languages.map((lang, i) => (
+                  <span key={i} className="px-4 py-2 text-sm font-semibold bg-white/10 text-white rounded-xl backdrop-blur-sm">
+                    {lang}
+                  </span>
+                ))}
+              </div>
+            </motion.div>
+
+            {/* Available days */}
+            <motion.div
+              initial={{ opacity: 0, x: isRTL ? -30 : 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm"
+            >
+              <h3 className={`flex items-center gap-3 text-xl font-bold text-navy mb-8 ${fontHeading}`}>
+                <div className="w-10 h-10 rounded-full bg-teal/10 flex items-center justify-center shrink-0">
+                  <CalendarDays className="w-5 h-5 text-teal" />
+                </div>
+                {dict.doctors.availableDays}
+              </h3>
+              <div className="grid grid-cols-2 gap-3">
+                {dayKeys.map((day) => {
+                  const isAvailable = doctor.availableDays.includes(day);
+                  if(!isAvailable) return null;
+                  return (
+                    <div
+                      key={day}
+                      className="text-center py-3 px-4 rounded-xl text-sm font-bold bg-teal/10 text-teal border border-teal/20 shadow-sm"
+                    >
+                      {daysDict[day]}
+                    </div>
+                  );
+                })}
+              </div>
+            </motion.div>
+          </div>
+
         </div>
       </div>
     </div>

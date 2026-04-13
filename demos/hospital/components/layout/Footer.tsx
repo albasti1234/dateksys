@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, Phone, Mail, MapPin, MessageCircle } from "lucide-react";
+import { Shield, Phone, Mail, MapPin, Clock, Facebook, Instagram, Linkedin, Youtube } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
 import { departments } from "@/lib/data";
@@ -12,7 +12,6 @@ export default function Footer({
 }: {
   locale: Locale;
   dict: Dictionary["footer"];
-  navDict?: Dictionary["nav"];
 }) {
   const isRTL = locale === "ar";
   const prefix = `/${locale}`;
@@ -20,47 +19,91 @@ export default function Footer({
 
   const quickLinks = [
     { label: isRTL ? "الرئيسية" : "Home", href: p("/") },
-    { label: isRTL ? "عن المستشفى" : "About", href: p("/about") },
+    { label: isRTL ? "عن المركز" : "About", href: p("/about") },
     { label: isRTL ? "الأطباء" : "Doctors", href: p("/doctors") },
-    { label: isRTL ? "الخدمات" : "Services", href: p("/services") },
+    { label: isRTL ? "حجز موعد" : "Book Appointment", href: p("/appointments") },
     { label: isRTL ? "تواصل معنا" : "Contact", href: p("/contact") },
+    { label: isRTL ? "الأسئلة الشائعة" : "FAQ", href: p("/faq") },
   ];
 
-  const topDepartments = departments.slice(0, 4);
+  const patientResources = [
+    { label: isRTL ? "بوابة المريض" : "Patient Portal", href: `${prefix}/portal/patient` },
+    { label: isRTL ? "التأمين الصحي" : "Insurance", href: p("/insurance") },
+    { label: isRTL ? "الخدمات" : "Services", href: p("/services") },
+    { label: isRTL ? "الوظائف" : "Careers", href: p("/") },
+  ];
 
+  const topDepartments = departments.slice(0, 5);
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-navy-dark text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+    <footer className="bg-navy text-white">
+      {/* Emergency Banner */}
+      <div className="bg-danger/90">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-3 flex items-center justify-center gap-3 text-sm font-semibold">
+          <Phone className="w-4 h-4" />
+          <span>
+            {isRTL ? "طوارئ ٢٤/٧:" : "24/7 Emergency:"}
+          </span>
+          <a
+            href="tel:+96265000000"
+            className="underline underline-offset-2 hover:opacity-80 transition-opacity"
+            dir="ltr"
+          >
+            +962 6 500 0000
+          </a>
+        </div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
           {/* Hospital info */}
           <div>
-            <div className="flex items-center gap-2 mb-4">
-              <Heart className="w-7 h-7 text-teal fill-teal" />
+            <div className="flex items-center gap-2.5 mb-5">
+              <div className="w-10 h-10 rounded-xl bg-primary flex items-center justify-center">
+                <Shield className="w-5 h-5 text-white" />
+              </div>
               <span
-                className={`text-xl font-bold ${
-                  isRTL ? "font-arabic-display" : "font-heading"
+                className={`text-lg font-bold ${
+                  isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
                 }`}
               >
                 {isRTL ? "مستشفى الحياة" : "Al-Hayat Hospital"}
               </span>
             </div>
-            <p className="text-sm text-white/70 leading-relaxed">
+            <p className="text-sm text-white/70 leading-relaxed mb-6">
               {dict.description}
             </p>
+            {/* Social icons */}
+            <div className="flex items-center gap-3">
+              {[
+                { icon: Facebook, label: "Facebook" },
+                { icon: Instagram, label: "Instagram" },
+                { icon: Linkedin, label: "LinkedIn" },
+                { icon: Youtube, label: "YouTube" },
+              ].map(({ icon: Icon, label }) => (
+                <a
+                  key={label}
+                  href="#"
+                  className="w-9 h-9 rounded-lg bg-white/5 border border-white/10 flex items-center justify-center hover:bg-primary hover:border-primary transition-all"
+                  aria-label={label}
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              ))}
+            </div>
           </div>
 
           {/* Quick Links */}
           <div>
             <h3
-              className={`text-sm font-semibold uppercase tracking-wider mb-4 text-teal-light ${
-                isRTL ? "font-arabic-display" : "font-heading"
+              className={`text-sm font-semibold uppercase tracking-wider mb-5 text-primary ${
+                isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
               }`}
             >
               {dict.quickLinks}
             </h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {quickLinks.map((link) => (
                 <li key={link.href}>
                   <Link
@@ -77,13 +120,13 @@ export default function Footer({
           {/* Departments */}
           <div>
             <h3
-              className={`text-sm font-semibold uppercase tracking-wider mb-4 text-teal-light ${
-                isRTL ? "font-arabic-display" : "font-heading"
+              className={`text-sm font-semibold uppercase tracking-wider mb-5 text-primary ${
+                isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
               }`}
             >
               {dict.departments}
             </h3>
-            <ul className="space-y-2.5">
+            <ul className="space-y-3">
               {topDepartments.map((dept) => (
                 <li key={dept.id}>
                   <Link
@@ -94,39 +137,53 @@ export default function Footer({
                   </Link>
                 </li>
               ))}
+              <li>
+                <Link
+                  href={p("/departments")}
+                  className="text-sm text-primary hover:text-primary-light transition-colors font-medium"
+                >
+                  {isRTL ? "جميع الأقسام →" : "All Departments →"}
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Contact Info */}
           <div>
             <h3
-              className={`text-sm font-semibold uppercase tracking-wider mb-4 text-teal-light ${
-                isRTL ? "font-arabic-display" : "font-heading"
+              className={`text-sm font-semibold uppercase tracking-wider mb-5 text-primary ${
+                isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
               }`}
             >
               {dict.contactInfo}
             </h3>
-            <ul className="space-y-3">
-              <li className="flex items-start gap-2 text-sm text-white/70">
-                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-teal-light" />
+            <ul className="space-y-4">
+              <li className="flex items-start gap-3 text-sm text-white/70">
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-primary" />
                 <span>{dict.address}</span>
               </li>
-              <li className="flex items-center gap-2 text-sm text-white/70">
-                <Phone className="w-4 h-4 shrink-0 text-teal-light" />
-                <a href="tel:065249036" className="hover:text-white transition-colors" dir="ltr">06-524-9036</a>
-              </li>
-              <li className="flex items-center gap-2 text-sm text-white/70">
-                <MessageCircle className="w-4 h-4 shrink-0 text-emerald-400" />
-                <a href="https://wa.me/962780104920" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" dir="ltr">WhatsApp</a>
-              </li>
-              <li className="flex items-center gap-2 text-sm text-white/70">
-                <Mail className="w-4 h-4 shrink-0 text-teal-light" />
+              <li className="flex items-center gap-3 text-sm text-white/70">
+                <Phone className="w-4 h-4 shrink-0 text-primary" />
                 <a
-                  href="mailto:info@alhayat-hospital.jo"
+                  href="tel:+96265000000"
+                  className="hover:text-white transition-colors"
+                  dir="ltr"
+                >
+                  +962 6 500 0000
+                </a>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-white/70">
+                <Mail className="w-4 h-4 shrink-0 text-primary" />
+                <a
+                  href="mailto:info@royalmedical.jo"
                   className="hover:text-white transition-colors"
                 >
-                  info@alhayat-hospital.jo
+                  info@royalmedical.jo
                 </a>
+              </li>
+              <li className="flex items-center gap-3 text-sm text-white/70">
+                <Clock className="w-4 h-4 shrink-0 text-primary" />
+                <span>{isRTL ? "السبت-الخميس ٨ص-٨م" : "Sat-Thu 8AM-8PM"}</span>
               </li>
             </ul>
           </div>
@@ -135,7 +192,7 @@ export default function Footer({
 
       {/* Bottom bar */}
       <div className="border-t border-white/10">
-        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/50">
+        <div className="max-w-7xl mx-auto px-6 lg:px-10 py-5 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/40">
           <span>
             &copy; {year}{" "}
             {isRTL ? "مستشفى الحياة" : "Al-Hayat Hospital"}.{" "}

@@ -20,7 +20,7 @@ const sections = {
       icon: "FileCheck",
       title: "قبول الخدمة",
       content:
-        "باستخدامك لموقع مستشفى الحياة الإلكتروني وخدماته، فإنك توافق على الالتزام بشروط الاستخدام هذه. إذا كنت لا توافق على أي من هذه الشروط، يرجى عدم استخدام الموقع أو خدماته.",
+        "باستخدامك لموقع المركز الطبي الملكي الإلكتروني وخدماته، فإنك توافق على الالتزام بشروط الاستخدام هذه. إذا كنت لا توافق على أي من هذه الشروط، يرجى عدم استخدام الموقع أو خدماته.",
     },
     {
       icon: "UserCheck",
@@ -38,19 +38,19 @@ const sections = {
       icon: "AlertTriangle",
       title: "تحديد المسؤولية",
       content:
-        "مستشفى الحياة غير مسؤول عن أي أضرار ناتجة عن استخدام الموقع الإلكتروني أو الاعتماد على المعلومات المقدمة فيه. نبذل قصارى جهدنا لضمان دقة المعلومات، لكن لا نضمن خلوها من الأخطاء. الموقع قد يتعرض لفترات صيانة أو انقطاع مؤقت.",
+        "المركز الطبي الملكي غير مسؤول عن أي أضرار ناتجة عن استخدام الموقع الإلكتروني أو الاعتماد على المعلومات المقدمة فيه. نبذل قصارى جهدنا لضمان دقة المعلومات، لكن لا نضمن خلوها من الأخطاء. الموقع قد يتعرض لفترات صيانة أو انقطاع مؤقت.",
     },
     {
       icon: "Scale",
       title: "الملكية الفكرية",
       content:
-        "جميع المحتويات المنشورة على الموقع بما في ذلك النصوص والصور والشعارات والتصاميم هي ملكية فكرية لمستشفى الحياة ومحمية بموجب قوانين حقوق النشر. يُمنع نسخ أو توزيع أو تعديل أي محتوى دون إذن كتابي مسبق.",
+        "جميع المحتويات المنشورة على الموقع بما في ذلك النصوص والصور والشعارات والتصاميم هي ملكية فكرية للمركز الطبي الملكي ومحمية بموجب قوانين حقوق النشر. يُمنع نسخ أو توزيع أو تعديل أي محتوى دون إذن كتابي مسبق.",
     },
     {
       icon: "RefreshCw",
       title: "التعديلات",
       content:
-        "يحتفظ مستشفى الحياة بالحق في تعديل هذه الشروط في أي وقت دون إشعار مسبق. ستكون الشروط المعدّلة سارية فور نشرها على الموقع. استمرارك في استخدام الموقع بعد نشر التعديلات يُعتبر قبولاً للشروط الجديدة.",
+        "يحتفظ المركز الطبي الملكي بالحق في تعديل هذه الشروط في أي وقت دون إشعار مسبق. ستكون الشروط المعدّلة سارية فور نشرها على الموقع. استمرارك في استخدام الموقع بعد نشر التعديلات يُعتبر قبولاً للشروط الجديدة.",
     },
   ],
   en: [
@@ -58,7 +58,7 @@ const sections = {
       icon: "FileCheck",
       title: "Acceptance of Service",
       content:
-        "By using the Al-Hayat Hospital website and its services, you agree to abide by these terms of use. If you do not agree to any of these terms, please do not use the website or its services.",
+        "By using the Royal Medical Center website and its services, you agree to abide by these terms of use. If you do not agree to any of these terms, please do not use the website or its services.",
     },
     {
       icon: "UserCheck",
@@ -76,19 +76,19 @@ const sections = {
       icon: "AlertTriangle",
       title: "Limitation of Liability",
       content:
-        "Al-Hayat Hospital is not responsible for any damages resulting from the use of this website or reliance on the information provided herein. While we make every effort to ensure accuracy, we do not guarantee the information is error-free. The website may experience maintenance periods or temporary interruptions.",
+        "Royal Medical Center is not responsible for any damages resulting from the use of this website or reliance on the information provided herein. While we make every effort to ensure accuracy, we do not guarantee the information is error-free. The website may experience maintenance periods or temporary interruptions.",
     },
     {
       icon: "Scale",
       title: "Intellectual Property",
       content:
-        "All content published on this website including text, images, logos, and designs are the intellectual property of Al-Hayat Hospital and are protected under copyright laws. Copying, distributing, or modifying any content without prior written permission is prohibited.",
+        "All content published on this website including text, images, logos, and designs are the intellectual property of Royal Medical Center and are protected under copyright laws. Copying, distributing, or modifying any content without prior written permission is prohibited.",
     },
     {
       icon: "RefreshCw",
       title: "Modifications",
       content:
-        "Al-Hayat Hospital reserves the right to modify these terms at any time without prior notice. Modified terms will be effective immediately upon publication on the website. Your continued use of the website after modifications are published constitutes acceptance of the new terms.",
+        "Royal Medical Center reserves the right to modify these terms at any time without prior notice. Modified terms will be effective immediately upon publication on the website. Your continued use of the website after modifications are published constitutes acceptance of the new terms.",
     },
   ],
 };

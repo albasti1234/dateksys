@@ -5,12 +5,14 @@ import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
 import { departments, doctors } from "@/lib/data";
 import Hero from "@/components/home/Hero";
-import StatsStrip from "@/components/home/StatsStrip";
+import AccreditationsStrip from "@/components/home/AccreditationsStrip";
 import DepartmentsPreview from "@/components/home/DepartmentsPreview";
 import WhyChooseUs from "@/components/home/WhyChooseUs";
 import DoctorHighlights from "@/components/home/DoctorHighlights";
 import Testimonials from "@/components/home/Testimonials";
+import NewsPreview from "@/components/home/NewsPreview";
 import CallToAction from "@/components/home/CallToAction";
+import LocationContact from "@/components/home/LocationContact";
 
 export default function HomePage({
   params,
@@ -24,7 +26,7 @@ export default function HomePage({
   return (
     <>
       <Hero locale={locale} dict={dict.home.hero} />
-      <StatsStrip locale={locale} stats={dict.home.stats} />
+      <AccreditationsStrip locale={locale} />
       <DepartmentsPreview
         locale={locale}
         dict={dict.home.departments}
@@ -38,7 +40,9 @@ export default function HomePage({
         departments={departments}
       />
       <Testimonials locale={locale} dict={dict.home.testimonials} />
+      <NewsPreview locale={locale} />
       <CallToAction locale={locale} dict={dict.home.cta} />
+      <LocationContact locale={locale} />
     </>
   );
 }

@@ -1,17 +1,43 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Quote, Star, CheckCircle2 } from "lucide-react";
+import { useState, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Quote, Star } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
+import { fadeUp, viewport, CINEMATIC } from "@/lib/animations";
 
-const avatarColors = [
-  "bg-teal",
-  "bg-navy",
-  "bg-sky",
-  "bg-emerald",
-  "bg-rose",
-  "bg-amber-500",
+const testimonials = [
+  {
+    id: "1",
+    name: { ar: "أحمد الشمايلة", en: "Ahmad Al-Shamayleh" },
+    treatment: { ar: "جراحة القلب", en: "Heart Surgery" },
+    quote: {
+      ar: "الفريق الطبي في المركز الطبي الملكي أنقذ حياتي. من لحظة دخولي كان الجميع محترفين ومتعاطفين. أنصح بشدة بهذا المركز.",
+      en: "The medical team at Royal Medical Center saved my life. From the moment I walked in, everyone was professional and compassionate. I highly recommend this center.",
+    },
+    rating: 5,
+  },
+  {
+    id: "2",
+    name: { ar: "سارة الخالدي", en: "Sara Al-Khalidi" },
+    treatment: { ar: "طب الأطفال", en: "Pediatrics" },
+    quote: {
+      ar: "د. لينا الحسيني اعتنت بابنتي كأنها ابنتها. الاهتمام والرعاية التي تلقيناها كانت استثنائية بكل المقاييس.",
+      en: "Dr. Lina Al-Husseini cared for my daughter as if she were her own. The attention and care we received was exceptional by every measure.",
+    },
+    rating: 5,
+  },
+  {
+    id: "3",
+    name: { ar: "محمد العبادي", en: "Mohammad Al-Abbadi" },
+    treatment: { ar: "جراحة العظام", en: "Orthopedic Surgery" },
+    quote: {
+      ar: "بعد عملية استبدال الركبة، عدت للمشي خلال أسابيع. الدكتور خالد والفريق كانوا رائعين من التشخيص حتى إعادة التأهيل.",
+      en: "After my knee replacement, I was walking again within weeks. Dr. Khaled and the team were amazing from diagnosis through rehabilitation.",
+    },
+    rating: 5,
+  },
 ];
 
 export default function Testimonials({
@@ -22,91 +48,98 @@ export default function Testimonials({
   dict: Dictionary["home"]["testimonials"];
 }) {
   const isRTL = locale === "ar";
+  const [current, setCurrent] = useState(0);
+
+  const next = useCallback(() => {
+    setCurrent((prev) => (prev + 1) % testimonials.length);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(next, 6000);
+    return () => clearInterval(timer);
+  }, [next]);
+
+  const t = testimonials[current];
 
   return (
-    <section className="py-20 lg:py-28 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section className="py-24 lg:py-32 bg-surface-dark overflow-hidden">
+      <div className="max-w-4xl mx-auto px-6 lg:px-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
+          viewport={viewport}
+          transition={{ duration: 0.7, ease: CINEMATIC }}
+          className="text-center"
         >
-          <span className="section-label">{dict.label}</span>
+          <span className="section-label-on-dark">{dict.label}</span>
           <h2
-            className={`text-3xl lg:text-4xl font-bold text-ink ${
-              isRTL ? "font-arabic-display" : "font-heading"
+            className={`text-3xl lg:text-4xl font-bold text-text-on-dark mb-16 ${
+              isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
             }`}
           >
             {dict.title}
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {dict.items.map((item, i) => {
-            const initials = item.name
-              .split(" ")
-              .filter((w) => w.length > 1)
-              .map((w) => w[0])
-              .slice(0, 2)
-              .join("");
+        <div className="relative min-h-[300px]">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={t.id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.5, ease: CINEMATIC }}
+              className="text-center"
+            >
+              {/* Quote icon */}
+              <Quote className="w-10 h-10 text-primary/40 mx-auto mb-6" />
 
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.1 }}
-                className="card p-6 relative"
+              {/* Quote text */}
+              <blockquote
+                className={`text-xl md:text-2xl lg:text-3xl text-text-on-dark leading-relaxed mb-8 max-w-3xl mx-auto ${
+                  isRTL
+                    ? "font-[var(--font-arabic-heading)]"
+                    : "font-[var(--font-serif)] italic"
+                }`}
               >
-                <Quote className="w-8 h-8 text-teal/30 absolute top-4 end-4" />
+                &ldquo;{t.quote[locale]}&rdquo;
+              </blockquote>
 
-                {/* Star rating */}
-                <div className="flex items-center gap-0.5 mb-4">
-                  {Array.from({ length: 5 }).map((_, si) => (
-                    <Star
-                      key={si}
-                      className="w-4 h-4 text-amber-400 fill-amber-400"
-                    />
-                  ))}
-                </div>
+              {/* Stars */}
+              <div className="flex items-center justify-center gap-1 mb-4">
+                {Array.from({ length: t.rating }).map((_, i) => (
+                  <Star
+                    key={i}
+                    className="w-4 h-4 text-accent fill-accent"
+                  />
+                ))}
+              </div>
 
-                <p className="text-ink-soft leading-relaxed mb-5 text-sm">
-                  &ldquo;{item.quote}&rdquo;
-                </p>
-                <div className="border-t border-gray-100 pt-4 flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    {/* Avatar */}
-                    <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center text-white text-sm font-bold ${
-                        avatarColors[i % avatarColors.length]
-                      }`}
-                    >
-                      {initials}
-                    </div>
-                    <div>
-                      <p
-                        className={`font-semibold text-ink text-sm ${
-                          isRTL ? "font-arabic-display" : "font-heading"
-                        }`}
-                      >
-                        {item.name}
-                      </p>
-                      <p className="text-sm text-teal font-medium">
-                        {item.condition}
-                      </p>
-                    </div>
-                  </div>
-                  {/* Verified badge */}
-                  <div className="flex items-center gap-1 text-teal text-xs font-medium">
-                    <CheckCircle2 className="w-3.5 h-3.5" />
-                    <span>{isRTL ? "مريض موثق" : "Verified Patient"}</span>
-                  </div>
-                </div>
-              </motion.div>
-            );
-          })}
+              {/* Patient info */}
+              <div className="text-text-on-dark font-semibold">
+                {t.name[locale]}
+              </div>
+              <div className="text-text-on-dark-secondary text-sm">
+                {t.treatment[locale]}
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        {/* Navigation dots */}
+        <div className="flex items-center justify-center gap-2 mt-12">
+          {testimonials.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                i === current
+                  ? "w-8 bg-primary"
+                  : "bg-white/20 hover:bg-white/40"
+              }`}
+              aria-label={`Testimonial ${i + 1}`}
+            />
+          ))}
         </div>
       </div>
     </section>

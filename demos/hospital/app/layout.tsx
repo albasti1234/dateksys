@@ -1,18 +1,23 @@
 import "./globals.css";
 
 // ============================================
-// Root Layout — required by Next.js to hold <html>/<body>
+// Root Layout — Royal Medical Center
 // ============================================
-// Next.js 16 strictly requires the ROOT `app/layout.tsx` to own the
-// <html>/<body> tags. So we render them here with the Arabic defaults
-// (RTL, lang="ar") and then synchronously swap them in the client if
-// the URL is under /en/. The inline script runs BEFORE React hydrates
-// so there is no flash of wrong direction.
+// Next.js 16 requires the ROOT `app/layout.tsx` to own <html>/<body>.
+// We render with Arabic defaults (RTL, lang="ar") and then
+// synchronously swap via inline script before React hydrates.
 
 export const metadata = {
-  title: "مستشفى الحياة — Al-Hayat Hospital",
+  title: "المركز الطبي الملكي — Royal Medical Center",
   description:
-    "مستشفى الحياة — رعاية صحية متكاملة في عمّان، الأردن",
+    "المركز الطبي الملكي — رعاية صحية متميزة في عمّان، الأردن | Royal Medical Center — Premium Healthcare in Amman, Jordan",
+  keywords: [
+    "Royal Medical Center",
+    "المركز الطبي الملكي",
+    "hospital Amman",
+    "مستشفى عمان",
+    "healthcare Jordan",
+  ],
 };
 
 const localeInitScript = `
@@ -45,12 +50,17 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />
         <link
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Inter:wght@300..700&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Noto+Kufi+Arabic:wght@400;500;600;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Instrument+Serif:ital@0;1&family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Readex+Pro:wght@300;400;500;600;700&display=swap"
           rel="stylesheet"
         />
         <script dangerouslySetInnerHTML={{ __html: localeInitScript }} />
       </head>
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-base">
+        <a href="#main-content" className="skip-to-content">
+          Skip to content
+        </a>
+        {children}
+      </body>
     </html>
   );
 }

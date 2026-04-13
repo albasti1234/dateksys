@@ -4,10 +4,8 @@ import { getDictionary } from "@/i18n/getDictionary";
 import LocaleHtmlAttrs from "./LocaleHtmlAttrs";
 
 // ============================================
-// Per-locale layout — NO <html>/<body> here
-// (Those live in the root app/layout.tsx)
-// This layout updates <html lang> and <html dir> via a tiny client
-// component so Arabic pages render RTL and English pages render LTR.
+// Per-locale layout — Royal Medical Center
+// Updates <html lang> and <html dir> via client component.
 // ============================================
 
 export async function generateStaticParams() {
@@ -30,7 +28,7 @@ export async function generateMetadata({
       title: dict.meta.title,
       description: dict.meta.description,
       type: "website",
-      siteName: "Al-Hayat Hospital",
+      siteName: "Royal Medical Center",
       locale: locale === "ar" ? "ar_JO" : "en_US",
     },
   };

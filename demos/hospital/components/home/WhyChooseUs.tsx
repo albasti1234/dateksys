@@ -1,33 +1,17 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
-import {
-  Award,
-  Cpu,
-  Building2,
-  Clock,
-  Shield,
-  Sparkles,
-} from "lucide-react";
+import { Stethoscope, Cpu, HeartHandshake, Siren, CheckCircle } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
+import { fadeUp, stagger, imageReveal, viewport, getSlideDirection } from "@/lib/animations";
 
-const icons = [Award, Cpu, Building2, Clock, Shield, Sparkles];
-const accents = [
-  "text-teal",
-  "text-navy",
-  "text-teal",
-  "text-navy",
-  "text-teal",
-  "text-navy",
-];
-const bgAccents = [
-  "bg-teal/10",
-  "bg-navy/10",
-  "bg-teal/10",
-  "bg-navy/10",
-  "bg-teal/10",
-  "bg-navy/10",
+const features = [
+  { icon: Stethoscope, key: "specialists" as const },
+  { icon: Cpu, key: "technology" as const },
+  { icon: HeartHandshake, key: "patientFirst" as const },
+  { icon: Siren, key: "emergency" as const },
 ];
 
 export default function WhyChooseUs({
@@ -38,58 +22,102 @@ export default function WhyChooseUs({
   dict: Dictionary["home"]["whyUs"];
 }) {
   const isRTL = locale === "ar";
+  const slideDir = getSlideDirection(isRTL);
 
   return (
-    <section className="py-20 lg:py-28 bg-gray-50">
+    <section className="py-24 lg:py-32 bg-base">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-14"
-        >
-          <span className="section-label">{dict.label}</span>
-          <h2
-            className={`text-3xl lg:text-4xl font-bold text-ink ${
-              isRTL ? "font-arabic-display" : "font-heading"
-            }`}
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
+          {/* Image — left on LTR, right on RTL */}
+          <motion.div
+            variants={imageReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+            className="relative rounded-2xl overflow-hidden aspect-[4/3]"
           >
-            {dict.title}
-          </h2>
-        </motion.div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {dict.items.map((item, i) => {
-            const Icon = icons[i % icons.length];
-            return (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-                className="card p-6"
-              >
-                <div
-                  className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${bgAccents[i % bgAccents.length]}`}
-                >
-                  <Icon
-                    className={`w-6 h-6 ${accents[i % accents.length]}`}
-                  />
+            <Image
+              src="/demos/hospital/images/doctor-patient.png"
+              alt={isRTL ? "طبيب يعتني بمريض" : "Doctor caring for a patient"}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
+            {/* Accent overlay */}
+            <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-navy/60 to-transparent" />
+            {/* Floating badge */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.8, duration: 0.5 }}
+              className="absolute bottom-6 start-6 bg-white/95 backdrop-blur-sm rounded-xl px-4 py-3 shadow-lg"
+            >
+              <div className="flex items-center gap-2">
+                <CheckCircle className="w-5 h-5 text-success" />
+                <div>
+                  <div className="text-sm font-bold text-text-primary">30+</div>
+                  <div className="text-xs text-text-secondary">
+                    {isRTL ? "سنوات من التميز" : "Years of Excellence"}
+                  </div>
                 </div>
-                <h3
-                  className={`text-lg font-semibold text-ink mb-2 ${
-                    isRTL ? "font-arabic-display" : "font-heading"
-                  }`}
-                >
-                  {item.title}
-                </h3>
-                <p className="text-sm text-ink-soft leading-relaxed">
-                  {item.description}
-                </p>
-              </motion.div>
-            );
-          })}
+              </div>
+            </motion.div>
+          </motion.div>
+
+          {/* Content — right on LTR, left on RTL */}
+          <motion.div
+            variants={stagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={viewport}
+          >
+            <motion.span variants={fadeUp} className="section-label">
+              {dict.label}
+            </motion.span>
+            <motion.h2
+              variants={fadeUp}
+              className={`text-3xl lg:text-4xl font-bold text-text-primary mb-4 ${
+                isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
+              }`}
+            >
+              {dict.title}
+            </motion.h2>
+            <motion.p
+              variants={fadeUp}
+              className="text-text-body mb-10 leading-relaxed"
+            >
+              {dict.subtitle}
+            </motion.p>
+
+            <div className="space-y-6">
+              {features.map((feat) => {
+                const Icon = feat.icon;
+                const item = dict.features[feat.key];
+                return (
+                  <motion.div
+                    key={feat.key}
+                    variants={fadeUp}
+                    className="flex items-start gap-4 group"
+                  >
+                    <div className="w-12 h-12 rounded-xl bg-primary-light flex items-center justify-center shrink-0 group-hover:bg-primary transition-colors duration-300">
+                      <Icon className="w-6 h-6 text-primary group-hover:text-white transition-colors duration-300" />
+                    </div>
+                    <div>
+                      <h3 className={`font-semibold text-text-primary mb-1 ${
+                        isRTL ? "font-[var(--font-arabic-heading)]" : "font-[var(--font-heading)]"
+                      }`}>
+                        {item.title}
+                      </h3>
+                      <p className="text-sm text-text-secondary leading-relaxed">
+                        {item.description}
+                      </p>
+                    </div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </motion.div>
         </div>
       </div>
     </section>
