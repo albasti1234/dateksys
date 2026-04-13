@@ -6,7 +6,7 @@ import { ArrowRight, Award } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 
 // ============================================
-// Home Hero — cinematic, bilingual, RTL-aware
+// Home Hero — cinematic video background
 // ============================================
 
 const EASE = [0.16, 1, 0.3, 1] as const;
@@ -31,47 +31,89 @@ export default function Hero({
   dict: HeroDict;
 }) {
   const isRTL = locale === "ar";
-  const enterX = isRTL ? -30 : 30;
 
   const headlineClass = isRTL
-    ? "font-arabic-display text-5xl md:text-6xl lg:text-[5rem] font-bold text-[var(--color-navy)] leading-[1.25] tracking-tight"
-    : "font-serif text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-[var(--color-navy)] leading-[1.05] tracking-tight";
+    ? "font-arabic-display text-5xl md:text-6xl lg:text-[5rem] font-bold text-white leading-[1.25] tracking-tight"
+    : "font-serif text-5xl md:text-6xl lg:text-[5.5rem] font-bold text-white leading-[1.05] tracking-tight";
+
+  // RTL-aware gradient — heavier on the text side
+  const overlayGradient = isRTL
+    ? "linear-gradient(to left, rgba(15,30,55,0.88) 0%, rgba(15,30,55,0.65) 40%, rgba(15,30,55,0.35) 70%, rgba(15,30,55,0.15) 100%)"
+    : "linear-gradient(to right, rgba(15,30,55,0.88) 0%, rgba(15,30,55,0.65) 40%, rgba(15,30,55,0.35) 70%, rgba(15,30,55,0.15) 100%)";
 
   return (
-    <section className="relative min-h-[92vh] overflow-hidden bg-[var(--color-cream)]">
-      {/* Background pattern */}
-      <div
-        className="absolute inset-0 opacity-[0.04]"
-        style={{
-          backgroundImage:
-            "radial-gradient(circle at 1px 1px, #0F2C5C 1px, transparent 0)",
-          backgroundSize: "32px 32px",
-        }}
-      />
+    <section className="relative min-h-[92vh] overflow-hidden">
+      {/* ── Video Background ── */}
+      <div className="absolute inset-0 z-0 overflow-hidden">
+        <video
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+        >
+          <source src="/demos/school/videos/hero-bg.mp4" type="video/mp4" />
+        </video>
 
-      {/* Gold accent shapes */}
-      <div
-        className="absolute top-0 end-0 w-[600px] h-[600px] rounded-full blur-3xl opacity-[0.06] pointer-events-none"
-        style={{ background: "#C19A4B" }}
-      />
-      <div
-        className="absolute bottom-0 start-0 w-[500px] h-[500px] rounded-full blur-3xl opacity-[0.05] pointer-events-none"
-        style={{ background: "#0F2C5C" }}
-      />
+        {/* Dark overlay gradient — heavier on text side */}
+        <div className="absolute inset-0" style={{ background: overlayGradient }} />
 
-      <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10 pt-16 lg:pt-24 pb-16 grid lg:grid-cols-12 gap-12 items-center">
-        {/* Content side */}
-        <div className="lg:col-span-7 relative z-10">
-          {/* Top badge */}
+        {/* Extra top-to-bottom vignette for readability */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "linear-gradient(to bottom, rgba(15,30,55,0.3) 0%, transparent 30%, transparent 70%, rgba(15,30,55,0.5) 100%)",
+          }}
+        />
+
+        {/* Bottom fade to page background */}
+        <div
+          className="absolute bottom-0 left-0 right-0 h-32"
+          style={{
+            background: "linear-gradient(to top, var(--color-cream, #FAF8F4) 0%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* ── Scan line animation ── */}
+      <style>{`
+        @keyframes scan {
+          0% { top: -2px; opacity: 0; }
+          5% { opacity: 1; }
+          95% { opacity: 1; }
+          100% { top: 100%; opacity: 0; }
+        }
+        .animate-scan {
+          animation: scan 8s linear infinite;
+        }
+      `}</style>
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+        <div
+          className="absolute left-0 right-0 h-[1px] animate-scan"
+          style={{
+            background: "linear-gradient(90deg, transparent 0%, rgba(193,154,75,0.12) 30%, rgba(193,154,75,0.25) 50%, rgba(193,154,75,0.12) 70%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* ── Content ── */}
+      <div className="relative z-10 max-w-[1400px] mx-auto px-6 lg:px-10 pt-20 lg:pt-28 pb-20">
+        <div className="max-w-2xl">
+          {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EASE }}
-            className="inline-flex items-center gap-2 px-4 py-2 mb-8 bg-white border border-[var(--color-border)] rounded-full shadow-sm"
+            className="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full backdrop-blur-md"
+            style={{
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.15)",
+            }}
           >
-            <Award className="w-4 h-4 text-[var(--color-gold)]" />
+            <Award className="w-4 h-4 text-[#C9A84C]" />
             <span
-              className={`text-xs font-semibold text-[var(--color-navy)] tracking-wider ${
+              className={`text-xs font-semibold text-white/90 tracking-wider ${
                 isRTL ? "" : "uppercase"
               }`}
             >
@@ -85,10 +127,11 @@ export default function Hero({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.1, ease: EASE }}
             className={headlineClass}
+            style={{ textShadow: "0 2px 20px rgba(0,0,0,0.3)" }}
           >
             {dict.headlineTop}
             <br />
-            <span className="italic text-[var(--color-gold)]">
+            <span className="italic text-[#C9A84C]" style={{ textShadow: "0 0 40px rgba(193,154,75,0.3)" }}>
               {dict.headlineMid}
             </span>
             <br />
@@ -100,7 +143,8 @@ export default function Hero({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.3, ease: EASE }}
-            className="mt-8 text-lg text-[var(--color-ink-soft)] max-w-[620px] leading-relaxed"
+            className="mt-8 text-lg text-white/75 max-w-[580px] leading-relaxed"
+            style={{ textShadow: "0 1px 8px rgba(0,0,0,0.3)" }}
           >
             {dict.subtitle}
           </motion.p>
@@ -113,21 +157,44 @@ export default function Hero({
             className="mt-10 flex flex-wrap gap-4"
           >
             <Link href={`/${locale}/admissions`}>
-              <button className="btn-primary group">
+              <button
+                className="group flex items-center gap-2 px-8 py-4 font-semibold text-sm tracking-wider uppercase transition-all duration-300 hover:-translate-y-0.5"
+                style={{
+                  background: "#C9A84C",
+                  color: "#0F1E37",
+                  boxShadow: "0 4px 20px rgba(193,154,75,0.25)",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.background = "#D4B86A";
+                  e.currentTarget.style.boxShadow = "0 8px 30px rgba(193,154,75,0.35)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.background = "#C9A84C";
+                  e.currentTarget.style.boxShadow = "0 4px 20px rgba(193,154,75,0.25)";
+                }}
+              >
                 {dict.ctaPrimary}
                 <ArrowRight
-                  className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                    isRTL ? "rotate-180" : ""
-                  }`}
+                  className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`}
                 />
               </button>
             </Link>
-            <Link href={`/${locale}/about`} className="btn-outline group">
+            <Link
+              href={`/${locale}/about`}
+              className="flex items-center gap-2 px-8 py-4 font-medium text-sm tracking-wider uppercase text-white transition-all duration-300 hover:bg-white/5 group"
+              style={{
+                border: "1px solid rgba(255,255,255,0.25)",
+              }}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.5)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.borderColor = "rgba(255,255,255,0.25)";
+              }}
+            >
               {dict.ctaSecondary}
               <ArrowRight
-                className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${
-                  isRTL ? "rotate-180" : ""
-                }`}
+                className={`w-4 h-4 transition-transform group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`}
               />
             </Link>
           </motion.div>
@@ -137,18 +204,19 @@ export default function Hero({
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.6, ease: EASE }}
-            className="mt-16 grid grid-cols-3 gap-8 max-w-[620px]"
+            className="mt-16 grid grid-cols-3 gap-8 max-w-[500px]"
           >
             {dict.stats.map((stat) => (
               <div key={stat.label}>
                 <div
                   className={`${
                     isRTL ? "font-arabic-display" : "font-serif"
-                  } text-4xl font-bold text-[var(--color-navy)]`}
+                  } text-4xl font-bold text-white`}
+                  style={{ textShadow: "0 2px 10px rgba(0,0,0,0.3)" }}
                 >
                   {stat.num}
                 </div>
-                <div className="text-xs tracking-wider text-[var(--color-ink-soft)] mt-2">
+                <div className="text-xs tracking-wider text-white/50 mt-2">
                   {stat.label}
                 </div>
               </div>
@@ -156,94 +224,46 @@ export default function Hero({
           </motion.div>
         </div>
 
-        {/* Image collage side */}
-        <div className="lg:col-span-5 relative h-[500px] lg:h-[640px]">
-          {/* Large main image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95, x: enterX }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ duration: 1, delay: 0.2, ease: EASE }}
-            className="absolute top-0 end-0 w-[75%] h-[70%] overflow-hidden shadow-2xl"
+        {/* Floating stats card — desktop only */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.8, ease: EASE }}
+          className="absolute bottom-32 end-[6%] z-10 hidden lg:block"
+        >
+          <div
+            className="p-5 max-w-[220px] backdrop-blur-md rounded-xl"
             style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.15)",
+              boxShadow: "0 8px 32px rgba(0,0,0,0.3)",
             }}
-          >
-            <div className="absolute inset-0 bg-gradient-to-t from-[var(--color-navy)]/60 via-transparent to-transparent" />
-            <div
-              className="absolute top-4 end-4 w-12 h-12 border-t-2 border-e-2 pointer-events-none"
-              style={{ borderColor: "#C19A4B" }}
-            />
-          </motion.div>
-
-          {/* Small offset image */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, y: 30 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.5, ease: EASE }}
-            className="absolute bottom-0 start-0 w-[60%] h-[45%] overflow-hidden shadow-2xl border-8 border-white"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1544717305-2782549b5136?w=600&q=80')",
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <div
-              className="absolute bottom-4 start-4 w-12 h-12 border-b-2 border-s-2 pointer-events-none"
-              style={{ borderColor: "#C19A4B" }}
-            />
-          </motion.div>
-
-          {/* Floating stats card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.8, ease: EASE }}
-            className="absolute top-[55%] end-0 bg-white shadow-2xl p-5 max-w-[220px] border-t-2"
-            style={{ borderColor: "#C19A4B" }}
           >
             <div className="flex items-center gap-2 mb-2">
               <div className={`flex ${isRTL ? "-space-x-reverse -space-x-2" : "-space-x-2"}`}>
                 {[1, 2, 3, 4].map((i) => (
                   <div
                     key={i}
-                    className="w-7 h-7 rounded-full border-2 border-white"
-                    style={{
-                      background: `hsl(${200 + i * 20}, 40%, 60%)`,
-                    }}
+                    className="w-3 h-3 rounded-full border border-white/30"
+                    style={{ background: "#C9A84C" }}
                   />
                 ))}
+                <div
+                  className="w-3 h-3 rounded-full border border-white/30"
+                  style={{ background: "rgba(193,154,75,0.3)" }}
+                />
               </div>
             </div>
-            <div
-              className={`text-xs text-[var(--color-ink-soft)] ${
-                isRTL ? "" : "font-serif"
-              }`}
+            <span
+              className={`font-bold text-white ${isRTL ? "text-xl font-arabic-display" : "text-2xl font-serif"}`}
+              style={{ textShadow: "0 1px 8px rgba(0,0,0,0.3)" }}
             >
-              <span
-                className={`font-bold text-[var(--color-navy)] ${
-                  isRTL ? "text-xl font-arabic-display" : "text-base"
-                }`}
-              >
-                {dict.floatingBadge.value}
-              </span>
-              <br />
-              {dict.floatingBadge.label}
-            </div>
-          </motion.div>
-        </div>
+              {dict.floatingBadge.value}
+            </span>
+            <p className="text-xs text-white/60 mt-1">{dict.floatingBadge.label}</p>
+          </div>
+        </motion.div>
       </div>
-
-      {/* Bottom curve */}
-      <div
-        className="absolute bottom-0 left-0 right-0 h-20 bg-white"
-        style={{
-          clipPath: "polygon(0 100%, 100% 100%, 100% 40%, 50% 0, 0 40%)",
-        }}
-      />
     </section>
   );
 }
