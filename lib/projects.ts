@@ -158,7 +158,7 @@ export const projects: Project[] = [
       { ar: "لوحة تحكم الإدارة", en: "Admin dashboard" },
       { ar: "قاعدة بيانات ١٢ طبيب", en: "12 doctors database" },
     ],
-    coverImage: "/showcase/school-demo.png",
+    coverImage: "/showcase/hospital-cover.png",
     portals: [
       {
         id: "hospital-website",
