@@ -168,7 +168,7 @@ export const projects: Project[] = [
           ar: "موقع المستشفى مع الأقسام والأطباء وحجز المواعيد.",
           en: "Hospital website with departments, doctors, and appointment booking.",
         },
-        screenshots: ["/showcase/school-demo.png"],
+        screenshots: ["/showcase/hospital-cover.png"],
         url: "/demos/hospital",
       },
       {
@@ -179,7 +179,7 @@ export const projects: Project[] = [
           ar: "السجلات الطبية والمواعيد والوصفات والفوترة للمرضى.",
           en: "Medical records, appointments, prescriptions, and billing for patients.",
         },
-        screenshots: ["/showcase/school-demo.png"],
+        screenshots: ["/showcase/hospital-cover.png"],
         url: "/demos/hospital/ar/portal/patient",
       },
       {
@@ -190,7 +190,7 @@ export const projects: Project[] = [
           ar: "إدارة المستشفى — الجداول والسجلات والموظفين والتحليلات.",
           en: "Hospital management — scheduling, records, staff, and analytics.",
         },
-        screenshots: ["/showcase/school-demo.png"],
+        screenshots: ["/showcase/hospital-cover.png"],
         url: "/demos/hospital/ar/portal/admin",
       },
     ],
