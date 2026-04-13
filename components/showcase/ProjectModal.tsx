@@ -1,16 +1,23 @@
 "use client";
 import { useEffect, useCallback, useState } from "react";
-import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { X, ChevronLeft, ChevronRight, ExternalLink, Monitor, Tablet, Smartphone, Check } from "lucide-react";
+import {
+  X, ChevronLeft, ChevronRight, ExternalLink, Check, Monitor, Tablet, Smartphone,
+  Globe, GraduationCap, BookOpen, Users, LayoutDashboard, Heart, ShoppingBag, Store,
+  type LucideProps,
+} from "lucide-react";
 import BrowserFrame from "./BrowserFrame";
+import ScreenshotCarousel from "./ScreenshotCarousel";
 import { projects, type Project } from "@/lib/projects";
 import { CINEMATIC } from "@/lib/showcase-animations";
 
+const iconMap: Record<string, React.ComponentType<LucideProps>> = {
+  Globe, GraduationCap, BookOpen, Users, LayoutDashboard, Heart, ShoppingBag, Store,
+};
+
 interface ProjectModalProps {
   project: Project | null;
-  view: "website" | "dashboard";
-  onViewChange: (view: "website" | "dashboard") => void;
+  initialPortalId: string;
   onClose: () => void;
   onNavigate: (project: Project) => void;
 }
@@ -25,12 +32,19 @@ const deviceWidths: Record<DeviceSize, string> = {
 
 export default function ProjectModal({
   project,
-  view,
-  onViewChange,
+  initialPortalId,
   onClose,
   onNavigate,
 }: ProjectModalProps) {
+  const [activePortalId, setActivePortalId] = useState(initialPortalId);
   const [device, setDevice] = useState<DeviceSize>("desktop");
+
+  // Sync when initialPortalId changes
+  useEffect(() => {
+    if (initialPortalId) setActivePortalId(initialPortalId);
+  }, [initialPortalId]);
+
+  const activePortal = project?.portals.find((p) => p.id === activePortalId) || project?.portals[0];
 
   const currentIndex = project ? projects.findIndex((p) => p.id === project.id) : -1;
   const prevProject = currentIndex > 0 ? projects[currentIndex - 1] : null;
@@ -63,23 +77,11 @@ export default function ProjectModal({
     };
   }, [project]);
 
-  const screenshotUrl =
-    project
-      ? view === "website"
-        ? project.website.screenshots[0]
-        : project.dashboard.screenshots[0]
-      : "";
-
-  const liveUrl =
-    project
-      ? view === "website"
-        ? project.website.url
-        : project.dashboard.url
-      : undefined;
+  const liveUrl = activePortal?.url;
 
   return (
     <AnimatePresence>
-      {project && (
+      {project && activePortal && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -114,7 +116,7 @@ export default function ProjectModal({
               <X className="w-4 h-4" style={{ color: "rgba(240,237,230,0.5)" }} />
             </button>
 
-            {/* Left panel — Info */}
+            {/* Left panel -- Info */}
             <div
               className="w-full lg:w-[380px] shrink-0 p-6 lg:p-8 overflow-y-auto border-b lg:border-b-0 lg:border-r"
               style={{ borderColor: "rgba(255,255,255,0.06)" }}
@@ -184,22 +186,49 @@ export default function ProjectModal({
                 {project.description}
               </p>
 
-              {/* View toggle */}
-              <div className="flex gap-2 mb-6">
-                {(["website", "dashboard"] as const).map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => onViewChange(tab)}
-                    className="px-4 py-2 rounded-lg text-xs font-medium capitalize transition-colors"
-                    style={{
-                      background: view === tab ? "rgba(139,123,244,0.12)" : "rgba(255,255,255,0.03)",
-                      border: view === tab ? "1px solid rgba(139,123,244,0.3)" : "1px solid rgba(255,255,255,0.06)",
-                      color: view === tab ? "#8B7BF4" : "rgba(240,237,230,0.4)",
-                    }}
-                  >
-                    {tab}
-                  </button>
-                ))}
+              {/* Portal selector */}
+              <div className="mb-6">
+                <span className="text-[10px] uppercase tracking-wider block mb-2" style={{ color: "rgba(240,237,230,0.3)" }}>
+                  Portals
+                </span>
+                <div className="space-y-1">
+                  {project.portals.map((portal) => {
+                    const Icon = iconMap[portal.icon] || Globe;
+                    const isActive = portal.id === activePortalId;
+                    return (
+                      <button
+                        key={portal.id}
+                        onClick={() => setActivePortalId(portal.id)}
+                        className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-left transition-all duration-200"
+                        style={{
+                          background: isActive ? "rgba(139,123,244,0.08)" : "transparent",
+                          border: isActive ? "1px solid rgba(139,123,244,0.2)" : "1px solid transparent",
+                        }}
+                      >
+                        {isActive && (
+                          <span
+                            className="w-1.5 h-1.5 rounded-full shrink-0"
+                            style={{ background: "#8B7BF4" }}
+                          />
+                        )}
+                        <Icon
+                          size={15}
+                          className="shrink-0"
+                          style={{ color: isActive ? "#8B7BF4" : "rgba(240,237,230,0.4)" }}
+                        />
+                        <span
+                          className="flex-1 text-xs font-medium"
+                          style={{
+                            color: isActive ? "#8B7BF4" : "rgba(240,237,230,0.6)",
+                            fontFamily: "var(--font-dm-sans)",
+                          }}
+                        >
+                          {portal.nameEn}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
 
               {/* Tech stack */}
@@ -260,7 +289,7 @@ export default function ProjectModal({
               )}
             </div>
 
-            {/* Right panel — Preview */}
+            {/* Right panel -- Preview */}
             <div className="flex-1 flex flex-col min-h-0 p-4 lg:p-6">
               {/* Device toggle */}
               <div className="flex items-center justify-end gap-1 mb-4">
@@ -285,22 +314,28 @@ export default function ProjectModal({
 
               {/* Preview */}
               <div className="flex-1 flex items-start justify-center overflow-auto">
-                <div
-                  className="transition-all duration-500"
-                  style={{ width: deviceWidths[device], maxWidth: "100%" }}
+                <motion.div
+                  animate={{ width: deviceWidths[device] }}
+                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
+                  style={{ maxWidth: "100%" }}
                 >
-                  <BrowserFrame url={liveUrl ? `dateksys.com${liveUrl}` : "dateksys.com"}>
-                    <div className="relative aspect-[16/10]">
-                      <Image
-                        src={screenshotUrl || "/showcase/school-demo.png"}
-                        alt={`${project.name} ${view} preview`}
-                        fill
-                        sizes="800px"
-                        className="object-cover object-top"
-                      />
-                    </div>
+                  <BrowserFrame url={liveUrl ? `dateksys.com${liveUrl}` : `dateksys.com — ${activePortal.nameEn}`}>
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activePortal.id}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        <ScreenshotCarousel
+                          screenshots={activePortal.screenshots}
+                          alt={`${project.name} ${activePortal.nameEn}`}
+                        />
+                      </motion.div>
+                    </AnimatePresence>
                   </BrowserFrame>
-                </div>
+                </motion.div>
               </div>
             </div>
 

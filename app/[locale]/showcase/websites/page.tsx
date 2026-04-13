@@ -12,7 +12,12 @@ import { type ProjectCategory, type Project } from "@/lib/projects";
 export default function ShowcasePage() {
   const [filter, setFilter] = useState<ProjectCategory | "all">("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
-  const [selectedView, setSelectedView] = useState<"website" | "dashboard">("website");
+  const [selectedPortalId, setSelectedPortalId] = useState<string>("");
+
+  const handleSelectProject = (project: Project, portalId: string) => {
+    setSelectedProject(project);
+    setSelectedPortalId(portalId);
+  };
 
   return (
     <div style={{ background: "#06060A", color: "#F0EDE6" }} className="min-h-screen">
@@ -28,10 +33,7 @@ export default function ShowcasePage() {
       <FilterBar active={filter} onChange={setFilter} />
       <ProjectGrid
         filter={filter}
-        onSelectProject={(project, view) => {
-          setSelectedProject(project);
-          setSelectedView(view);
-        }}
+        onSelectProject={handleSelectProject}
       />
       <StatsSection />
       <CTASection />
@@ -39,10 +41,12 @@ export default function ShowcasePage() {
 
       <ProjectModal
         project={selectedProject}
-        view={selectedView}
-        onViewChange={setSelectedView}
+        initialPortalId={selectedPortalId}
         onClose={() => setSelectedProject(null)}
-        onNavigate={(project) => setSelectedProject(project)}
+        onNavigate={(project) => {
+          setSelectedProject(project);
+          setSelectedPortalId(project.portals[0].id);
+        }}
       />
     </div>
   );

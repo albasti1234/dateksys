@@ -1,25 +1,30 @@
 "use client";
-import { useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { ExternalLink } from "lucide-react";
+import { Globe, GraduationCap, BookOpen, Users, LayoutDashboard, Heart, ShoppingBag, Store, ChevronRight, type LucideProps } from "lucide-react";
 import BrowserFrame from "./BrowserFrame";
 import { type Project } from "@/lib/projects";
 import { fadeUp } from "@/lib/showcase-animations";
 
+const iconMap: Record<string, React.ComponentType<LucideProps>> = {
+  Globe,
+  GraduationCap,
+  BookOpen,
+  Users,
+  LayoutDashboard,
+  Heart,
+  ShoppingBag,
+  Store,
+};
+
 interface ProjectCardProps {
   project: Project;
   index: number;
-  onSelect: (project: Project, view: "website" | "dashboard") => void;
+  onSelect: (project: Project, portalId: string) => void;
 }
 
 export default function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
-  const [activeTab, setActiveTab] = useState<"website" | "dashboard">("website");
-
-  const screenshotUrl =
-    activeTab === "website"
-      ? project.website.screenshots[0]
-      : project.dashboard.screenshots[0];
+  const coverUrl = project.portals[0]?.screenshots[0] || project.coverImage;
 
   return (
     <motion.div
@@ -29,44 +34,44 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
       viewport={{ once: true, margin: "-60px" }}
       whileHover={{ y: -6 }}
       transition={{ duration: 0.3 }}
-      className="group rounded-2xl overflow-hidden cursor-pointer"
+      className="group rounded-2xl overflow-hidden"
       style={{
         background: "rgba(255,255,255,0.02)",
         border: "1px solid rgba(255,255,255,0.06)",
         backdropFilter: "blur(12px)",
       }}
-      onClick={() => onSelect(project, activeTab)}
     >
-      {/* Browser mockup */}
-      <BrowserFrame url={project.url ? `dateksys.com${project.url}` : "dateksys.com"}>
-        <div className="relative aspect-[16/10] overflow-hidden">
-          <Image
-            src={screenshotUrl || "/showcase/school-demo.png"}
-            alt={`${project.name} preview`}
-            fill
-            sizes="(max-width: 768px) 100vw, 50vw"
-            className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-          />
-          {/* Hover overlay */}
-          <div
-            className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-            style={{ background: "rgba(6,6,10,0.6)", backdropFilter: "blur(4px)" }}
-          >
-            <span
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
-              style={{
-                background: "rgba(139,123,244,0.15)",
-                border: "1px solid rgba(139,123,244,0.3)",
-                color: "#F0EDE6",
-                fontFamily: "var(--font-dm-sans)",
-              }}
+      {/* Browser mockup — click opens first portal */}
+      <div className="cursor-pointer" onClick={() => onSelect(project, project.portals[0]?.id || "")}>
+        <BrowserFrame url={project.portals[0]?.url ? `dateksys.com${project.portals[0].url}` : "dateksys.com"}>
+          <div className="relative aspect-[16/10] overflow-hidden">
+            <Image
+              src={coverUrl || "/showcase/school-demo.png"}
+              alt={`${project.name} preview`}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* Hover overlay */}
+            <div
+              className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              style={{ background: "rgba(6,6,10,0.6)", backdropFilter: "blur(4px)" }}
             >
-              View Project
-              <ExternalLink className="w-3.5 h-3.5" />
-            </span>
+              <span
+                className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium"
+                style={{
+                  background: "rgba(139,123,244,0.15)",
+                  border: "1px solid rgba(139,123,244,0.3)",
+                  color: "#F0EDE6",
+                  fontFamily: "var(--font-dm-sans)",
+                }}
+              >
+                View Project
+              </span>
+            </div>
           </div>
-        </div>
-      </BrowserFrame>
+        </BrowserFrame>
+      </div>
 
       {/* Content */}
       <div className="p-5">
@@ -118,34 +123,56 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
           {project.description}
         </p>
 
-        {/* Website / Dashboard toggle */}
-        <div className="flex gap-2 mb-4">
-          {(["website", "dashboard"] as const).map((tab) => (
-            <button
-              key={tab}
-              onClick={(e) => {
-                e.stopPropagation();
-                setActiveTab(tab);
-              }}
-              className="px-3 py-1.5 rounded-md text-[11px] font-medium capitalize transition-colors"
-              style={{
-                background:
-                  activeTab === tab
-                    ? "rgba(139,123,244,0.12)"
-                    : "rgba(255,255,255,0.03)",
-                border:
-                  activeTab === tab
-                    ? "1px solid rgba(139,123,244,0.3)"
-                    : "1px solid rgba(255,255,255,0.06)",
-                color:
-                  activeTab === tab
-                    ? "#8B7BF4"
-                    : "rgba(240,237,230,0.4)",
-              }}
-            >
-              {tab}
-            </button>
-          ))}
+        {/* Portal list */}
+        <div className="mb-4">
+          <div
+            className="flex items-center gap-2 mb-2"
+            style={{ color: "rgba(240,237,230,0.25)" }}
+          >
+            <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+            <span className="text-[9px] font-semibold tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-dm-sans)" }}>
+              System Portals
+            </span>
+            <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
+          </div>
+          <div className="space-y-1">
+            {project.portals.map((portal) => {
+              const Icon = iconMap[portal.icon] || Globe;
+              return (
+                <button
+                  key={portal.id}
+                  onClick={() => onSelect(project, portal.id)}
+                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-left transition-all duration-200 group/portal hover:translate-x-1"
+                  style={{
+                    background: "transparent",
+                    border: "1px solid transparent",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.background = "rgba(139,123,244,0.06)";
+                    e.currentTarget.style.borderColor = "rgba(139,123,244,0.15)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.background = "transparent";
+                    e.currentTarget.style.borderColor = "transparent";
+                  }}
+                >
+                  <Icon size={15} className="shrink-0" style={{ color: "rgba(240,237,230,0.4)" }} />
+                  <span
+                    className="flex-1 text-xs font-medium"
+                    style={{ color: "rgba(240,237,230,0.6)", fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    {portal.nameEn}
+                  </span>
+                  <ChevronRight
+                    size={13}
+                    className="shrink-0 opacity-0 group-hover/portal:opacity-100 transition-opacity duration-200"
+                    style={{ color: "rgba(139,123,244,0.6)" }}
+                  />
+                </button>
+              );
+            })}
+          </div>
+          <div className="h-px mt-2" style={{ background: "rgba(255,255,255,0.06)" }} />
         </div>
 
         {/* Tech stack */}

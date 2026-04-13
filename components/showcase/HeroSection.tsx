@@ -2,6 +2,7 @@
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { CINEMATIC, EXPO_OUT } from "@/lib/showcase-animations";
+import FloatingPreviewCards from "./FloatingPreviewCards";
 
 const heroWords1 = ["Projects", "That"];
 const heroWords2 = ["Speak", "for", "Themselves"];
@@ -26,7 +27,7 @@ export default function HeroSection() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      className="relative min-h-screen flex items-center overflow-hidden"
     >
       {/* CSS Keyframes */}
       <style>{`
@@ -91,99 +92,107 @@ export default function HeroSection() {
 
       <motion.div
         style={{ y: heroY, opacity: heroOpacity }}
-        className="relative z-10 max-w-5xl mx-auto px-6 text-center"
+        className="relative z-10 w-full max-w-7xl mx-auto px-6 flex items-center"
       >
-        {/* Glass pill badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: CINEMATIC }}
-          className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-10"
-          style={{
-            background: "rgba(139,123,244,0.06)",
-            border: "1px solid rgba(139,123,244,0.2)",
-            backdropFilter: "blur(12px)",
-          }}
-        >
-          <span className="relative flex h-2 w-2">
-            <span
-              className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
-              style={{ background: "#8B7BF4" }}
-            />
-            <span
-              className="relative inline-flex rounded-full h-2 w-2"
-              style={{ background: "#8B7BF4" }}
-            />
-          </span>
-          <span
-            className="text-xs font-medium tracking-widest uppercase"
-            style={{ color: "rgba(139,123,244,0.9)", fontFamily: "var(--font-dm-sans)" }}
+        {/* Left content */}
+        <div className="max-w-xl">
+          {/* Glass pill badge */}
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: CINEMATIC }}
+            className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full mb-10"
+            style={{
+              background: "rgba(139,123,244,0.06)",
+              border: "1px solid rgba(139,123,244,0.2)",
+              backdropFilter: "blur(12px)",
+            }}
           >
-            Our Work &mdash; Live Showcase
-          </span>
-        </motion.div>
+            <span className="relative flex h-2 w-2">
+              <span
+                className="animate-ping absolute inline-flex h-full w-full rounded-full opacity-50"
+                style={{ background: "#8B7BF4" }}
+              />
+              <span
+                className="relative inline-flex rounded-full h-2 w-2"
+                style={{ background: "#8B7BF4" }}
+              />
+            </span>
+            <span
+              className="text-xs font-medium tracking-widest uppercase"
+              style={{ color: "rgba(139,123,244,0.9)", fontFamily: "var(--font-dm-sans)" }}
+            >
+              Our Work &mdash; Live Showcase
+            </span>
+          </motion.div>
 
-        {/* Heading with word-by-word reveal */}
-        <h1
-          className="font-bold leading-[0.95] tracking-tight"
-          style={{
-            fontSize: "clamp(3rem, 8vw, 7rem)",
-            fontFamily: "var(--font-space-grotesk)",
-          }}
-        >
-          <span className="block">
-            {heroWords1.map((word, i) => (
-              <span key={word} className="inline-block overflow-hidden mr-[0.25em]">
-                <motion.span
-                  className="inline-block"
-                  variants={wordVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={i}
-                  style={{ color: "#F0EDE6" }}
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
-          </span>
-          <span className="block mt-1">
-            {heroWords2.map((word, i) => (
-              <span key={word} className="inline-block overflow-hidden mr-[0.25em]">
-                <motion.span
-                  className="inline-block"
-                  variants={wordVariants}
-                  initial="hidden"
-                  animate="visible"
-                  custom={i + heroWords1.length}
-                  style={
-                    word === "Speak"
-                      ? {
-                          fontStyle: "italic",
-                          background: "linear-gradient(135deg, #8B7BF4, #A78BFA, #C4B5FD)",
-                          WebkitBackgroundClip: "text",
-                          WebkitTextFillColor: "transparent",
-                        }
-                      : { color: "#F0EDE6" }
-                  }
-                >
-                  {word}
-                </motion.span>
-              </span>
-            ))}
-          </span>
-        </h1>
+          {/* Heading with word-by-word reveal */}
+          <h1
+            className="font-bold leading-[0.95] tracking-tight"
+            style={{
+              fontSize: "clamp(3rem, 8vw, 7rem)",
+              fontFamily: "var(--font-space-grotesk)",
+            }}
+          >
+            <span className="block">
+              {heroWords1.map((word, i) => (
+                <span key={word} className="inline-block overflow-hidden mr-[0.25em]">
+                  <motion.span
+                    className="inline-block"
+                    variants={wordVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={i}
+                    style={{ color: "#F0EDE6" }}
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </span>
+            <span className="block mt-1">
+              {heroWords2.map((word, i) => (
+                <span key={word} className="inline-block overflow-hidden mr-[0.25em]">
+                  <motion.span
+                    className="inline-block"
+                    variants={wordVariants}
+                    initial="hidden"
+                    animate="visible"
+                    custom={i + heroWords1.length}
+                    style={
+                      word === "Speak"
+                        ? {
+                            fontStyle: "italic",
+                            background: "linear-gradient(135deg, #8B7BF4, #A78BFA, #C4B5FD)",
+                            WebkitBackgroundClip: "text",
+                            WebkitTextFillColor: "transparent",
+                          }
+                        : { color: "#F0EDE6" }
+                    }
+                  >
+                    {word}
+                  </motion.span>
+                </span>
+              ))}
+            </span>
+          </h1>
 
-        {/* Subtitle */}
-        <motion.p
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.8, ease: CINEMATIC }}
-          className="mt-8 text-lg lg:text-xl max-w-2xl mx-auto leading-relaxed"
-          style={{ color: "rgba(240,237,230,0.5)", fontFamily: "var(--font-dm-sans)" }}
-        >
-          From concept to production — explore the platforms we build for businesses across industries.
-        </motion.p>
+          {/* Subtitle */}
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.8, ease: CINEMATIC }}
+            className="mt-8 text-lg lg:text-xl max-w-2xl leading-relaxed"
+            style={{ color: "rgba(240,237,230,0.5)", fontFamily: "var(--font-dm-sans)" }}
+          >
+            From concept to production — explore the platforms we build for businesses across industries.
+          </motion.p>
+        </div>
+
+        {/* Right floating cards — hidden on mobile */}
+        <div className="hidden lg:block flex-1 relative h-[500px]">
+          <FloatingPreviewCards />
+        </div>
       </motion.div>
 
       {/* Scroll hint */}

@@ -6,7 +6,7 @@ import ProjectCard from "./ProjectCard";
 
 interface ProjectGridProps {
   filter: ProjectCategory | "all";
-  onSelectProject: (project: Project, view: "website" | "dashboard") => void;
+  onSelectProject: (project: Project, portalId: string) => void;
 }
 
 export default function ProjectGrid({ filter, onSelectProject }: ProjectGridProps) {
