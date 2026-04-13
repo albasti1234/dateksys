@@ -17,6 +17,8 @@ import {
   Droplets,
   Apple,
   Truck,
+  ArrowRight,
+  ArrowLeft,
 } from "lucide-react";
 
 const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -42,6 +44,7 @@ export default function ServicesPage({
   const dict = getDictionary(locale);
   const isRTL = locale === "ar";
   const s = dict.services;
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
 
   return (
     <>
@@ -68,10 +71,10 @@ export default function ServicesPage({
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.05 }}
-                  className="card p-6 relative"
+                  className="card p-6 relative border-t-2 border-teal hover:-translate-y-1 hover:shadow-lg transition-all duration-300"
                 >
                   {service.available24h && (
-                    <span className="absolute top-4 end-4 text-xs font-semibold bg-rose/10 text-rose px-2.5 py-1 rounded-full">
+                    <span className="absolute top-4 end-4 text-xs font-bold bg-rose text-white px-3 py-1 rounded-full shadow-sm">
                       {s.available24h}
                     </span>
                   )}
@@ -88,9 +91,14 @@ export default function ServicesPage({
                     {service.name[locale]}
                   </h3>
 
-                  <p className="text-ink-soft text-sm leading-relaxed">
+                  <p className="text-ink-soft text-sm leading-relaxed mb-4">
                     {service.description[locale]}
                   </p>
+
+                  <span className="text-sm text-teal font-medium flex items-center gap-1">
+                    {isRTL ? "المزيد" : "Learn More"}
+                    <Arrow className="w-3.5 h-3.5" />
+                  </span>
                 </motion.div>
               );
             })}

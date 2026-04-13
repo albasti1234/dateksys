@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Heart, Phone, Mail, MapPin } from "lucide-react";
+import { Heart, Phone, Mail, MapPin, MessageCircle } from "lucide-react";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
 import { departments } from "@/lib/data";
@@ -113,7 +113,11 @@ export default function Footer({
               </li>
               <li className="flex items-center gap-2 text-sm text-white/70">
                 <Phone className="w-4 h-4 shrink-0 text-teal-light" />
-                <span dir="ltr">06-524-9036</span>
+                <a href="tel:065249036" className="hover:text-white transition-colors" dir="ltr">06-524-9036</a>
+              </li>
+              <li className="flex items-center gap-2 text-sm text-white/70">
+                <MessageCircle className="w-4 h-4 shrink-0 text-emerald-400" />
+                <a href="https://wa.me/962780104920" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors" dir="ltr">WhatsApp</a>
               </li>
               <li className="flex items-center gap-2 text-sm text-white/70">
                 <Mail className="w-4 h-4 shrink-0 text-teal-light" />

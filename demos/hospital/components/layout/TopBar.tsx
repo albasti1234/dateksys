@@ -22,12 +22,13 @@ export default function TopBar({
           </span>
           <Phone className="w-3 h-3" />
           <span>{dict.emergency}</span>
-          <span
-            className="text-white font-bold"
+          <a
+            href="tel:065249036"
+            className="text-white font-bold hover:underline"
             dir="ltr"
           >
             {dict.emergencyPhone}
-          </span>
+          </a>
         </div>
 
         {/* Working hours + Email (hidden on small screens) */}

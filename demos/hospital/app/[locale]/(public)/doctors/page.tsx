@@ -66,7 +66,7 @@ export default function DoctorsPage({
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
           {/* Filter tabs */}
-          <div className="flex flex-wrap gap-2 mb-12 justify-center">
+          <div className="flex md:flex-wrap md:justify-center gap-2 mb-12 overflow-x-auto flex-nowrap whitespace-nowrap pb-2 scrollbar-hide [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <button
               onClick={() => setActiveDept("all")}
               className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${

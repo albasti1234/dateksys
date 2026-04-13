@@ -45,7 +45,7 @@ export default function PageHero({
             {breadcrumbs.map((crumb, i) => (
               <li key={i} className="flex items-center gap-2">
                 {i > 0 && (
-                  <span className={isRTL ? "rotate-180" : ""}>/</span>
+                  <span>&rsaquo;</span>
                 )}
                 {crumb.href ? (
                   <Link

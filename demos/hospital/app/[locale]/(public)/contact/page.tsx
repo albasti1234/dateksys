@@ -187,9 +187,9 @@ export default function ContactPage({
                     <p className="text-sm font-medium text-ink">
                       {isRTL ? "الهاتف" : "Phone"}
                     </p>
-                    <p className="text-sm text-ink-soft" dir="ltr">
+                    <a href="tel:065249036" className="text-sm text-ink-soft hover:text-teal transition-colors" dir="ltr">
                       {c.info.phone}
-                    </p>
+                    </a>
                   </div>
                 </div>
 
@@ -201,9 +201,9 @@ export default function ContactPage({
                     <p className="text-sm font-medium text-ink">
                       {isRTL ? "واتساب" : "WhatsApp"}
                     </p>
-                    <p className="text-sm text-ink-soft" dir="ltr">
+                    <a href="https://wa.me/962780104920" target="_blank" rel="noopener noreferrer" className="text-sm text-ink-soft hover:text-emerald transition-colors" dir="ltr">
                       {c.info.whatsapp}
-                    </p>
+                    </a>
                   </div>
                 </div>
 

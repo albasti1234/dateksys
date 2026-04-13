@@ -62,46 +62,44 @@ export default function DepartmentsPage({
             {departments.map((dept, i) => {
               const Icon = iconMap[dept.icon] || Stethoscope;
               return (
-                <motion.div
-                  key={dept.id}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: i * 0.06 }}
-                  className="card p-6 group"
-                >
-                  <div
-                    className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
-                    style={{ backgroundColor: `${dept.color}15` }}
+                <Link key={dept.id} href={`${prefix}/doctors`} className="block">
+                  <motion.div
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: i * 0.06 }}
+                    className="card p-6 group hover:-translate-y-1 hover:shadow-lg transition-all duration-300 h-full"
                   >
-                    <Icon
-                      className="w-7 h-7"
-                      style={{ color: dept.color }}
-                    />
-                  </div>
-                  <h3
-                    className={`text-lg font-semibold text-ink mb-2 ${
-                      isRTL ? "font-arabic-display" : "font-heading"
-                    }`}
-                  >
-                    {dept.name[locale]}
-                  </h3>
-                  <p className="text-sm text-ink-soft mb-4 leading-relaxed">
-                    {dept.description[locale]}
-                  </p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-teal font-medium">
-                      {dept.doctorCount} {isRTL ? "أطباء" : "Doctors"}
-                    </span>
-                    <Link
-                      href={`${prefix}/doctors`}
-                      className="text-sm text-teal font-medium flex items-center gap-1 hover:underline"
+                    <div
+                      className="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 transition-transform group-hover:scale-110"
+                      style={{ backgroundColor: `${dept.color}15` }}
                     >
-                      {dict.common.learnMore}
-                      <Arrow className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </motion.div>
+                      <Icon
+                        className="w-7 h-7"
+                        style={{ color: dept.color }}
+                      />
+                    </div>
+                    <h3
+                      className={`text-lg font-semibold text-ink mb-2 ${
+                        isRTL ? "font-arabic-display" : "font-heading"
+                      }`}
+                    >
+                      {dept.name[locale]}
+                    </h3>
+                    <p className="text-sm text-ink-soft mb-4 leading-relaxed">
+                      {dept.description[locale]}
+                    </p>
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-teal font-medium">
+                        {dept.doctorCount} {isRTL ? "أطباء" : "Doctors"}
+                      </span>
+                      <span className="text-sm text-teal font-medium flex items-center gap-1 group-hover:underline">
+                        {dict.common.learnMore}
+                        <Arrow className="w-3.5 h-3.5" />
+                      </span>
+                    </div>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>

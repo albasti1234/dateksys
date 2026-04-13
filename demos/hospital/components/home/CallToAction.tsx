@@ -60,6 +60,13 @@ export default function CallToAction({
             <CalendarPlus className="w-5 h-5" />
             {dict.button}
           </Link>
+          <a
+            href="tel:065249036"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-transparent text-white font-semibold rounded-xl border-2 border-white/40 hover:bg-white hover:text-teal transition-colors"
+          >
+            <Phone className="w-5 h-5" />
+            {isRTL ? "اتصل الآن" : "Call Now"}
+          </a>
         </motion.div>
 
         <motion.p
@@ -70,7 +77,7 @@ export default function CallToAction({
           className="mt-6 text-white/70 flex items-center justify-center gap-2 text-sm"
         >
           <Phone className="w-4 h-4" />
-          <span>{dict.phone}</span>
+          <a href="tel:065249036" className="hover:text-white transition-colors">{dict.phone}</a>
         </motion.p>
       </div>
     </section>
