@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
@@ -47,7 +48,13 @@ export default function PropertyStory({
             variants={imageReveal}
             className="relative aspect-[4/5] overflow-hidden bg-surface-warm"
           >
-            <div className="absolute inset-0 bg-gradient-to-br from-surface-warm to-gold-subtle" />
+            <Image
+              src={`/demos/realestate/images/properties/${property.slug}.webp`}
+              alt={property.title[locale]}
+              fill
+              className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
+            />
           </motion.div>
         </motion.div>
       </div>

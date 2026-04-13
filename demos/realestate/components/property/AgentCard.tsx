@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Phone, Mail, MessageCircle, Briefcase } from "lucide-react";
 import type { Locale } from "@/i18n/config";
@@ -39,7 +40,15 @@ export default function AgentCard({
             </div>
 
             <div className="flex items-center gap-6 mb-8">
-              <div className="w-20 h-20 rounded-full bg-charcoal-light border-2 border-gold/20" />
+              <div className="w-20 h-20 rounded-full bg-charcoal-light border-2 border-gold/20 overflow-hidden relative">
+                <Image
+                  src={agent.image}
+                  alt={agent.name[locale]}
+                  fill
+                  className="object-cover"
+                  sizes="80px"
+                />
+              </div>
               <div>
                 <h3 className={`text-xl text-text-on-dark ${fontHeading}`}>
                   {agent.name[locale]}

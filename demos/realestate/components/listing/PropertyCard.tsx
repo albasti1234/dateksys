@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Bed, Bath, Maximize, Eye, Heart } from "lucide-react";
 import type { Locale } from "@/i18n/config";
@@ -36,7 +37,13 @@ export default function PropertyCard({
       >
         {/* Image */}
         <div className="relative aspect-[4/3] overflow-hidden bg-surface-warm mb-5">
-          <div className="absolute inset-0 bg-gradient-to-br from-charcoal-light/30 to-charcoal-light/10" />
+          <Image
+            src={`/demos/realestate/images/properties/${property.slug}.webp`}
+            alt={property.title[locale]}
+            fill
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
+            sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+          />
 
           {/* Badges */}
           <div className="absolute top-4 start-4 z-10 flex gap-2">

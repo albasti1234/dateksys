@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { Phone } from "lucide-react";
 import type { Locale } from "@/i18n/config";
@@ -21,8 +22,15 @@ export default function CTASection({
   return (
     <section className="relative min-h-[60vh] flex items-center bg-surface-dark overflow-hidden">
       {/* Blurred background */}
-      <div className="absolute inset-0 opacity-[0.08]">
-        <div className="absolute inset-0 bg-charcoal-light" />
+      <div className="absolute inset-0 opacity-[0.15]">
+        <Image
+          src="/demos/realestate/images/cta-bg.webp"
+          alt=""
+          fill
+          className="object-cover blur-sm"
+          sizes="100vw"
+          aria-hidden="true"
+        />
       </div>
 
       <div className="relative z-10 max-w-3xl mx-auto px-8 md:px-16 lg:px-24 text-center py-32">

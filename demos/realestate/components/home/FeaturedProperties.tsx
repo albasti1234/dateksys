@@ -64,7 +64,13 @@ export default function FeaturedProperties({
                   <Link href={`${prefix}/properties/${property.slug}`} className="block group relative">
                     <div className="relative aspect-[21/9] overflow-hidden bg-charcoal">
                       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10" />
-                      <div className="absolute inset-0 bg-charcoal-light" />
+                      <Image
+                        src={`/demos/realestate/images/properties/${property.slug}.webp`}
+                        alt={property.title[locale]}
+                        fill
+                        className="object-cover"
+                        sizes="100vw"
+                      />
                       <div className="absolute bottom-0 left-0 right-0 z-20 p-8 lg:p-16">
                         <p className="text-gold text-[11px] tracking-[0.3em] uppercase mb-2">
                           {dict.forSale}
@@ -101,7 +107,13 @@ export default function FeaturedProperties({
                 >
                   <Link href={`${prefix}/properties/${property.slug}`} className="block group relative">
                     <div className="relative aspect-[3/4] overflow-hidden bg-charcoal-light">
-                      <div className="absolute inset-0 bg-charcoal-light" />
+                      <Image
+                        src={`/demos/realestate/images/properties/${property.slug}.webp`}
+                        alt={property.title[locale]}
+                        fill
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        sizes="(max-width: 1024px) 100vw, 60vw"
+                      />
                       {/* Hover overlay */}
                       <div className="absolute inset-0 z-10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-black/20">
                         <span className="flex items-center gap-2 text-white text-[11px] tracking-[0.3em] uppercase">

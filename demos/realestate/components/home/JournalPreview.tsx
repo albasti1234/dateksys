@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { ArrowRight, ArrowLeft, Clock } from "lucide-react";
 import type { Locale } from "@/i18n/config";
@@ -51,7 +52,13 @@ export default function JournalPreview({
               <Link href={`${prefix}/journal/${article.slug}`} className="group block">
                 {/* Image */}
                 <div className="relative aspect-[4/3] overflow-hidden bg-surface-warm mb-6">
-                  <div className="absolute inset-0 bg-surface-warm" />
+                  <Image
+                    src={article.image || "/demos/realestate/images/journal/neighborhood.webp"}
+                    alt={article.title[locale]}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500 z-10" />
                 </div>
 
