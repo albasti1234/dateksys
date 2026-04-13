@@ -5,7 +5,7 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/getDictionary";
-import { fadeUp, viewport, CINEMATIC } from "@/lib/animations";
+import { viewport, CINEMATIC } from "@/lib/animations";
 
 export default function CallToAction({
   locale,
