@@ -16,7 +16,29 @@
       "Bash(mv faculty:*)",
       "Bash(rm e:/netcore/demos/school/pnpm-workspace.yaml)",
       "Bash(rm -rf node_modules .next)",
-      "Bash(pnpm run:*)"
+      "Bash(pnpm run:*)",
+      "Bash(mv \"school-demo.webp.png\" \"school-demo.png\")",
+      "Bash(node -e \"const fs=require\\('fs'\\);const buf=fs.readFileSync\\('school-demo.png'\\);console.log\\('PNG size:',\\(buf.length/1024\\).toFixed\\(1\\),'KB'\\);const w=buf.readUInt32BE\\(16\\);const h=buf.readUInt32BE\\(20\\);console.log\\('Dimensions:',w+'x'+h,'px'\\);console.log\\('Aspect ratio:',\\(w/h\\).toFixed\\(3\\)\\);\")",
+      "Bash(find /e/netcore/demos/school/app/[locale]/portal -name \"page.tsx\" -type f)",
+      "Bash(npx tsc:*)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('services',{}\\), indent=2\\)\\)\")",
+      "Bash(python -c \"import json; json.load\\(open\\('messages/en.json'\\)\\); json.load\\(open\\('messages/ar.json'\\)\\); print\\('Both JSON files valid'\\)\")",
+      "Bash(python -c \"import json; json.load\\(open\\('messages/en.json','r',encoding='utf-8'\\)\\); json.load\\(open\\('messages/ar.json','r',encoding='utf-8'\\)\\); print\\('Both JSON files valid'\\)\")",
+      "WebFetch(domain:www.dateksys.com)",
+      "Bash(ls -la e:/netcore/.claude*)",
+      "Bash(ls -la e:/netcore/CLAUDE*)",
+      "Bash(ls node_modules/.package-lock.json)",
+      "Bash(ls node_modules/next/package.json)",
+      "Bash(cat pnpm-workspace.yaml)",
+      "Bash(ls E:/netcore/pnpm-workspace.yaml)",
+      "Bash(cat E:/netcore/pnpm-workspace.yaml)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(pnpm root:*)",
+      "Bash(pnpm config:*)"
+    ],
+    "additionalDirectories": [
+      "E:\\netcore\\demos\\hospital\\app\\[locale]",
+      "e:\\netcore\\demos\\hospital\\app\\[locale]"
     ]
   }
 }

@@ -4,9 +4,7 @@ import { use } from "react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
 import PageHero from "@/components/ui/PageHero";
-import { motion } from "framer-motion";
-import { fadeUp, stagger, viewport } from "@/lib/animations";
-import { BriefcaseBusiness, Users2, GraduationCap, MapPin } from "lucide-react";
+import { BriefcaseBusiness } from "lucide-react";
 
 export default function CareersPage({
   params,

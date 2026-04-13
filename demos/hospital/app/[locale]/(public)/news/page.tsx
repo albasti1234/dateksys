@@ -4,8 +4,6 @@ import { use } from "react";
 import { getDictionary } from "@/i18n/getDictionary";
 import type { Locale } from "@/i18n/config";
 import PageHero from "@/components/ui/PageHero";
-import { motion } from "framer-motion";
-import { fadeUp, stagger, viewport } from "@/lib/animations";
 import NewsPreview from "@/components/home/NewsPreview";
 
 export default function NewsPage({
