@@ -3,6 +3,14 @@
 import { motion } from "framer-motion";
 import { Quote } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import {
+  fadeUp,
+  fadeUpSubtle,
+  staggerContainer,
+  staggerItem,
+  scaleIn,
+  viewportOnce,
+} from "@/lib/animations";
 
 // ============================================
 // Family Testimonials — bilingual, formal voice
@@ -54,27 +62,33 @@ export default function Testimonials({
       <div className="relative max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <p className="section-label !text-[var(--color-gold)] mb-4 !justify-center">
+          <motion.p variants={fadeUpSubtle} className="section-label !text-[var(--color-gold)] mb-4 !justify-center">
             {dict.eyebrow}
-          </p>
-          <h2 className={titleClass}>{dict.title}</h2>
+          </motion.p>
+          <motion.h2 variants={fadeUp} className={titleClass}>
+            {dict.title}
+          </motion.h2>
         </motion.div>
 
         {/* Testimonial cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+        >
           {dict.items.map((t, i) => (
             <motion.div
               key={t.author}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.7, delay: i * 0.15 }}
+              variants={staggerItem}
+              whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="relative p-8 backdrop-blur-sm"
               style={{
                 background: "rgba(255,255,255,0.04)",
@@ -107,7 +121,7 @@ export default function Testimonials({
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

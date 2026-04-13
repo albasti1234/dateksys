@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ChevronRight, Home } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import { EXPO_OUT } from "@/lib/animations";
 
 // ============================================
 // Reusable page hero for inner pages — bilingual

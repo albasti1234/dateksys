@@ -4,6 +4,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Calendar, ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import {
+  fadeUp,
+  fadeUpSubtle,
+  staggerContainer,
+  staggerItem,
+  viewportOnce,
+} from "@/lib/animations";
 
 // ============================================
 // Latest News & Events Preview — bilingual
@@ -39,33 +46,49 @@ export default function NewsPreview({
     ? "font-arabic-display text-4xl md:text-5xl font-bold text-[var(--color-navy)] leading-[1.4]"
     : "font-serif text-4xl md:text-5xl font-bold text-[var(--color-navy)] leading-tight";
   const cardTitleClass = isRTL
-    ? "font-arabic-display text-lg font-bold text-[var(--color-navy)] mb-3 leading-[1.6] group-hover:text-[var(--color-gold-dark)] transition-colors"
-    : "font-serif text-lg font-bold text-[var(--color-navy)] mb-3 leading-snug group-hover:text-[var(--color-gold-dark)] transition-colors";
+    ? "font-arabic-display text-lg font-bold text-[var(--color-navy)] mb-3 leading-[1.6] group-hover:text-[var(--color-gold-dark)] transition-colors duration-300"
+    : "font-serif text-lg font-bold text-[var(--color-navy)] mb-3 leading-snug group-hover:text-[var(--color-gold-dark)] transition-colors duration-300";
 
   return (
     <section className="py-24 lg:py-32 bg-[var(--color-cream)]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Header */}
-        <div className="flex items-end justify-between flex-wrap gap-6 mb-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
+          className="flex items-end justify-between flex-wrap gap-6 mb-16"
+        >
           <div className="max-w-xl">
-            <p className="section-label mb-4">{dict.eyebrow}</p>
-            <h2 className={headlineClass}>{dict.title}</h2>
+            <motion.p variants={fadeUpSubtle} className="section-label mb-4">
+              {dict.eyebrow}
+            </motion.p>
+            <motion.h2 variants={fadeUp} className={headlineClass}>
+              {dict.title}
+            </motion.h2>
           </div>
-          <Link href={`/${locale}/news`} className="btn-outline">
-            {dict.cta}
-            <ArrowUpRight className={`w-4 h-4 ${isRTL ? "-scale-x-100" : ""}`} />
-          </Link>
-        </div>
+          <motion.div variants={fadeUpSubtle}>
+            <Link href={`/${locale}/news`} className="btn-outline">
+              {dict.cta}
+              <ArrowUpRight className={`w-4 h-4 ${isRTL ? "-scale-x-100" : ""}`} />
+            </Link>
+          </motion.div>
+        </motion.div>
 
         {/* News grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+        >
           {dict.items.map((item, i) => (
             <motion.article
               key={item.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: i * 0.1 }}
+              variants={staggerItem}
+              whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="bg-white border border-[var(--color-border)] overflow-hidden group hover:border-[var(--color-gold)] transition-all duration-500 hover:shadow-xl"
             >
               <Link
@@ -103,7 +126,7 @@ export default function NewsPreview({
               </Link>
             </motion.article>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

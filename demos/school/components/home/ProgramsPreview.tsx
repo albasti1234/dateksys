@@ -4,6 +4,13 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import {
+  fadeUp,
+  fadeUpSubtle,
+  staggerContainer,
+  staggerItem,
+  viewportOnce,
+} from "@/lib/animations";
 
 // ============================================
 // Programs Preview — Academic stages, bilingual
@@ -49,29 +56,45 @@ export default function ProgramsPreview({
     <section className="py-24 lg:py-32 bg-[var(--color-cream)]">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Header */}
-        <div className="flex items-end justify-between flex-wrap gap-6 mb-16">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
+          className="flex items-end justify-between flex-wrap gap-6 mb-16"
+        >
           <div className="max-w-xl">
-            <p className="section-label mb-4">{dict.eyebrow}</p>
-            <h2 className={titleClass}>{dict.title}</h2>
-            <p className="mt-4 text-[var(--color-ink-soft)] leading-relaxed">
+            <motion.p variants={fadeUpSubtle} className="section-label mb-4">
+              {dict.eyebrow}
+            </motion.p>
+            <motion.h2 variants={fadeUp} className={titleClass}>
+              {dict.title}
+            </motion.h2>
+            <motion.p variants={fadeUpSubtle} className="mt-4 text-[var(--color-ink-soft)] leading-relaxed">
               {dict.subtitle}
-            </p>
+            </motion.p>
           </div>
-          <Link href={`/${locale}/programs`} className="btn-outline">
-            {dict.cta}
-            <ArrowUpRight className={`w-4 h-4 ${isRTL ? "-scale-x-100" : ""}`} />
-          </Link>
-        </div>
+          <motion.div variants={fadeUpSubtle}>
+            <Link href={`/${locale}/programs`} className="btn-outline">
+              {dict.cta}
+              <ArrowUpRight className={`w-4 h-4 ${isRTL ? "-scale-x-100" : ""}`} />
+            </Link>
+          </motion.div>
+        </motion.div>
 
         {/* Programs grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+        >
           {dict.items.map((p, i) => (
             <motion.div
               key={p.stage}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.1 }}
+              variants={staggerItem}
+              whileHover={{ y: -6, transition: { duration: 0.3 } }}
               className="group relative overflow-hidden cursor-pointer bg-white"
             >
               {/* Image */}
@@ -101,7 +124,7 @@ export default function ProgramsPreview({
               </div>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

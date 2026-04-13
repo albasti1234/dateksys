@@ -4,6 +4,14 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowRight, Calendar, Phone } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import {
+  fadeUp,
+  fadeUpSubtle,
+  staggerContainer,
+  staggerItem,
+  scaleIn,
+  viewportOnce,
+} from "@/lib/animations";
 
 // ============================================
 // Final CTA — Schedule visit / Apply
@@ -45,10 +53,10 @@ export default function CallToAction({
 
       <div className="relative max-w-[1200px] mx-auto px-6 lg:px-10">
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={scaleIn}
           className="bg-[var(--color-navy)] text-white p-12 lg:p-20 relative overflow-hidden"
         >
           {/* Gold corner accents */}
@@ -67,16 +75,26 @@ export default function CallToAction({
             style={{ background: "#C19A4B" }}
           />
 
-          <div className="relative grid lg:grid-cols-12 gap-10 items-center">
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={staggerContainer}
+            className="relative grid lg:grid-cols-12 gap-10 items-center"
+          >
             <div className="lg:col-span-8">
-              <p className="section-label !text-[var(--color-gold-light)] mb-6">
+              <motion.p variants={fadeUpSubtle} className="section-label !text-[var(--color-gold-light)] mb-6">
                 {dict.eyebrow}
-              </p>
-              <h2 className={titleClass}>{dict.title}</h2>
-              <p className={bodyClass}>{dict.body}</p>
+              </motion.p>
+              <motion.h2 variants={fadeUp} className={titleClass}>
+                {dict.title}
+              </motion.h2>
+              <motion.p variants={fadeUp} className={bodyClass}>
+                {dict.body}
+              </motion.p>
             </div>
 
-            <div className="lg:col-span-4 flex flex-col gap-4">
+            <motion.div variants={staggerItem} className="lg:col-span-4 flex flex-col gap-4">
               <Link href={`/${locale}/admissions`}>
                 <button className="w-full btn-gold !bg-[var(--color-gold)] !text-white !border-[var(--color-gold)] group">
                   {dict.ctaPrimary}
@@ -101,8 +119,8 @@ export default function CallToAction({
                 <Phone className="w-4 h-4" />
                 <span className="num">+962 6 555 1234</span>
               </a>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

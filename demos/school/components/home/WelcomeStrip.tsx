@@ -2,6 +2,13 @@
 
 import { motion } from "framer-motion";
 import type { Locale } from "@/i18n/config";
+import {
+  fadeUp,
+  fadeUpSubtle,
+  staggerContainer,
+  lineExpand,
+  viewportOnce,
+} from "@/lib/animations";
 
 // ============================================
 // Welcome / Leadership Message
@@ -52,21 +59,27 @@ export default function WelcomeStrip({
 
       <div className="relative max-w-[860px] mx-auto px-6 lg:px-10 text-center">
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
         >
-          <p className="section-label mb-6 !justify-center">{dict.eyebrow}</p>
+          <motion.p variants={fadeUpSubtle} className="section-label mb-6 !justify-center">
+            {dict.eyebrow}
+          </motion.p>
 
-          <h2 className={titleClass}>{dict.title}</h2>
+          <motion.h2 variants={fadeUp} className={titleClass}>
+            {dict.title}
+          </motion.h2>
 
-          <div className="ornamental-divider mb-10" />
+          <motion.div variants={lineExpand} className="ornamental-divider mb-10" />
 
-          <p className={bodyClass}>{dict.body}</p>
+          <motion.p variants={fadeUp} className={bodyClass}>
+            {dict.body}
+          </motion.p>
 
           {/* Signature */}
-          <div className="mt-12 flex flex-col items-center gap-3">
+          <motion.div variants={fadeUpSubtle} className="mt-12 flex flex-col items-center gap-3">
             <div className="w-16 h-px bg-[var(--color-gold)]" />
             <p
               className={`text-sm tracking-wider ${
@@ -75,7 +88,7 @@ export default function WelcomeStrip({
             >
               {dict.signature}
             </p>
-          </div>
+          </motion.div>
         </motion.div>
       </div>
     </section>

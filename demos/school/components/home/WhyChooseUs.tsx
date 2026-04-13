@@ -10,6 +10,13 @@ import {
   Users,
 } from "lucide-react";
 import type { Locale } from "@/i18n/config";
+import {
+  fadeUp,
+  fadeUpSubtle,
+  staggerContainer,
+  staggerItem,
+  viewportOnce,
+} from "@/lib/animations";
 
 // ============================================
 // Why Choose Us — Six pillars of Al-Nakhla
@@ -43,28 +50,36 @@ export default function WhyChooseUs({
       <div className="max-w-[1400px] mx-auto px-6 lg:px-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
+          initial="hidden"
+          whileInView="visible"
+          viewport={viewportOnce}
+          variants={staggerContainer}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <p className="section-label mb-4 !justify-center">{dict.eyebrow}</p>
-          <h2 className={titleClass}>{dict.title}</h2>
-          <div className="ornamental-divider" />
+          <motion.p variants={fadeUpSubtle} className="section-label mb-4 !justify-center">
+            {dict.eyebrow}
+          </motion.p>
+          <motion.h2 variants={fadeUp} className={titleClass}>
+            {dict.title}
+          </motion.h2>
+          <motion.div variants={fadeUpSubtle} className="ornamental-divider" />
         </motion.div>
 
         {/* Features grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-80px" }}
+          variants={staggerContainer}
+        >
           {dict.features.map((f, i) => {
             const Icon = icons[i % icons.length];
             return (
               <motion.div
                 key={f.title}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-50px" }}
-                transition={{ duration: 0.6, delay: i * 0.08 }}
+                variants={staggerItem}
+                whileHover={{ y: -6, transition: { duration: 0.3 } }}
                 className="p-8 border border-[var(--color-border)] bg-[var(--color-cream)] hover:bg-white hover:shadow-xl transition-all duration-500 group"
               >
                 {/* Icon */}
@@ -84,14 +99,16 @@ export default function WhyChooseUs({
                 />
 
                 {/* Text */}
-                <h3 className={cardTitleClass}>{f.title}</h3>
+                <h3 className={`${cardTitleClass} group-hover:text-[var(--color-gold-dark)] transition-colors duration-300`}>
+                  {f.title}
+                </h3>
                 <p className="text-sm text-[var(--color-ink-soft)] leading-relaxed">
                   {f.description}
                 </p>
               </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </div>
     </section>
   );
