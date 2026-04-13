@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useCallback, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useTranslations } from "next-intl";
 import {
   X, ChevronLeft, ChevronRight, ExternalLink, Check, Monitor, Tablet, Smartphone,
   Globe, GraduationCap, BookOpen, Users, LayoutDashboard, Heart, ShoppingBag, Store,
@@ -18,6 +19,7 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
 interface ProjectModalProps {
   project: Project | null;
   initialPortalId: string;
+  locale: string;
   onClose: () => void;
   onNavigate: (project: Project) => void;
 }
@@ -33,9 +35,12 @@ const deviceWidths: Record<DeviceSize, string> = {
 export default function ProjectModal({
   project,
   initialPortalId,
+  locale,
   onClose,
   onNavigate,
 }: ProjectModalProps) {
+  const t = useTranslations("showcase");
+  const lang = locale as "ar" | "en";
   const [activePortalId, setActivePortalId] = useState(initialPortalId);
   const [device, setDevice] = useState<DeviceSize>("desktop");
 
@@ -107,8 +112,9 @@ export default function ProjectModal({
             {/* Close button */}
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 z-20 w-9 h-9 flex items-center justify-center rounded-full transition-colors"
+              className="absolute top-4 z-20 w-9 h-9 flex items-center justify-center rounded-full transition-colors"
               style={{
+                [locale === "ar" ? "left" : "right"]: "1rem",
                 background: "rgba(255,255,255,0.05)",
                 border: "1px solid rgba(255,255,255,0.08)",
               }}
@@ -118,7 +124,7 @@ export default function ProjectModal({
 
             {/* Left panel -- Info */}
             <div
-              className="w-full lg:w-[380px] shrink-0 p-6 lg:p-8 overflow-y-auto border-b lg:border-b-0 lg:border-r"
+              className="w-full lg:w-[380px] shrink-0 p-6 lg:p-8 overflow-y-auto border-b lg:border-b-0 lg:border-e"
               style={{ borderColor: "rgba(255,255,255,0.06)" }}
             >
               {/* Category */}
@@ -135,7 +141,7 @@ export default function ProjectModal({
                     className="w-1.5 h-1.5 rounded-full"
                     style={{ background: project.categoryColor }}
                   />
-                  {project.categoryLabel}
+                  {project.categoryLabel[lang]}
                 </span>
               </div>
 
@@ -144,22 +150,22 @@ export default function ProjectModal({
                 className="text-2xl font-bold mb-2"
                 style={{ color: "#F0EDE6", fontFamily: "var(--font-space-grotesk)" }}
               >
-                {project.name}
+                {project.name[lang]}
               </h2>
 
               {/* Meta */}
               <div className="flex gap-4 mb-4">
                 <div>
                   <span className="text-[10px] uppercase tracking-wider block mb-0.5" style={{ color: "rgba(240,237,230,0.3)" }}>
-                    Client
+                    {t("modal_client")}
                   </span>
                   <span className="text-xs font-medium" style={{ color: "rgba(240,237,230,0.7)" }}>
-                    {project.client}
+                    {project.client[lang]}
                   </span>
                 </div>
                 <div>
                   <span className="text-[10px] uppercase tracking-wider block mb-0.5" style={{ color: "rgba(240,237,230,0.3)" }}>
-                    Year
+                    {t("modal_year")}
                   </span>
                   <span className="text-xs font-medium" style={{ color: "rgba(240,237,230,0.7)" }}>
                     {project.year}
@@ -167,13 +173,13 @@ export default function ProjectModal({
                 </div>
                 <div>
                   <span className="text-[10px] uppercase tracking-wider block mb-0.5" style={{ color: "rgba(240,237,230,0.3)" }}>
-                    Status
+                    {t("modal_status")}
                   </span>
                   <span
                     className="text-xs font-medium capitalize"
                     style={{ color: project.status === "live" ? "#4ADE80" : "rgba(240,237,230,0.5)" }}
                   >
-                    {project.status}
+                    {project.status === "live" ? t("status_live") : t("status_coming_soon")}
                   </span>
                 </div>
               </div>
@@ -183,13 +189,13 @@ export default function ProjectModal({
                 className="text-sm leading-relaxed mb-6"
                 style={{ color: "rgba(240,237,230,0.5)", fontFamily: "var(--font-dm-sans)" }}
               >
-                {project.description}
+                {project.description[lang]}
               </p>
 
               {/* Portal selector */}
               <div className="mb-6">
                 <span className="text-[10px] uppercase tracking-wider block mb-2" style={{ color: "rgba(240,237,230,0.3)" }}>
-                  Portals
+                  {t("modal_portals")}
                 </span>
                 <div className="space-y-1">
                   {project.portals.map((portal) => {
@@ -199,7 +205,7 @@ export default function ProjectModal({
                       <button
                         key={portal.id}
                         onClick={() => setActivePortalId(portal.id)}
-                        className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-left transition-all duration-200"
+                        className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-start transition-all duration-200"
                         style={{
                           background: isActive ? "rgba(139,123,244,0.08)" : "transparent",
                           border: isActive ? "1px solid rgba(139,123,244,0.2)" : "1px solid transparent",
@@ -223,7 +229,7 @@ export default function ProjectModal({
                             fontFamily: "var(--font-dm-sans)",
                           }}
                         >
-                          {portal.nameEn}
+                          {portal.name[lang]}
                         </span>
                       </button>
                     );
@@ -234,7 +240,7 @@ export default function ProjectModal({
               {/* Tech stack */}
               <div className="mb-6">
                 <span className="text-[10px] uppercase tracking-wider block mb-2" style={{ color: "rgba(240,237,230,0.3)" }}>
-                  Tech Stack
+                  {t("modal_tech_stack")}
                 </span>
                 <div className="flex flex-wrap gap-1.5">
                   {project.techStack.map((tech) => (
@@ -256,14 +262,14 @@ export default function ProjectModal({
               {/* Features */}
               <div className="mb-6">
                 <span className="text-[10px] uppercase tracking-wider block mb-2" style={{ color: "rgba(240,237,230,0.3)" }}>
-                  Features
+                  {t("modal_features")}
                 </span>
                 <div className="space-y-1.5">
-                  {project.features.map((feature) => (
-                    <div key={feature} className="flex items-center gap-2">
+                  {project.features.map((feature, idx) => (
+                    <div key={idx} className="flex items-center gap-2">
                       <Check className="w-3 h-3 shrink-0" style={{ color: "#8B7BF4" }} />
                       <span className="text-xs" style={{ color: "rgba(240,237,230,0.5)" }}>
-                        {feature}
+                        {feature[lang]}
                       </span>
                     </div>
                   ))}
@@ -285,8 +291,8 @@ export default function ProjectModal({
                 >
                   <ExternalLink className="w-4 h-4" />
                   {activePortal.icon === "Globe" || activePortal.icon === "ShoppingBag"
-                    ? "Visit Live Site"
-                    : "Visit Dashboard"}
+                    ? t("visit_site")
+                    : t("visit_dashboard")}
                 </a>
               )}
             </div>
@@ -321,7 +327,7 @@ export default function ProjectModal({
                   transition={{ type: "spring", stiffness: 200, damping: 25 }}
                   style={{ maxWidth: "100%" }}
                 >
-                  <BrowserFrame url={liveUrl ? `dateksys.com${liveUrl}` : `dateksys.com — ${activePortal.nameEn}`}>
+                  <BrowserFrame url={liveUrl ? `dateksys.com${liveUrl}` : `dateksys.com — ${activePortal.name[lang]}`}>
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={activePortal.id}
@@ -332,7 +338,7 @@ export default function ProjectModal({
                       >
                         <ScreenshotCarousel
                           screenshots={activePortal.screenshots}
-                          alt={`${project.name} ${activePortal.nameEn}`}
+                          alt={`${project.name[lang]} ${activePortal.name[lang]}`}
                         />
                       </motion.div>
                     </AnimatePresence>
@@ -345,8 +351,9 @@ export default function ProjectModal({
             {prevProject && (
               <button
                 onClick={() => onNavigate(prevProject)}
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full transition-colors z-20 hidden lg:flex"
+                className="absolute top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full transition-colors z-20 hidden lg:flex"
                 style={{
+                  [locale === "ar" ? "right" : "left"]: "1rem",
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}
@@ -357,8 +364,9 @@ export default function ProjectModal({
             {nextProject && (
               <button
                 onClick={() => onNavigate(nextProject)}
-                className="absolute right-14 top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full transition-colors z-20 hidden lg:flex"
+                className="absolute top-1/2 -translate-y-1/2 w-10 h-10 flex items-center justify-center rounded-full transition-colors z-20 hidden lg:flex"
                 style={{
+                  [locale === "ar" ? "left" : "right"]: "3.5rem",
                   background: "rgba(255,255,255,0.05)",
                   border: "1px solid rgba(255,255,255,0.08)",
                 }}

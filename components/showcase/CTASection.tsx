@@ -1,10 +1,19 @@
 "use client";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
-import { ArrowRight } from "lucide-react";
-import { fadeUp, stagger, CINEMATIC } from "@/lib/showcase-animations";
+import { ArrowRight, ArrowLeft } from "lucide-react";
+import { fadeUp, stagger } from "@/lib/showcase-animations";
 
-export default function CTASection() {
+interface CTASectionProps {
+  locale: string;
+}
+
+export default function CTASection({ locale }: CTASectionProps) {
+  const t = useTranslations("showcase");
+  const isRTL = locale === "ar";
+  const Arrow = isRTL ? ArrowLeft : ArrowRight;
+
   return (
     <section className="py-24 lg:py-32 px-6 relative overflow-hidden">
       {/* Background glow */}
@@ -27,7 +36,7 @@ export default function CTASection() {
           className="text-4xl md:text-6xl font-bold tracking-tight mb-6"
           style={{ fontFamily: "var(--font-space-grotesk)", color: "#F0EDE6" }}
         >
-          Have a{" "}
+          {t("cta_title_1")}{" "}
           <span
             style={{
               fontStyle: "italic",
@@ -36,9 +45,9 @@ export default function CTASection() {
               WebkitTextFillColor: "transparent",
             }}
           >
-            Project
+            {t("cta_title_2")}
           </span>{" "}
-          in Mind?
+          {t("cta_title_3")}
         </motion.h2>
 
         <motion.p
@@ -46,7 +55,7 @@ export default function CTASection() {
           className="text-lg mb-10 max-w-xl mx-auto leading-relaxed"
           style={{ color: "rgba(240,237,230,0.5)", fontFamily: "var(--font-dm-sans)" }}
         >
-          Let&apos;s turn your vision into a production-ready platform. From design to deployment, we handle every detail.
+          {t("cta_subtitle")}
         </motion.p>
 
         <motion.div variants={fadeUp} className="flex flex-wrap justify-center gap-4">
@@ -58,8 +67,8 @@ export default function CTASection() {
               color: "#F0EDE6",
             }}
           >
-            Start a Project
-            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+            {t("cta_start")}
+            <Arrow className={`w-4 h-4 transition-transform ${isRTL ? "group-hover:-translate-x-1" : "group-hover:translate-x-1"}`} />
           </Link>
           <Link
             href="/services"
@@ -71,7 +80,7 @@ export default function CTASection() {
               background: "rgba(255,255,255,0.02)",
             }}
           >
-            View Our Services
+            {t("cta_services")}
           </Link>
         </motion.div>
       </motion.div>

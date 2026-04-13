@@ -5,10 +5,12 @@ import { categories, type ProjectCategory } from "@/lib/projects";
 
 interface FilterBarProps {
   active: ProjectCategory | "all";
+  locale: string;
   onChange: (value: ProjectCategory | "all") => void;
 }
 
-export default function FilterBar({ active, onChange }: FilterBarProps) {
+export default function FilterBar({ active, locale, onChange }: FilterBarProps) {
+  const lang = locale as "ar" | "en";
   const ref = useRef<HTMLDivElement>(null);
   const { scrollY } = useScroll();
   const bgOpacity = useTransform(scrollY, [200, 400], [0, 1]);
@@ -70,7 +72,7 @@ export default function FilterBar({ active, onChange }: FilterBarProps) {
                     style={{ background: cat.color }}
                   />
                 )}
-                <span className="relative z-10">{cat.label}</span>
+                <span className="relative z-10">{cat.label[lang]}</span>
               </motion.button>
             );
           })}

@@ -1,16 +1,23 @@
 "use client";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 import AnimatedCounter from "./AnimatedCounter";
 import { fadeUp, stagger } from "@/lib/showcase-animations";
 
-const stats = [
-  { target: 15, suffix: "+", label: "Projects Delivered" },
-  { target: 6, suffix: "", label: "Industries Served" },
-  { target: 100, suffix: "%", label: "Satisfaction Rate" },
-  { target: 24, suffix: "/7", label: "Support Available" },
-];
+interface StatsSectionProps {
+  locale: string;
+}
 
-export default function StatsSection() {
+export default function StatsSection({ locale }: StatsSectionProps) {
+  const t = useTranslations("showcase");
+
+  const stats = [
+    { target: 15, suffix: "+", label: t("stats_projects") },
+    { target: 6, suffix: "", label: t("stats_industries") },
+    { target: 100, suffix: "%", label: t("stats_satisfaction") },
+    { target: 24, suffix: "/7", label: t("stats_support") },
+  ];
+
   return (
     <section
       className="py-24 px-6 border-t"

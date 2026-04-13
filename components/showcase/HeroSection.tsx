@@ -1,11 +1,9 @@
 "use client";
 import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { useTranslations } from "next-intl";
 import { CINEMATIC, EXPO_OUT } from "@/lib/showcase-animations";
 import FloatingPreviewCards from "./FloatingPreviewCards";
-
-const heroWords1 = ["Projects", "That"];
-const heroWords2 = ["Speak", "for", "Themselves"];
 
 const wordVariants = {
   hidden: { y: "110%" },
@@ -15,7 +13,12 @@ const wordVariants = {
   }),
 };
 
-export default function HeroSection() {
+interface HeroSectionProps {
+  locale: string;
+}
+
+export default function HeroSection({ locale }: HeroSectionProps) {
+  const t = useTranslations("showcase");
   const heroRef = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -23,6 +26,13 @@ export default function HeroSection() {
   });
   const heroOpacity = useTransform(scrollYProgress, [0, 0.7], [1, 0]);
   const heroY = useTransform(scrollYProgress, [0, 1], [0, 150]);
+
+  const isRTL = locale === "ar";
+
+  // Split translated title lines into words
+  const line1Words = t("hero_title_1").split(" ");
+  const accentWord = t("hero_title_2");
+  const line2Words = [accentWord, ...t("hero_title_3").split(" ")];
 
   return (
     <section
@@ -122,7 +132,7 @@ export default function HeroSection() {
               className="text-xs font-medium tracking-widest uppercase"
               style={{ color: "rgba(139,123,244,0.9)", fontFamily: "var(--font-dm-sans)" }}
             >
-              Our Work &mdash; Live Showcase
+              {t("hero_badge")}
             </span>
           </motion.div>
 
@@ -135,8 +145,8 @@ export default function HeroSection() {
             }}
           >
             <span className="block">
-              {heroWords1.map((word, i) => (
-                <span key={word} className="inline-block overflow-hidden mr-[0.25em]">
+              {line1Words.map((word, i) => (
+                <span key={`l1-${i}`} className={`inline-block overflow-hidden ${isRTL ? "ml-[0.25em]" : "mr-[0.25em]"}`}>
                   <motion.span
                     className="inline-block"
                     variants={wordVariants}
@@ -151,16 +161,16 @@ export default function HeroSection() {
               ))}
             </span>
             <span className="block mt-1">
-              {heroWords2.map((word, i) => (
-                <span key={word} className="inline-block overflow-hidden mr-[0.25em]">
+              {line2Words.map((word, i) => (
+                <span key={`l2-${i}`} className={`inline-block overflow-hidden ${isRTL ? "ml-[0.25em]" : "mr-[0.25em]"}`}>
                   <motion.span
                     className="inline-block"
                     variants={wordVariants}
                     initial="hidden"
                     animate="visible"
-                    custom={i + heroWords1.length}
+                    custom={i + line1Words.length}
                     style={
-                      word === "Speak"
+                      word === accentWord
                         ? {
                             fontStyle: "italic",
                             background: "linear-gradient(135deg, #8B7BF4, #A78BFA, #C4B5FD)",
@@ -185,7 +195,7 @@ export default function HeroSection() {
             className="mt-8 text-lg lg:text-xl max-w-2xl leading-relaxed"
             style={{ color: "rgba(240,237,230,0.5)", fontFamily: "var(--font-dm-sans)" }}
           >
-            From concept to production — explore the platforms we build for businesses across industries.
+            {t("hero_subtitle")}
           </motion.p>
         </div>
 
@@ -206,7 +216,7 @@ export default function HeroSection() {
           className="text-[10px] font-semibold tracking-[0.3em] uppercase"
           style={{ color: "rgba(240,237,230,0.25)", fontFamily: "var(--font-dm-sans)" }}
         >
-          Explore
+          {t("hero_scroll")}
         </span>
         <div
           className="w-px h-8 origin-top"

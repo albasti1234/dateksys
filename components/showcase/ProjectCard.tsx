@@ -1,7 +1,8 @@
 "use client";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Globe, GraduationCap, BookOpen, Users, LayoutDashboard, Heart, ShoppingBag, Store, ChevronRight, type LucideProps } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Globe, GraduationCap, BookOpen, Users, LayoutDashboard, Heart, ShoppingBag, Store, ChevronRight, ChevronLeft, type LucideProps } from "lucide-react";
 import BrowserFrame from "./BrowserFrame";
 import { type Project } from "@/lib/projects";
 import { fadeUp } from "@/lib/showcase-animations";
@@ -20,11 +21,16 @@ const iconMap: Record<string, React.ComponentType<LucideProps>> = {
 interface ProjectCardProps {
   project: Project;
   index: number;
+  locale: string;
   onSelect: (project: Project, portalId: string) => void;
 }
 
-export default function ProjectCard({ project, index, onSelect }: ProjectCardProps) {
+export default function ProjectCard({ project, index, locale, onSelect }: ProjectCardProps) {
+  const t = useTranslations("showcase");
+  const lang = locale as "ar" | "en";
+  const isRTL = locale === "ar";
   const coverUrl = project.portals[0]?.screenshots[0] || project.coverImage;
+  const Chevron = isRTL ? ChevronLeft : ChevronRight;
 
   return (
     <motion.div
@@ -47,7 +53,7 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
           <div className="relative aspect-[16/10] overflow-hidden">
             <Image
               src={coverUrl || "/showcase/school-demo.png"}
-              alt={`${project.name} preview`}
+              alt={`${project.name[lang]} preview`}
               fill
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
@@ -66,7 +72,7 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
                   fontFamily: "var(--font-dm-sans)",
                 }}
               >
-                View Project
+                {t("view_project")}
               </span>
             </div>
           </div>
@@ -89,14 +95,14 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
               className="w-1.5 h-1.5 rounded-full"
               style={{ background: project.categoryColor }}
             />
-            {project.categoryLabel}
+            {project.categoryLabel[lang]}
           </span>
           {project.status === "live" && (
             <span
               className="text-[10px] font-medium uppercase tracking-wider"
               style={{ color: "#4ADE80" }}
             >
-              Live
+              {t("status_live")}
             </span>
           )}
           {project.status === "in-progress" && (
@@ -104,7 +110,7 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
               className="text-[10px] font-medium uppercase tracking-wider"
               style={{ color: "rgba(240,237,230,0.3)" }}
             >
-              Coming Soon
+              {t("status_coming_soon")}
             </span>
           )}
         </div>
@@ -114,13 +120,13 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
           className="text-lg font-bold mb-2 transition-colors"
           style={{ color: "#F0EDE6", fontFamily: "var(--font-space-grotesk)" }}
         >
-          {project.name}
+          {project.name[lang]}
         </h3>
         <p
           className="text-sm leading-relaxed mb-4 line-clamp-2"
           style={{ color: "rgba(240,237,230,0.45)", fontFamily: "var(--font-dm-sans)" }}
         >
-          {project.description}
+          {project.description[lang]}
         </p>
 
         {/* Portal list */}
@@ -131,7 +137,7 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
           >
             <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
             <span className="text-[9px] font-semibold tracking-[0.15em] uppercase" style={{ fontFamily: "var(--font-dm-sans)" }}>
-              System Portals
+              {t("system_portals")}
             </span>
             <div className="flex-1 h-px" style={{ background: "rgba(255,255,255,0.06)" }} />
           </div>
@@ -142,7 +148,7 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
                 <button
                   key={portal.id}
                   onClick={() => onSelect(project, portal.id)}
-                  className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-left transition-all duration-200 group/portal hover:translate-x-1"
+                  className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-start transition-all duration-200 group/portal ${isRTL ? "hover:-translate-x-1" : "hover:translate-x-1"}`}
                   style={{
                     background: "transparent",
                     border: "1px solid transparent",
@@ -161,9 +167,9 @@ export default function ProjectCard({ project, index, onSelect }: ProjectCardPro
                     className="flex-1 text-xs font-medium"
                     style={{ color: "rgba(240,237,230,0.6)", fontFamily: "var(--font-dm-sans)" }}
                   >
-                    {portal.nameEn}
+                    {portal.name[lang]}
                   </span>
-                  <ChevronRight
+                  <Chevron
                     size={13}
                     className="shrink-0 opacity-0 group-hover/portal:opacity-100 transition-opacity duration-200"
                     style={{ color: "rgba(139,123,244,0.6)" }}

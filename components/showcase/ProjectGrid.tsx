@@ -6,10 +6,11 @@ import ProjectCard from "./ProjectCard";
 
 interface ProjectGridProps {
   filter: ProjectCategory | "all";
+  locale: string;
   onSelectProject: (project: Project, portalId: string) => void;
 }
 
-export default function ProjectGrid({ filter, onSelectProject }: ProjectGridProps) {
+export default function ProjectGrid({ filter, locale, onSelectProject }: ProjectGridProps) {
   const filtered =
     filter === "all" ? projects : projects.filter((p) => p.category === filter);
 
@@ -35,6 +36,7 @@ export default function ProjectGrid({ filter, onSelectProject }: ProjectGridProp
               <ProjectCard
                 project={project}
                 index={i}
+                locale={locale}
                 onSelect={onSelectProject}
               />
             </motion.div>

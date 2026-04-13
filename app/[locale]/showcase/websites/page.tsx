@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { useLocale } from "next-intl";
 import HeroSection from "@/components/showcase/HeroSection";
 import FilterBar from "@/components/showcase/FilterBar";
 import ProjectGrid from "@/components/showcase/ProjectGrid";
@@ -9,6 +10,7 @@ import CTASection from "@/components/showcase/CTASection";
 import { type ProjectCategory, type Project } from "@/lib/projects";
 
 export default function ShowcasePage() {
+  const locale = useLocale();
   const [filter, setFilter] = useState<ProjectCategory | "all">("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const [selectedPortalId, setSelectedPortalId] = useState<string>("");
@@ -19,7 +21,11 @@ export default function ShowcasePage() {
   };
 
   return (
-    <div style={{ background: "#06060A", color: "#F0EDE6" }} className="min-h-screen">
+    <div
+      style={{ background: "#06060A", color: "#F0EDE6" }}
+      className="min-h-screen"
+      dir={locale === "ar" ? "rtl" : "ltr"}
+    >
       {/* Noise overlay */}
       <div
         className="fixed inset-0 z-[9999] pointer-events-none opacity-[0.02]"
@@ -28,18 +34,20 @@ export default function ShowcasePage() {
         }}
       />
 
-      <HeroSection />
-      <FilterBar active={filter} onChange={setFilter} />
+      <HeroSection locale={locale} />
+      <FilterBar active={filter} locale={locale} onChange={setFilter} />
       <ProjectGrid
         filter={filter}
+        locale={locale}
         onSelectProject={handleSelectProject}
       />
-      <StatsSection />
-      <CTASection />
+      <StatsSection locale={locale} />
+      <CTASection locale={locale} />
 
       <ProjectModal
         project={selectedProject}
         initialPortalId={selectedPortalId}
+        locale={locale}
         onClose={() => setSelectedProject(null)}
         onNavigate={(project) => {
           setSelectedProject(project);
