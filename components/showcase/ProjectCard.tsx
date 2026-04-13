@@ -55,6 +55,7 @@ export default function ProjectCard({ project, index, locale, onSelect }: Projec
               src={coverUrl || "/showcase/school-demo.png"}
               alt={`${project.name[lang]} preview`}
               fill
+              priority={index < 2}
               sizes="(max-width: 768px) 100vw, 50vw"
               className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
             />
