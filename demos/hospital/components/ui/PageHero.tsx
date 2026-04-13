@@ -30,7 +30,7 @@ export default function PageHero({
   const parallaxY = useTransform(scrollY, [0, 400], [0, 100]);
 
   return (
-    <section className="relative overflow-hidden bg-navy min-h-[40vh] flex items-center">
+    <section className="relative overflow-hidden bg-navy min-h-[40vh] flex items-center pt-20">
       {/* Background Image with Parallax */}
       {imageUrl ? (
         <motion.div style={{ y: parallaxY }} className="absolute inset-0">
