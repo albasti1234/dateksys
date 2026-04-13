@@ -96,7 +96,7 @@ export default function Navbar({
       initial={false}
       animate={{ y: hidden ? "-100%" : "0%" }}
       transition={{ duration: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className={`transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled || !isHomePage
           ? "bg-white/95 backdrop-blur-xl shadow-sm"
           : "bg-transparent"

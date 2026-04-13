@@ -17,10 +17,8 @@ export default async function PublicLayout({
 
   return (
     <>
-      <div className="fixed top-0 left-0 right-0 z-50">
-        <TopBar locale={locale} />
-        <Navbar locale={locale} dict={dict.nav} />
-      </div>
+      <TopBar locale={locale} />
+      <Navbar locale={locale} dict={dict.nav} />
       <main id="main-content" className="flex-1">{children}</main>
       <Footer locale={locale} dict={dict.footer} />
     </>
