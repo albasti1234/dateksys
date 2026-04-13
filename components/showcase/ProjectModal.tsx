@@ -270,7 +270,7 @@ export default function ProjectModal({
                 </div>
               </div>
 
-              {/* Live site button */}
+              {/* Live site / dashboard button */}
               {liveUrl && (
                 <a
                   href={liveUrl}
@@ -284,7 +284,9 @@ export default function ProjectModal({
                   }}
                 >
                   <ExternalLink className="w-4 h-4" />
-                  Visit Live Site
+                  {activePortal.icon === "Globe" || activePortal.icon === "ShoppingBag"
+                    ? "Visit Live Site"
+                    : "Visit Dashboard"}
                 </a>
               )}
             </div>

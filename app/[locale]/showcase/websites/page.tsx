@@ -6,7 +6,6 @@ import ProjectGrid from "@/components/showcase/ProjectGrid";
 import ProjectModal from "@/components/showcase/ProjectModal";
 import StatsSection from "@/components/showcase/StatsSection";
 import CTASection from "@/components/showcase/CTASection";
-import ShowcaseFooter from "@/components/showcase/ShowcaseFooter";
 import { type ProjectCategory, type Project } from "@/lib/projects";
 
 export default function ShowcasePage() {
@@ -37,7 +36,6 @@ export default function ShowcasePage() {
       />
       <StatsSection />
       <CTASection />
-      <ShowcaseFooter />
 
       <ProjectModal
         project={selectedProject}

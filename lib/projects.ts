@@ -78,6 +78,7 @@ export const projects: Project[] = [
         icon: "GraduationCap",
         description: "Grade tracking, assignments, schedule, and attendance for students.",
         screenshots: ["/showcase/school-demo.png"],
+        url: "/demos/school/ar/portal/student",
       },
       {
         id: "school-teacher",
@@ -86,6 +87,7 @@ export const projects: Project[] = [
         icon: "BookOpen",
         description: "Class management, grading, lesson plans, and communication tools.",
         screenshots: ["/showcase/school-demo.png"],
+        url: "/demos/school/ar/portal/teacher",
       },
       {
         id: "school-parent",
@@ -94,6 +96,7 @@ export const projects: Project[] = [
         icon: "Users",
         description: "Child progress tracking, fee payments, and teacher communication.",
         screenshots: ["/showcase/school-demo.png"],
+        url: "/demos/school/ar/portal/parent",
       },
       {
         id: "school-admin",
@@ -137,6 +140,7 @@ export const projects: Project[] = [
         icon: "Heart",
         description: "Medical records, appointments, prescriptions, and billing for patients.",
         screenshots: ["/showcase/school-demo.png"],
+        url: "/demos/hospital/ar/portal/patient",
       },
       {
         id: "hospital-admin",
