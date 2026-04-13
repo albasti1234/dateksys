@@ -119,7 +119,7 @@ export const doctors: Doctor[] = [
       en: "Consultant Pediatrician & Neonatologist",
     },
     departmentId: "pediatrics",
-    avatar: "/avatars/doctor-f-1.jpg",
+    avatar: "/demos/hospital/images/doctors/dr-lina-husseini.webp",
     bio: {
       ar: "متخصصة في طب حديثي الولادة والعناية المركزة للأطفال. ١٢ عاماً من الخبرة في أكبر مستشفيات الأردن",
       en: "Specialized in neonatal medicine and pediatric intensive care. 12 years of experience in Jordan's leading hospitals",
@@ -142,7 +142,7 @@ export const doctors: Doctor[] = [
       en: "Consultant Orthopedic Surgeon",
     },
     departmentId: "orthopedics",
-    avatar: "/avatars/doctor-m-2.jpg",
+    avatar: "/demos/hospital/images/doctors/dr-khaled-abu-zeid.webp",
     bio: {
       ar: "٢٢ عاماً في جراحة العظام مع تخصص دقيق في استبدال المفاصل وجراحة المناظير. أجرى أكثر من ٣٠٠٠ عملية ناجحة",
       en: "22 years in orthopedic surgery specializing in joint replacement and arthroscopy. Performed over 3,000 successful surgeries",

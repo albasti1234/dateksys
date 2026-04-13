@@ -22,11 +22,12 @@ export default function CallToAction({
       {/* Background image */}
       <div className="absolute inset-0">
         <Image
-          src="/demos/hospital/images/about.png"
-          alt=""
+          src="/demos/hospital/images/cta-bg.webp"
+          alt="Al-Hayat Hospital Interior"
           fill
           className="object-cover"
           sizes="100vw"
+          priority
           aria-hidden="true"
         />
         <div className="absolute inset-0 bg-navy/95" />

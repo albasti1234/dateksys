@@ -37,8 +37,8 @@ export default function WhyChooseUs({
             className="relative rounded-2xl overflow-hidden aspect-[4/3]"
           >
             <Image
-              src="/demos/hospital/images/doctor-patient.png"
-              alt={isRTL ? "طبيب يعتني بمريض" : "Doctor caring for a patient"}
+              src="/demos/hospital/images/doctor-patient.webp"
+              alt={isRTL ? "طبيب يشرح لمريضة" : "Doctor explaining to patient"}
               fill
               className="object-cover"
               sizes="(max-width: 1024px) 100vw, 50vw"

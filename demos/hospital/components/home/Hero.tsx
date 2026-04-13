@@ -50,7 +50,7 @@ export default function Hero({
       {/* Parallax Background Image */}
       <motion.div style={{ y: parallaxY }} className="absolute inset-0 -top-20">
         <Image
-          src="/demos/hospital/images/hero.png"
+          src="/demos/hospital/images/hero-bg.webp"
           alt={isRTL ? "مستشفى الحياة" : "Al-Hayat Hospital"}
           fill
           className="object-cover"
@@ -221,9 +221,9 @@ export default function Hero({
                 {isRTL ? "الموعد المتاح التالي" : "Next Available"}
               </div>
               <div className="flex items-center gap-4 mb-5">
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center">
+                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center overflow-hidden">
                   <Image
-                    src="/demos/hospital/images/doctor-m-1.png"
+                    src="/demos/hospital/images/doctors/dr-ahmad-mansour.webp"
                     alt="Doctor"
                     width={56}
                     height={56}

@@ -55,11 +55,11 @@ export default function AboutPage({
               className="relative aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl order-2 lg:order-1"
             >
               <Image
-                src="/demos/hospital/images/doctor-patient.png"
+                src="/demos/hospital/images/doctor-patient.webp"
                 alt={about.story.title}
                 fill
                 className="object-cover"
-                sizes="(max-w-width: 768px) 100vw, 50vw"
+                sizes="(max-width: 768px) 100vw, 50vw"
               />
               {/* Decorative Accent */}
               <div className="absolute inset-0 border border-white/20 rounded-2xl md:m-4 m-2" />

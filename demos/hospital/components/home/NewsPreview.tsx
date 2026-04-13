@@ -20,7 +20,7 @@ const articles = [
       en: "Discover the most important medical tips to keep your heart healthy and prevent cardiovascular diseases.",
     },
     category: { ar: "صحة القلب", en: "Heart Health" },
-    image: "/demos/hospital/images/about.png",
+    image: "/demos/hospital/images/news/heart-health.webp",
     date: "2026-04-10",
   },
   {
@@ -35,7 +35,7 @@ const articles = [
       en: "Learn about the latest methods to manage diabetes and effectively control blood sugar levels.",
     },
     category: { ar: "السكري", en: "Diabetes" },
-    image: "/demos/hospital/images/doctor-patient.png",
+    image: "/demos/hospital/images/news/diabetes.webp",
     date: "2026-04-05",
   },
   {
@@ -50,7 +50,7 @@ const articles = [
       en: "Updated vaccination schedule for children from birth through school age with the latest medical recommendations.",
     },
     category: { ar: "طب الأطفال", en: "Pediatrics" },
-    image: "/demos/hospital/images/hero.png",
+    image: "/demos/hospital/images/news/vaccination.webp",
     date: "2026-03-28",
   },
 ];
